@@ -1,0 +1,61 @@
+.tablist>li:focus, .tablist>li:hover, .tablist>li:is(.active,.is-active) {
+    font-family: PremierSans-Heavy,Arial,Helvetica Neue,Helvetica,sans-serif;
+    font-weight: 400;
+}
+
+
+.tablist>li {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 0.8rem 1.6rem;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    color: #37003c;
+    background-color: #f5f2f5;
+    border-radius: 0.8rem 0.8rem 0 0;
+    letter-spacing: -.4px;
+    transition: background-color .1s,font-family .1s;
+}   
+
+.tablist>li:is(.active,.is-active) {
+    background-color: #fff;
+}
+
+
+.tablist {
+    display: flex;
+    gap: 0.8rem;
+    border-bottom: 0.1rem solid #f5f2f5;
+}
+
+nav {
+    display: block;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+ol li, ul li {
+    list-style-type: none;
+}
+
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}

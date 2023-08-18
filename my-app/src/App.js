@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Main from "./component/Main";
 import Ranking from "./component/Ranking";
 import Schedule from "./component/Schedule";
-import Squad from "./component/Squad";
+import Squad from "./component/Squad"
 
 
 function App() {
