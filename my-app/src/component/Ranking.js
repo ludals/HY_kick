@@ -18,7 +18,7 @@ const Ranking = () => {
   }
 
     return (
-      <div>
+      <div className="tabbedContent">
         <nav>
           <div className = "tabs">
             <ul className = "tablist">

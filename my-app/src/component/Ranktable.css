@@ -1,10 +1,46 @@
+table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    color: #37003c;
+    display: table;
+    /* border-collapse: separate; */
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+    height: 3.1rem;
+}
+
+table thead th {
+    padding: 0.5rem 0.8rem 0.5rem 1.6rem;
+}
+
+table thead th.league-table-pos-header {
+    text-align: left;
+}
+
+table thead th.league-table-team-header {
+    padding-left: 0.8rem;
+    text-align: left;
+}
+
+table thead tr {
+    background-color: #fbfafa;
+    border-bottom: 0.1rem solid #ebe5eb;
+    font-size: 1.2rem;
+    color: #87668a;
+    font-family: PremierSans-Heavy,Arial,Helvetica Neue,Helvetica,sans-serif;
+    font-weight: 400;
+    line-height: 1.8rem;
+}
+
 .tablist>li:focus, .tablist>li:hover, .tablist>li:is(.active,.is-active) {
     font-family: PremierSans-Heavy,Arial,Helvetica Neue,Helvetica,sans-serif;
     font-weight: 400;
 }
 
 
-.tablist>li {
+.tablist li {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +56,7 @@
     transition: background-color .1s,font-family .1s;
 }   
 
-.tablist>li:is(.active,.is-active) {
+.tablist li:is(.active,.is-active) {
     background-color: #fff;
 }
 
@@ -31,31 +67,11 @@
     border-bottom: 0.1rem solid #f5f2f5;
 }
 
-nav {
-    display: block;
+.league-table tr {
+    height: 5.6rem;
+    font-size: 1.6rem;
 }
 
-* {
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-ol li, ul li {
-    list-style-type: none;
-}
-
-ul {
-    display: block;
-    list-style-type: disc;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;
-}
-
-li {
-    display: list-item;
-    text-align: -webkit-match-parent;
+table tbody td{
+    padding-left: 0.8rem;
 }
