@@ -1,0 +1,72 @@
+.Squad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  .field {
+    position: relative;
+    width: 500px; /* 너비 조정 */
+    height: 500px; /* 높이 조정 */
+    border: 1px solid #000;
+    margin: 20px;
+  }
+  
+  
+  .bench {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .position {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+    line-height: 40px;
+  }
+  
+/* 4-4-2 Formation */
+.formation-4-4-2 .position:nth-child(1) { top: 10%; left: 40%; } /* ST */
+.formation-4-4-2 .position:nth-child(2) { top: 10%; left: 60%; } /* ST */
+.formation-4-4-2 .position:nth-child(3) { top: 30%; left: 5%; }  /* LM */
+.formation-4-4-2 .position:nth-child(4) { top: 30%; left: 90%; } /* RM */
+.formation-4-4-2 .position:nth-child(5) { top: 50%; left: 40%; } /* CM */
+.formation-4-4-2 .position:nth-child(6) { top: 50%; left: 60%; } /* CM */
+.formation-4-4-2 .position:nth-child(7) { top: 70%; left: 5%; }  /* LB */
+.formation-4-4-2 .position:nth-child(8) { top: 70%; left: 40%; } /* CB */
+.formation-4-4-2 .position:nth-child(9) { top: 70%; left: 60%; } /* CB */
+.formation-4-4-2 .position:nth-child(10) { top: 70%; left: 90%; } /* RB */
+.formation-4-4-2 .position:nth-child(11) { top: 85%; left: 50%; } /* GK */
+
+/* 4-3-3 Formation */
+.formation-4-3-3 .position:nth-child(1) { top: 10%; left: 5%; }  /* LW */
+.formation-4-3-3 .position:nth-child(2) { top: 10%; left: 50%; } /* ST */
+.formation-4-3-3 .position:nth-child(3) { top: 10%; left: 90%; } /* RW */
+.formation-4-3-3 .position:nth-child(4) { top: 30%; left: 5%; }  /* LM */
+.formation-4-3-3 .position:nth-child(5) { top: 30%; left: 50%; } /* CM */
+.formation-4-3-3 .position:nth-child(6) { top: 30%; left: 90%; } /* RM */
+.formation-4-3-3 .position:nth-child(7) { top: 70%; left: 5%; }  /* LB */
+.formation-4-3-3 .position:nth-child(8) { top: 70%; left: 40%; } /* CB */
+.formation-4-3-3 .position:nth-child(9) { top: 70%; left: 60%; } /* CB */
+.formation-4-3-3 .position:nth-child(10) { top: 70%; left: 90%; } /* RB */
+.formation-4-3-3 .position:nth-child(11) { top: 85%; left: 50%; } /* GK */
+
+/* 3-5-2 Formation */
+.formation-3-5-2 .position:nth-child(1) { top: 10%; left: 40%; } /* ST */
+.formation-3-5-2 .position:nth-child(2) { top: 10%; left: 60%; } /* ST */
+.formation-3-5-2 .position:nth-child(3) { top: 30%; left: 5%; }  /* LM */
+.formation-3-5-2 .position:nth-child(4) { top: 30%; left: 25%; } /* CM */
+.formation-3-5-2 .position:nth-child(5) { top: 30%; left: 50%; } /* CM */
+.formation-3-5-2 .position:nth-child(6) { top: 30%; left: 75%; } /* CM */
+.formation-3-5-2 .position:nth-child(7) { top: 30%; left: 90%; } /* RM */
+.formation-3-5-2 .position:nth-child(8) { top: 70%; left: 25%; } /* CB */
+.formation-3-5-2 .position:nth-child(9) { top: 70%; left: 50%; } /* CB */
+.formation-3-5-2 .position:nth-child(10) { top: 70%; left: 75%; } /* CB */
+.formation-3-5-2 .position:nth-child(11) { top: 85%; left: 50%; } /* CB */
+
+
+  
