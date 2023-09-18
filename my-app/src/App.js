@@ -4,6 +4,7 @@ import Main from "./component/Main";
 import Ranking from "./component/Ranking";
 import Schedule from "./component/Schedule";
 import Squad from "./component/Squad"
+import Team1 from './component/team_pages/team1';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/ranking" element={<Ranking />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/squad" element={<Squad />} />
+        <Route path="/team1" element={<Team1 />}></Route>
       </Routes>
     </>
   );

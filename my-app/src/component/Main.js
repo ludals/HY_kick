@@ -14,6 +14,9 @@ const Main = () => {
           <li>
             <Link to="/squad">스쿼드</Link>
           </li>
+          <li>
+            <Link to ="/team1">팀1</Link>
+          </li>
         </ul>
       </nav>
 
