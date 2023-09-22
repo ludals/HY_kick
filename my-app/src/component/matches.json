@@ -11,7 +11,7 @@
             "date": "2023-09-04",
             "home": "LALA",
             "away": "포유",
-            "time": "12",
+            "time": "13",
             "league": "공대리그"            
         },
         {
@@ -25,7 +25,7 @@
             "date": "2023-09-06",
             "home": "UFC",
             "away": "개발",
-            "time": "12",
+            "time": "13",
             "league": "선봉리그"
         },
         {
@@ -39,7 +39,7 @@
             "date": "2023-09-08",
             "home": "SHOOTTANK",
             "away": "LALA",
-            "time": "12",
+            "time": "13",
             "league": "공대리그"
         }
     ]

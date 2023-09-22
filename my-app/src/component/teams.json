@@ -6,7 +6,8 @@
             "played" : 5,
             "win" : 4,
             "lose" : 1,
-            "draw" : 0
+            "draw" : 0,
+            "code" : "00"
         },
         {
             "name" : "전사",
@@ -14,7 +15,8 @@
             "played" : 6,
             "win" : 3,
             "lose" : 1,
-            "draw" : 1
+            "draw" : 1,
+            "code" : "00"
         },
         {
             "name" : "SOCC3",
@@ -22,7 +24,8 @@
             "played" : 5,
             "win" : 2,
             "lose" : 2,
-            "draw" : 1
+            "draw" : 1,
+            "code" : "00"
         },
         {
             "name" : "개발",
@@ -30,7 +33,8 @@
             "played" : 4,
             "win" : 2,
             "lose" : 2,
-            "draw" : 0
+            "draw" : 0,
+            "code" : "00"
         },
         {
             "name" : "알싸",
@@ -38,7 +42,8 @@
             "played" : 4,
             "win" : 1,
             "lose" : 2,
-            "draw" : 1
+            "draw" : 1,
+            "code" : "00"
         },
         {
             "name" : "HYUS",
@@ -46,7 +51,8 @@
             "played" : 5,
             "win" : 1,
             "lose" : 3,
-            "draw" : 1
+            "draw" : 1,
+            "code" : "00"
         },
         {
             "name" : "UFC",
@@ -54,7 +60,8 @@
             "played" : 3,
             "win" : 1,
             "lose" : 2,
-            "draw" : 0
+            "draw" : 0,
+            "code" : "00"
         }
     ],
 
@@ -65,7 +72,8 @@
             "played" : 4,
             "win" : 2,
             "lose" : 0,
-            "draw" : 2
+            "draw" : 2,
+            "code" : "00"
         },
         {
             "name" : "AUSOC",
@@ -73,7 +81,8 @@
             "played" : 4,
             "win" : 2,
             "lose" : 0,
-            "draw" : 2
+            "draw" : 2,
+            "code" : "00"
         },
         {
             "name" : "HYMSE",
@@ -81,7 +90,8 @@
             "played" : 3,
             "win" : 2,
             "lose" : 0,
-            "draw" : 1
+            "draw" : 1,
+            "code" : "00"
         },
         {
             "name" : "SHINHWA",
@@ -89,7 +99,8 @@
             "played" : 5,
             "win" : 1,
             "lose" : 2,
-            "draw" : 2
+            "draw" : 2,
+            "code" : "00"
         },
         {
             "name" : "포유",
@@ -97,7 +108,8 @@
             "played" : 2,
             "win" : 1,
             "lose" : 1,
-            "draw" : 0
+            "draw" : 0,
+            "code" : "00"
         },
         {
             "name" : "LALA",
@@ -105,7 +117,8 @@
             "played" : 3,
             "win" : 0,
             "lose" : 1,
-            "draw" : 2
+            "draw" : 2,
+            "code" : "00"
         },
         {
             "name" : "혈쉬",
@@ -113,7 +126,8 @@
             "played" : 3,
             "win" : 0,
             "lose" : 3,
-            "draw" : 0
+            "draw" : 0,
+            "code" : "00"
         }
     ]
 }

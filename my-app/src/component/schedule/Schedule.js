@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 
 import Match from "./Match"
 import "./Match.css"
-import matchData from "./matches.json"
+import matchData from "../matches.json"
 
 
 const ModalStyle = {
@@ -21,8 +21,8 @@ const ModalStyle = {
     
   },
   content: {
-    width: "70%",
-    height: "70%",
+    width: "100%",
+    height: "80%",
     position: "relative",
     top: "auto",
     left: "auto",
@@ -47,9 +47,21 @@ const Schedule = () => {
     data.color = data.league === "선봉리그" ? 'blue' : 'navy';
   });
 
+  function formatDateToYYYYMMDD(date) {
+    if(date === undefined)
+      return null;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+}
+
   const dateClicked = (arg) => {
-    setModalIsOpen(true);
-    setDate(arg.date);
+    if(matchData.match.filter((m) => m.date === formatDateToYYYYMMDD(arg.date)).length !== 0){
+      setModalIsOpen(true);
+      setDate(arg.date);
+    }
   }
   
   return (
@@ -62,7 +74,7 @@ const Schedule = () => {
         events={matchData.match}
       />
       <Modal className="modal-schedule" isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} style={ModalStyle} >
-        <Match data={matchData.match} date={date}/>
+        <Match data={matchData.match} date={formatDateToYYYYMMDD(date)}/>
       </Modal>
     </div>
   );
