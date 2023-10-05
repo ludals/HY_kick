@@ -1,12 +1,12 @@
 import "./Ranktable.css"
-import teams from "./teams.json"
+import teams from "../teams.json"
 
 function Ranktable({children}){
     const teamDatas = (children === "선봉리그" ? teams.sunbong : teams.gongde);
 
     return(
         <>
-            <h2 className = "league-type">{children}</h2>
+            {/* <h2 className = "league-type">{children}</h2> */}
             <table>
                     <thead className = "league-table">
                         <tr>
