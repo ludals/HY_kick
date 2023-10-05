@@ -112,7 +112,7 @@ const Register = () => {
     
     return (
         <div
-        style={{ display: "flex", justifyContent: "center",  width: "100%", height: "100vh" }}
+        style={{ display: "flex", justifyContent: "center",  width: "100%", height: "40vh" }}
       >
             <form style={{ display: "flex", flexDirection: "column" }} onSubmit={onSubmitHandler}>
                 <label>이름</label>

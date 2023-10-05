@@ -13,22 +13,23 @@ table {
 
 table thead th {
     padding: 0.5rem 0.8rem 0.5rem 1.6rem;
+    text-align: center;
 }
 
 table thead th.league-table-pos-header {
-    text-align: left;
+    text-align: center;
 }
 
 table thead th.league-table-team-header {
     padding-left: 0.8rem;
-    text-align: left;
+    text-align: center;
 }
 
 table thead tr {
     background-color: #fbfafa;
     border-bottom: 0.1rem solid #ebe5eb;
     font-size: 1.2rem;
-    color: #87668a;
+    color: navy;
     font-family: PremierSans-Heavy,Arial,Helvetica Neue,Helvetica,sans-serif;
     font-weight: 400;
     line-height: 1.8rem;
@@ -68,10 +69,11 @@ table thead tr {
 }
 
 .league-table tr {
-    height: 5.6rem;
-    font-size: 1.6rem;
+    height: 2rem;
+    font-size: 1rem;
 }
 
 table tbody td{
     padding-left: 0.8rem;
+    text-align: center;
 }

@@ -5,7 +5,7 @@
 }
 .container1 {
     padding: 0 auto;
-    width: fill;
+    width: stretch;
     height: 200px;
     display:flex;
     background-color: skyblue;
@@ -13,8 +13,8 @@
 }
 .container2 {
     padding: 0 auto;
-    height: fill;
-    width: fill;
+    height: stretch;
+    width: stretch;
     display: flex;
     background-color:white;
     flex-direction:row;
