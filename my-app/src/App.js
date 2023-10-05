@@ -7,6 +7,7 @@ import Squad from "./component/Squad"
 import Register from "./component/register/Register"
 import Login from "./component/login/Login";
 import Home from "./component/home/Home";
+import Team1 from './component/team_pages/team1';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/squad" element={<Squad />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/team1" element={<Team1 />}></Route>
         </Route>
       </Routes>
       

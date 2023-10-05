@@ -43,6 +43,9 @@ const Main = () => {
               스쿼드
             </NavLink>
           </li>
+          <li>
+            <Link to ="/team1">팀1</Link>
+          </li>
         </ul>
       </nav>
       <hr />
