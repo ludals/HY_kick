@@ -67,7 +67,7 @@
 
     "gongde":[
         {
-            "name" : "SHOOTTANK",
+            "name" : "슈탱",
             "points" : 8,
             "played" : 4,
             "win" : 2,
@@ -94,7 +94,7 @@
             "code" : "00"
         },
         {
-            "name" : "SHINHWA",
+            "name" : "신화",
             "points" : 5,
             "played" : 5,
             "win" : 1,
