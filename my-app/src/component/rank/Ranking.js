@@ -49,7 +49,7 @@ const TabWrapper = styled.div`
   display: flex;
   justify-content: center;
   ul{
-    padding: 0;
+    /* padding: 0; */
   }
   li{
     display: inline-flex;
