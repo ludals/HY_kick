@@ -10,7 +10,7 @@ const Ranktable = ({children}) => {
     return(
         <RankWrapper>
             <RankHeader>
-                <span>순위</span>                
+                <span className="ranking">순위</span>                
                 <span className="club">동아리</span>
                 <span>경기수</span>
                 <span>승점</span>
@@ -38,7 +38,7 @@ const Ranktable = ({children}) => {
                                     width={20}
                                     height={20}
                                 />
-                                <span>팀 페이지</span>
+                                <span>팀페이지</span>
                             </Link>
                         </span>
                         <span>{teamData.played}</span>
@@ -71,7 +71,7 @@ const RankWrapper = styled.div`
     }
 
     .rank{
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .club{
@@ -81,6 +81,21 @@ const RankWrapper = styled.div`
         width: 15rem;
         text-align: start;
         height: auto;
+    }
+    @media (max-width: 600px) {
+        font-size: 10px;
+        span{
+            width: 2.5rem;
+        }
+        .club{
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            width: 9rem;
+            text-align: start;
+            height: auto; 
+        }
     }
 `;
 
