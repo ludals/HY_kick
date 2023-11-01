@@ -48,7 +48,7 @@ const TabWrapper = styled.div`
   height: auto;
   display: flex;
   justify-content: center;
-  ul{
+ul{
     padding: 0;
   }
   li{
@@ -71,5 +71,10 @@ const TabWrapper = styled.div`
     border: solid;
     border-width: 3px;
     border-color: #f5f2f5;
+  }
+  @media (max-width: 600px){
+    li{
+      padding: 0.8rem 3rem;
+    }
   }
 `;
