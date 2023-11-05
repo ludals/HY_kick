@@ -38,6 +38,7 @@ const Ranking = () => {
 export default Ranking;
 
 const RankingWrapper = styled.div`
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -48,7 +49,7 @@ const TabWrapper = styled.div`
   height: auto;
   display: flex;
   justify-content: center;
-ul{
+  ul{
     padding: 0;
   }
   li{
