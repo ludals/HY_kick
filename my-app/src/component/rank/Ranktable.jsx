@@ -19,9 +19,9 @@ const Ranktable = ({children}) => {
                 <span>패</span>
             </RankHeader>         
             {teamDatas.map((teamData, index)=>(
-                    <RankBody>
+                    <RankBody key={index}>
                         <span className="rank">{index+1}</span>
-                        <span className="club">
+                        <span className="clubname">
                             <img
                             className="logo"
                             src={logo}
@@ -82,19 +82,35 @@ const RankWrapper = styled.div`
         text-align: start;
         height: auto;
     }
+    .clubname{
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        width: 15rem;
+        text-align: start;
+        height: auto;
+    }
     @media (max-width: 600px) {
         font-size: 10px;
         span{
             width: 2.5rem;
         }
         .club{
-            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 0.3rem;
             width: 9rem;
             text-align: start;
             height: auto; 
+        }
+        .clubname{
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            width: 9rem;
+            text-align: start;
+            height: auto;
         }
     }
 `;
