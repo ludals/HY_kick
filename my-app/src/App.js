@@ -7,7 +7,9 @@ import Squad from "./component/Squad"
 import Register from "./component/register/Register"
 import Login from "./component/login/Login";
 import Home from "./component/home/Home";
-import Team1 from './component/team_pages/team1';
+import Team from './component/team_pages/Team';
+import teamlogo from './component/team_image/gaebal.jpg';
+import deptlogo from './component/dept_image/cse.jpg';
 
 
 function App() {
@@ -22,7 +24,7 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/squad" element={<Squad />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/team1" element={<Team1 />}></Route>
+          <Route path="/team" element={<Team teamName="개발" teamLogo={teamlogo} deptLogo={deptlogo}/>} />
         </Route>
       </Routes>
       

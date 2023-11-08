@@ -44,8 +44,8 @@ const Main = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to ="/team1">
-              팀1
+            <NavLink to ="/team">
+              팀
             </NavLink>
           </li>
         </ul>
