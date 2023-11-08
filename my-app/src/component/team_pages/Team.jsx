@@ -13,11 +13,10 @@ import { Link } from "react-router-dom";
 
 const Team = ({ teamName, teamLogo, deptLogo }) => {
   //const [results, setResults] = useState(resultData);
-  const [selectedNav, setSelectedNav] = useState('nav1'); // 선택된 네비게이션 초기값
+  const [selectedNav, setSelectedNav] = useState('nav1'); //초기값
 
   const handleNavClick = (nav) => {
     setSelectedNav(nav);
-    // 선택된 네비게이션에 따른 내용을 업데이트할 수 있음
   };
   return(
   <TeamCard>
@@ -101,11 +100,11 @@ const TeamCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px; /* TeamCard의 가로를 조절하세요 */
+  width: 400px; 
   border: 1px solid #ddd;
   padding: 20px;
   text-align: center;
-  margin: 0 auto; /* 가로 가운데 정렬 */
+  margin: 0 auto; 
 `;
 //팀 정보
 const TeamContent = styled.div`
@@ -115,7 +114,7 @@ const TeamContent = styled.div`
   padding-right:63px;
   display: flex;
   align-items: center;
-  flex: 1; /* 로고, 이름 및 정보가 같은 라인에 있도록 설정 */
+  flex: 1; 
   margin-top: 20px;
 `;
 
@@ -154,21 +153,21 @@ const SeasonCard = styled.div`
 
 const LeagueName = styled.h4`
   margin: 0;
-  font-size: 14px; /* 크기를 조절하세요 */
+  font-size: 14px; 
 `;
 
 const CurrentRank = styled.p`
   margin: 0;
   font-weight: bold;
-  font-size: 16px; /* 크기를 조절하세요 */
-  display: inline; /* 같은 가로줄에 배치하기 위해 */
+  font-size: 16px;
+  display: inline;
 `;
 
 const SeasonPerformance = styled.p`
   margin: 0;
   font-weight: bold;
-  font-size: 16px; /* 크기를 조절하세요 */
-  display: inline; /* 같은 가로줄에 배치하기 위해 */
+  font-size: 16px;
+  display: inline;
 `;
 
 const Recent5Performance = styled.p`
@@ -209,7 +208,7 @@ const RecordCircle = styled.div`
 // color: ${props => (props.result === 'W' || props.result === 'L') ? 'white' : 'black'};
 
 const Spacer = styled.span`
-  margin: 0 10px; /* Rank와 Performance 사이의 간격을 조절 */
+  margin: 0 10px;
 `;
 //역대 전적
 const TeamHistoryCard = styled.div`
@@ -258,7 +257,6 @@ const TeamHistory = ({ history }) => {
 //Details(Navigation Bar)
 
 const DetailCard = styled.div`
-  /* DetailCard 스타일 설정 */
   padding: 10px;
   background-color: '#f0f0f0';
   border: 1px solid #ddd;
@@ -273,13 +271,11 @@ const Navigation = styled.nav`
 `;
 
 const NavItem = styled.div`
-color: black; /* 검은색 */
+color: black;
 padding: 10px;
 cursor: pointer;
-font-size: 12px; /* 폰트 크기 더 작게 설정 */
-
-  /* 선택된 항목 스타일 설정 */
-  background-color: ${props => (props.selected ? '#f0f0f0' : 'transparent')};
+font-size: 12px;
+background-color: ${props => (props.selected ? '#f0f0f0' : 'transparent')};
 `;
 
 const CardWrapper = styled.div`
