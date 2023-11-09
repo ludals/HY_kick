@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Formation from '../Formation';
 
 //DB에서 최근 5경기 전적 가져옴(예: recent5result = ['W', 'D', 'L', 'W', 'D']) -> prop으로 넣음
 {/* <Recent5Performance>
@@ -87,12 +88,14 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
         {selectedNav === 'nav4' && <TeamSquad />} {/* 네비게이션 4를 클릭했을 때 TeamSquad 렌더링 */}
       </CardWrapper>
       </DetailCard>
+      <Spacer/>
+      <Formation formation="4-4-2" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />
   </TeamCard>
 );};
 export default Team
 
 const DepartmentImage = styled.img`
-  max-width: 96%;
+  max-width: 25%;
   height: auto;
 `;
 
@@ -100,7 +103,7 @@ const TeamCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px; 
+  width: 100%; 
   border: 1px solid #ddd;
   padding: 20px;
   text-align: center;
@@ -208,7 +211,7 @@ const RecordCircle = styled.div`
 // color: ${props => (props.result === 'W' || props.result === 'L') ? 'white' : 'black'};
 
 const Spacer = styled.span`
-  margin: 0 10px;
+  margin: 10px;
 `;
 //역대 전적
 const TeamHistoryCard = styled.div`
