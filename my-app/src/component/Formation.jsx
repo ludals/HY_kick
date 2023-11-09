@@ -36,7 +36,6 @@ const Formation = ({ formation, players }) => {
       case '3-5-2':
         return ['GK', 'CB', 'CB', 'CB', 'LM', 'CM', 'CM', 'CM', 'RM', 'ST', 'ST'];
       default:
-        // 기본 포메이션을 설정하거나 에러 처리
         return [];
     }
   }
