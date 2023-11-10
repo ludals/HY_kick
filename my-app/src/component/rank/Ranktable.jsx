@@ -6,7 +6,23 @@ import { Link } from "react-router-dom";
 
 const Ranktable = ({children}) => {
     const teamDatas = (children === "선봉리그" ? teams.sunbong : teams.gongde);
+    const teamPagePaths = {
+        '개발': '/gaebal',
+        '메풍': '/maepung',
+        '전사': '/junsa',
+        'SOCC3': '/socc3',
+        '알싸' : '/alssa',
+        'HYUS' : '/hyus',
+        'UFC' : '/ufc',
 
+        '슈탱': '/shootang',
+        'AUSOC' : '/ausoc',
+        'HYMSE' : '/hymse',
+        '신화' : '/sinhwa',
+        '포유' : '/foryou',
+        'LALA' : '/lala',
+        '혈쉬' : '/hyulshe',
+      };
     return(
         <RankWrapper>
             <RankHeader>
@@ -30,7 +46,7 @@ const Ranktable = ({children}) => {
                                 height={30}
                             />
                             <span>{teamData.name}</span>
-                            <Link to="/team1" className="link">
+                            <Link to={teamPagePaths[teamData.name] || '/default'} className="link">                            
                                 <img
                                 className="arrow"
                                 src={arrow}

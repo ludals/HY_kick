@@ -89,7 +89,7 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
       </CardWrapper>
       </DetailCard>
       <Spacer/>
-      <Formation formation="3-5-2" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />
+      <Formation formation="4-3-3" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />
   </TeamCard>
 );};
 export default Team

@@ -59,6 +59,21 @@ const Formation = ({ formation, players }) => {
         left = 31+(position - 10) * 25;
       }
     }
+    else if (formation === "4-3-3"){
+      if (position === 1) {
+        top = 85; // GK
+        left = 44; // GK
+      } else if (position >= 2 && position <= 5){
+        top = 65; // LB, CB, CB, RB
+        left = 7+(position - 2) * 25;
+      } else if (position >= 6 && position <= 8){
+        top = 40; //LM, CM, RM
+        left = 26 + (position - 6)*18
+      } else if (position >= 9 && position <= 11){
+        top = 15; // LW, ST, RW
+        left = 26 + (position - 9)*18;
+      }
+    }
     else if (formation === "3-5-2"){
       if (position === 1) {
         top = 85; // GK
