@@ -12,7 +12,19 @@ import gaeballogo from './component/team_image/gaebal.jpg';
 import cselogo from './component/dept_image/cse.jpg';
 import Formation from './component/Formation';
 
+import matches from "../src/component/matches.json"
+import teams from "../src/component/teams.json"
+import { useDispatch, useSelector } from "react-redux";
+import { load_match } from "../src/redux/match";
+import { load_ranking } from "../src/redux/ranking"
+
 function App() {
+  const match = useSelector((state) => state.match.value);
+  const ranking = useSelector((state) => state.ranking.value)
+  const dispatch = useDispatch();
+  dispatch(load_match(matches.match));
+  dispatch(load_ranking(teams));
+
   return (
     <>
       <h1>HY_Kick</h1>

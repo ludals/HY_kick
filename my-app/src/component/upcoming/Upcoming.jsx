@@ -1,11 +1,29 @@
 import styled from "styled-components";
 import logo from '../team_image/gaebal.jpg'
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UpcomingModal from "./UpcomingModal";
 
-const Upcoming = () => {
+const Upcoming = (props) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const days = ["일", "월", "화", "수", "목", "금", "토"];
+    const homeComponent = document.getElementsByClassName('Home');
+    const awayComponent = document.getElementsByClassName('Away');
+
+    useEffect(()=>{
+        Array.from(homeComponent).map((tmp) => {
+            tmp.style.fontSize = `${26 - 1.5 * (tmp.textContent.length)}px`;
+            tmp.style.fontWeight = "bold";
+            tmp.style.marginLeft = tmp.textContent.length > 4 ? "1.5rem" : "1rem";
+            tmp.style.marginRight = tmp.textContent.length > 4 ? "1.5rem" : "2rem";
+        });
+        Array.from(awayComponent).map((tmp) => {
+            tmp.style.fontSize = `${26 - 1.5 *(tmp.textContent.length)}px`;
+            tmp.style.fontWeight = "bold";
+            tmp.style.marginLeft = tmp.textContent.length > 4 ? "1.5rem" : "2rem";
+            tmp.style.marginRight = tmp.textContent.length > 4 ? "1.5rem" : "1rem";
+        });
+    }, [])
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -20,56 +38,44 @@ const Upcoming = () => {
                 <UpcomingHeader>
                     이번 주 경기
                 </UpcomingHeader>
-                <UpcomingMatchWrapper onClick={openModal}>
-                    <UpcomingInfo>
-                        <div className="matchinfo">
-                            11월 11일(금)<br/>오후 12시
-                        </div>
-                    </UpcomingInfo>
-                    <UpcomingMatch>
-                        <img
-                            src={logo}
-                            alt="logo"
-                        />
-                        <span className="Home">개발</span>
-                        <span className="versus">vs</span>
-                        <span className="Away">개발</span>
-                        <img
-                            src={logo}
-                            alt="logo"
-                        />
-                    </UpcomingMatch>
-                    <UpcomingInfo>
-                        <div className="matchinfo">
-                            한양대학교 대운동장<br/>개발
-                        </div>
-                    </UpcomingInfo>
-                </UpcomingMatchWrapper>
-                <UpcomingMatchWrapper onClick={openModal}>
-                    <UpcomingInfo>
-                        <div className="matchinfo">
-                            11월 11일(금)<br/> 오후 1시
-                        </div>
-                    </UpcomingInfo>
-                    <UpcomingMatch>
-                        <img
-                            src={logo}
-                            alt="logo"
-                        />
-                        <span className="Home">개발</span>
-                        <span className="versus">vs</span>
-                        <span className="Away">개발</span>
-                        <img
-                            src={logo}
-                            alt="logo"
-                        />
-                    </UpcomingMatch>
-                    <UpcomingInfo>
-                        <div className="matchinfo">
-                            한양대학교 대운동장<br/>개발
-                        </div>
-                    </UpcomingInfo>
-                </UpcomingMatchWrapper>
+                {
+                    props.matches && props.matches.map((match, index) => {
+                        return(
+                            <UpcomingMatchWrapper onClick={openModal} key={index}>
+                                <UpcomingInfo>
+                                    <div className="matchinfo">
+                                        <div>
+                                            {new Date(match.date).getMonth()}월 {new Date(match.date).getDate()}일 
+                                            ({days[new Date(match.date).getDay()]})
+                                        </div>
+                                        <div>
+                                            {match.time >= 12 ? "오후 " : "오전 "}
+                                            {match.time >= 13 ? match.time % 12 : match.time}시
+                                        </div>
+                                    </div>
+                                </UpcomingInfo>
+                                <UpcomingMatch>
+                                    <img
+                                        src={logo}
+                                        alt="logo"
+                                    />
+                                    <span className="Home">{match.home}</span>
+                                    <span className="versus">vs</span>
+                                    <span className="Away">{match.away}</span>
+                                    <img
+                                        src={logo}
+                                        alt="logo"
+                                    />
+                                </UpcomingMatch>
+                                <UpcomingInfo>
+                                    <div className="matchinfo">
+                                        한양대학교 대운동장<br/>심판
+                                    </div>
+                                </UpcomingInfo>
+                            </UpcomingMatchWrapper>
+                        );
+                    })
+                }
                 <UpcomingFooter>
                     <Link to="/schedule" className="link">
                         <span>전체 일정 보기</span>
@@ -125,6 +131,7 @@ const UpcomingMatch = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    text-align: center;
     img{
         width: 70px;
         height: 70px;
@@ -132,12 +139,22 @@ const UpcomingMatch = styled.div`
         overflow: hidden;
     }
     .Home{
+        width: 3rem;
+        height: 2rem;
         margin: 1rem 2rem 0 1rem;
         font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .Away{
+        width: 3rem;
+        height: 2rem;
         margin: 1rem 1rem 0 2rem;
         font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .versus{
         margin-top: 2rem;
@@ -152,6 +169,7 @@ const UpcomingInfo = styled.div`
     justify-content: center;
     text-align: center;
     padding-top: 1rem;
+    white-space: pre-line;
 `;
 
 const UpcomingFooter = styled.div`
