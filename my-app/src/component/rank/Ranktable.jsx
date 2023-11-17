@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import logo from '../team_image/gaebal.jpg'
 import arrow from "../../asset/right_arrow.png"
-import teams from "../teams.json"
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Ranktable = ({children}) => {
-    const teamDatas = (children === "선봉리그" ? teams.sunbong : teams.gongde);
+    const teams = useSelector((state) => state.ranking.value)
+    const teamDatas = (children === "선봉리그" ? teams.ranking.sunbong : teams.ranking.gongde);
     const teamPagePaths = {
         '개발': '/gaebal',
         '메풍': '/maepung',
