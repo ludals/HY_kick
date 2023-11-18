@@ -45,7 +45,7 @@ const Upcoming = (props) => {
                                 <UpcomingInfo>
                                     <div className="matchinfo">
                                         <div>
-                                            {new Date(match.date).getMonth()}월 {new Date(match.date).getDate()}일 
+                                            {new Date(match.date).getMonth()+1}월 {new Date(match.date).getDate()}일 
                                             ({days[new Date(match.date).getDay()]})
                                         </div>
                                         <div>

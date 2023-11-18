@@ -41,6 +41,62 @@
             "away": "LALA",
             "time": "13",
             "league": "공대리그"
+        },
+        {
+            "date": "2023-10-04",
+            "home": "SHOOTTANK",
+            "away": "혈쉬",
+            "time": "12",
+            "league": "공대리그"
+        },
+        {
+            "date": "2023-10-04",
+            "home": "HYMSE",
+            "away": "SHINHWA",
+            "time": "13",
+            "league": "공대리그"
+        },
+        {
+            "date": "2023-10-06",
+            "home": "UFC",
+            "away": "SSOC3",
+            "time": "12",
+            "league": "선봉리그"
+        },
+        {
+            "date": "2023-10-06",
+            "home": "알싸",
+            "away": "개발",
+            "time": "13",
+            "league": "선봉리그"
+        },
+        {
+            "date": "2023-10-10",
+            "home": "UFC",
+            "away": "휴스",
+            "time": "12",
+            "league": "선봉리그"
+        },
+        {
+            "date": "2023-10-10",
+            "home": "메풍",
+            "away": "개발",
+            "time": "13",
+            "league": "선봉리그"
+        },
+        {
+            "date": "2023-10-13",
+            "home": "SSOC3",
+            "away": "개발",
+            "time": "12",
+            "league": "선봉리그"
+        },
+        {
+            "date": "2023-10-13",
+            "home": "메풍",
+            "away": "휴스",
+            "time": "13",
+            "league": "선봉리그"
         }
     ]
 }
