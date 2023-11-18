@@ -1,70 +1,70 @@
 {
     "match":[
         {
-            "date": "2023-09-04",
+            "date": "2023-9-4",
             "home": "HYMSE",
             "away": "혈쉬",
             "time": "12",
             "league": "공대리그"
         },
         {
-            "date": "2023-09-04",
+            "date": "2023-9-4",
             "home": "LALA",
             "away": "포유",
             "time": "13",
             "league": "공대리그"            
         },
         {
-            "date": "2023-09-06",
+            "date": "2023-9-6",
             "home": "전사",
             "away": "HYUS",
             "time": "12",
             "league": "선봉리그"
         },
         {
-            "date": "2023-09-06",
+            "date": "2023-9-6",
             "home": "UFC",
             "away": "개발",
             "time": "13",
             "league": "선봉리그"
         },
         {
-            "date": "2023-09-08",
+            "date": "2023-9-8",
             "home": "SHINHWA",
             "away": "포유",
             "time": "12",
             "league": "공대리그"
         },
         {
-            "date": "2023-09-08",
+            "date": "2023-9-8",
             "home": "SHOOTTANK",
             "away": "LALA",
             "time": "13",
             "league": "공대리그"
         },
         {
-            "date": "2023-10-04",
+            "date": "2023-10-4",
             "home": "SHOOTTANK",
             "away": "혈쉬",
             "time": "12",
             "league": "공대리그"
         },
         {
-            "date": "2023-10-04",
+            "date": "2023-10-4",
             "home": "HYMSE",
             "away": "SHINHWA",
             "time": "13",
             "league": "공대리그"
         },
         {
-            "date": "2023-10-06",
+            "date": "2023-10-6",
             "home": "UFC",
             "away": "SSOC3",
             "time": "12",
             "league": "선봉리그"
         },
         {
-            "date": "2023-10-06",
+            "date": "2023-10-6",
             "home": "알싸",
             "away": "개발",
             "time": "13",

@@ -34,13 +34,14 @@ const Schedule = () => {
     ));
 
     const loadMatchData = (year, month, date) => {
-        return (matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime()).length ? true : false);
+        console.log((matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime())));
+        return (matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime()));
     }
 
     useEffect(() => {
         setMonthDiv(monthData.days && monthData.days.map((value, index) => {
             return(
-                <DayWrapper key={index+1} $isActive={loadMatchData(monthData.date.getFullYear(), monthData.date.getMonth()+1, index+1)}>
+                <DayWrapper key={index+1} $isActive={loadMatchData(monthData.date.getFullYear(), monthData.date.getMonth()+1, index+1).length}>
                     <div className="day">{day[(new Date(monthData.date.getFullYear(), monthData.date.getMonth(), value)).getDay()]}</div>
                     <div className="date">{value}</div>
                 </DayWrapper>
@@ -189,7 +190,7 @@ const DayWrapper = styled.div`
         width: 5rem;
         height: 1rem;
         font-size:0.8rem;
-        color: ${(props) => (props.$isActive === null ? "blue" : (props.$isActive ? "black" : "lightgray"))};
+        color: ${(props) => (props.$isActive !== 0 ? "black" : "lightgray")};
         @media (max-width: 600px){
             width: 3rem;
         }
@@ -198,7 +199,7 @@ const DayWrapper = styled.div`
         width: 5rem;
         height: 2rem;
         font-size: 1.4rem;
-        color: ${(props) => (props.$isActive === null ? "blue" : (props.$isActive ? "black" : "lightgray"))};
+        color: ${(props) => (props.$isActive !== 0 ? "black" : "lightgray")};
         @media (max-width: 600px){
             width: 3rem;
         }
@@ -215,5 +216,5 @@ WeekWrapper.propTypes = {
 };
 
 DayWrapper.propTypes = {
-    $isActive: PropTypes.bool,
+    $isActive: PropTypes.number,
 };
