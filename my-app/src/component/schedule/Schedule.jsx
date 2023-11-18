@@ -5,8 +5,10 @@ import gotoLeft from "../../asset/gotoLeft.png"
 import gotoRight from "../../asset/gotoRight.png"
 import arrowLeft from "../../asset/arrow_left.png"
 import arrowRight from "../../asset/arrow_right.png"
+import { useSelector } from "react-redux";
 
 const Schedule = () => {
+    const matchData = useSelector((state) => state.match.value.match);
     const now = new Date();                                 //current date
     const [year, setYear] = useState(now.getFullYear());    //selected year
     const [month, setMonth] = useState(now.getMonth() + 1); //selected month
@@ -26,15 +28,19 @@ const Schedule = () => {
         );
     }));
 
+
     const [weekDiv, setWeekDiv] = useState(monthDiv.filter(value => 
         (date - now.getDay()) <= value.key && (date + (6 - now.getDay())) >= value.key
     ));
 
+    const loadMatchData = (year, month, date) => {
+        return (matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime()).length ? true : false);
+    }
+
     useEffect(() => {
-        // console.log("날짜 배열 변경" ,monthData.days);
         setMonthDiv(monthData.days && monthData.days.map((value, index) => {
             return(
-                <DayWrapper key={index+1}>
+                <DayWrapper key={index+1} $isActive={loadMatchData(monthData.date.getFullYear(), monthData.date.getMonth()+1, index+1)}>
                     <div className="day">{day[(new Date(monthData.date.getFullYear(), monthData.date.getMonth(), value)).getDay()]}</div>
                     <div className="date">{value}</div>
                 </DayWrapper>
@@ -43,7 +49,6 @@ const Schedule = () => {
     }, [monthData.days])
 
     useEffect(() => {     
-        // console.log("week 변경", monthData.date, monthDiv);
         setWeekDiv(monthDiv.filter(value => 
             (monthData.date.getDate() - monthData.date.getDay()) <= value.key && (monthData.date.getDate() + (6 - monthData.date.getDay())) >= value.key
         ));
@@ -181,10 +186,10 @@ const DayWrapper = styled.div`
         width: 3rem;
     }
     .day{
-        
         width: 5rem;
         height: 1rem;
         font-size:0.8rem;
+        color: ${(props) => (props.$isActive === null ? "blue" : (props.$isActive ? "black" : "lightgray"))};
         @media (max-width: 600px){
             width: 3rem;
         }
@@ -193,6 +198,7 @@ const DayWrapper = styled.div`
         width: 5rem;
         height: 2rem;
         font-size: 1.4rem;
+        color: ${(props) => (props.$isActive === null ? "blue" : (props.$isActive ? "black" : "lightgray"))};
         @media (max-width: 600px){
             width: 3rem;
         }
@@ -206,4 +212,8 @@ WeekView.propTypes = {
 WeekWrapper.propTypes = {
     $date: PropTypes.instanceOf(Date),
     $days: PropTypes.array,
+};
+
+DayWrapper.propTypes = {
+    $isActive: PropTypes.bool,
 };
