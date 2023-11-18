@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import gotoLeft from "../../asset/gotoLeft.png"
@@ -15,6 +15,7 @@ const Schedule = () => {
     const [date, setDate] = useState(now.getDate());        //selected day
     const day = ["일", "월", "화", "수", "목", "금", "토"];
     const days = [31, 28, 31, 30 ,31, 30, 31, 31, 30, 31, 30, 31];
+    const [matchInfo, setMatchInfo] = useState(matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime()));
     const [monthData, setMonthData] = useState({
         date: new Date(year, month-1, date),        //just move week
         days: Array.from({ length: days[month-1] }, (_, index) => index + 1),       //date info of selected month
@@ -28,25 +29,34 @@ const Schedule = () => {
         );
     }));
 
-
     const [weekDiv, setWeekDiv] = useState(monthDiv.filter(value => 
         (date - now.getDay()) <= value.key && (date + (6 - now.getDay())) >= value.key
     ));
 
-    const loadMatchData = (year, month, date) => {
-        console.log((matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime())));
-        return (matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime()));
+    const loadMatchData = useCallback((year, month, date) => {
+        return matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime());
+      }, [matchData]);
+
+    const selectDate = (value) => {
+        setYear(monthData.date.getFullYear());
+        setMonth(monthData.date.getMonth()+1);
+        setDate(value);
     }
 
     useEffect(() => {
-        setMonthDiv(monthData.days && monthData.days.map((value, index) => {
+        const matchInfo = loadMatchData(year, month, date);
+        setMatchInfo(matchInfo);
+    }, [year, month, date, loadMatchData]);
+
+    useEffect(() => {
+        setMonthDiv(monthData.days && monthData.days.map((value) => {
             return(
-                <DayWrapper key={index+1} $isActive={loadMatchData(monthData.date.getFullYear(), monthData.date.getMonth()+1, index+1).length}>
+                <DayWrapper key={value} onClick={() => selectDate(value)} $isActive={loadMatchData(monthData.date.getFullYear(), monthData.date.getMonth()+1, value).length}>
                     <div className="day">{day[(new Date(monthData.date.getFullYear(), monthData.date.getMonth(), value)).getDay()]}</div>
                     <div className="date">{value}</div>
                 </DayWrapper>
             );
-        }))
+        }))// eslint-disable-next-line
     }, [monthData.days])
 
     useEffect(() => {     
@@ -116,6 +126,26 @@ const Schedule = () => {
                 </WeekView>
                 <img src={gotoRight} alt="gotoRight" className="nextWeek" onClick={nextWeek}/>
             </WeekWrapper>
+            <MatchWrapper>
+                <div>{month}월 {date}일</div>
+                {
+                    matchInfo && matchInfo.map((value, index) => {
+                        return(
+                            <MatchView key={index}>
+                                <div className="matchNum">
+                                    <div>{index+1}경기</div>
+                                    <div>{value.league}</div>
+                                </div>
+                                <div className="matchInfo">
+                                    <div>{value.home}</div>
+                                    <div>vs</div>
+                                    <div>{value.away}</div>
+                                </div>
+                            </MatchView>
+                        );
+                    })
+                }
+            </MatchWrapper>
         </CalenderWrapper>
     );
 
@@ -203,6 +233,37 @@ const DayWrapper = styled.div`
         @media (max-width: 600px){
             width: 3rem;
         }
+    }
+`;
+const MatchWrapper = styled.div`
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+`;
+
+const MatchView = styled.div`
+    width: 50%;
+    height: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .matchNum{
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 1rem;
+    }
+    .matchInfo{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
     }
 `;
 
