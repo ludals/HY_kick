@@ -11,19 +11,19 @@ const Upcoming = (props) => {
     const awayComponent = document.getElementsByClassName('Away');
 
     useEffect(()=>{
-        Array.from(homeComponent).map((tmp) => {
+        Array.from(homeComponent).forEach((tmp) => {
             tmp.style.fontSize = `${26 - 1.5 * (tmp.textContent.length)}px`;
             tmp.style.fontWeight = "bold";
             tmp.style.marginLeft = tmp.textContent.length > 4 ? "1.5rem" : "1rem";
             tmp.style.marginRight = tmp.textContent.length > 4 ? "1.5rem" : "2rem";
         });
-        Array.from(awayComponent).map((tmp) => {
+        Array.from(awayComponent).forEach((tmp) => {
             tmp.style.fontSize = `${26 - 1.5 *(tmp.textContent.length)}px`;
             tmp.style.fontWeight = "bold";
             tmp.style.marginLeft = tmp.textContent.length > 4 ? "1.5rem" : "2rem";
             tmp.style.marginRight = tmp.textContent.length > 4 ? "1.5rem" : "1rem";
         });
-    }, [])
+    }, [homeComponent, awayComponent])
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -45,7 +45,7 @@ const Upcoming = (props) => {
                                 <UpcomingInfo>
                                     <div className="matchinfo">
                                         <div>
-                                            {new Date(match.date).getMonth()}월 {new Date(match.date).getDate()}일 
+                                            {new Date(match.date).getMonth()+1}월 {new Date(match.date).getDate()}일 
                                             ({days[new Date(match.date).getDay()]})
                                         </div>
                                         <div>
