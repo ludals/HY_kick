@@ -39,8 +39,8 @@ const Main = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink style={styles} to="/squad">
-              스쿼드
+            <NavLink style={styles} to="/squadmaker">
+              스쿼드메이커
             </NavLink>
           </li>
           <li>

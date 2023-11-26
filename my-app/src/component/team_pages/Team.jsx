@@ -21,14 +21,19 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
   };
   return(
   <TeamCard>
-    <DepartmentImage src={deptLogo} alt="학과 이미지" />
     <TeamContent>
+      <FirstRow>
       <TeamLogo src={teamLogo} alt="팀 로고" />
       <TeamInfo>
         <TeamName>{teamName}</TeamName>
         <TeamDescription>컴퓨터소프트웨어학부</TeamDescription>{/* back */}
         <TeamDescription>창설년도: 2020</TeamDescription>{/* back */}
       </TeamInfo>
+      </FirstRow>
+      <SecondRow>
+      <TeamLogo src={deptLogo} alt="학과 이미지" />
+    <TeamHistory history="2022년 공대스리가 우승, 2021년 공대스리가 3위, 2020년 공대스리가 5위" />
+    </SecondRow>
     </TeamContent>
     <SeasonCard>
       <LeagueName>공대스리가</LeagueName>{/* back {leagueName} */}
@@ -53,7 +58,6 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
         </RecordCircle>
       </Recent5Performance>
     </SeasonCard>
-    <TeamHistory history="2022년 공대스리가 우승, 2021년 공대스리가 3위, 2020년 공대스리가 5위" />
     <DetailCard>
         <Navigation>
           <NavItem
@@ -89,43 +93,50 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
       </CardWrapper>
       </DetailCard>
       <Spacer/>
-      <Formation formation="4-3-3" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />
+      <Formation formation="4-4-2" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />
   </TeamCard>
 );};
 export default Team
 
-const DepartmentImage = styled.img`
-  max-width: 25%;
-  height: auto;
-`;
 
 const TeamCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%; 
+  //width: 100%; 
   border: 1px solid #ddd;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   margin: 0 auto; 
 `;
 //팀 정보
 const TeamContent = styled.div`
   border: 1px solid #ddd;
-  padding: 10px;
-  padding-left: 63px;
-  padding-right:63px;
+  padding: 20px;
+  padding-right: 40px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap:20px;
+  flex-wrap: wrap;
   flex: 1; 
   margin-top: 20px;
+`;
+const FirstRow = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+const SecondRow = styled.div`
+  display: flex;
+  gap: 20px;
 `;
 
 const TeamLogo = styled.img`
   max-width: 100px;
-  height: auto;
+  max-height: 100px;
   border-radius: 50%;
   border: 2px solid #ddd;
+  padding: 1px;
 `;
 
 const TeamName = styled.h3`
@@ -139,17 +150,20 @@ const TeamDescription = styled.p`
 `;
 
 const TeamInfo = styled.div`
+  border: 1px solid #ddd;
   flex: 1;
   padding-left: 10px;
+  padding-right: 15px;
   text-align: left;
 `;
 //이번 시즌 성적
 const SeasonCard = styled.div`
+  
   border: 1px solid #ddd;
-  background-color: #f7f7f7;
+  //background-color: #f7f7f7;
   padding-top: 20px;
-  padding-left: 63px;
-  padding-right:63px;
+  padding-left: 57px;
+  padding-right:57px;
   text-align: left;
   margin-top: 10px;
 `;
@@ -215,15 +229,12 @@ const Spacer = styled.span`
 `;
 //역대 전적
 const TeamHistoryCard = styled.div`
+width: calc(100% - 120px);
 border: 1px solid #ddd;
 padding: 20px;
-padding-left: 114px;
-padding-right:114px;
+padding-left: 10px;
 padding-bottom: 0px;
 text-align: left;
-margin-top: 10px;
-margin-left: 10px; 
-margin-right: 10px; 
 `;
 
 const TeamHistoryTitle = styled.h3`
@@ -234,12 +245,12 @@ font-size: 14px;
 const HistoryList = styled.ul`
   list-style-type: none;
   padding: 0px;
-  margin-top: 10;
+  margin-top: 5;
 `;
 
 const HistoryItem = styled.li`
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
 `;
 
 const TeamHistory = ({ history }) => {
@@ -260,6 +271,7 @@ const TeamHistory = ({ history }) => {
 //Details(Navigation Bar)
 
 const DetailCard = styled.div`
+
   padding: 10px;
   background-color: '#f0f0f0';
   border: 1px solid #ddd;
@@ -269,7 +281,7 @@ const DetailCard = styled.div`
 const Navigation = styled.nav`
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #ddd;
 `;
 
