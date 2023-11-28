@@ -1,5 +1,19 @@
 {
-    "match":[
+    "match": [
+        {
+            "date": "2023-9-1",
+            "home": "HYMSE",
+            "away": "혈쉬",
+            "time": "12",
+            "league": "공대리그"
+        },
+        {
+            "date": "2023-9-30",
+            "home": "HYMSE",
+            "away": "혈쉬",
+            "time": "12",
+            "league": "공대리그"
+        },
         {
             "date": "2023-9-4",
             "home": "HYMSE",
@@ -12,7 +26,7 @@
             "home": "LALA",
             "away": "포유",
             "time": "13",
-            "league": "공대리그"            
+            "league": "공대리그"
         },
         {
             "date": "2023-9-6",

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import gotoLeft from "../../asset/gotoLeft.png"
@@ -7,147 +7,183 @@ import arrowLeft from "../../asset/arrow_left.png"
 import arrowRight from "../../asset/arrow_right.png"
 import { useSelector } from "react-redux";
 
+const initialState = {
+  today: new Date(),
+  clicked: {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
+    date: new Date().getDate(),
+  },
+  prevDate: new Date(),
+  weekData: new Date(),
+  day: ["일", "월", "화", "수", "목", "금", "토"],
+  days: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'GOTO_TODAY':
+      return {
+        ...state,
+        weekData: state.today,
+        clicked: {
+          year: state.today.getFullYear(),
+          month: state.today.getMonth() + 1,
+          date: state.today.getDate(),
+        },
+      };
+    case 'PREV_MONTH':
+      return {
+        ...state,
+        weekData: state.weekData.getMonth() === 0 ? new Date(state.weekData.getFullYear() - 1, 11, state.days[11]) : new Date(state.weekData.getFullYear(), state.weekData.getMonth() - 1, state.days[state.weekData.getMonth() - 1]),
+      };
+    case 'NEXT_MONTH':
+      return {
+        ...state,
+        weekData: state.weekData.getMonth() === 11 ? new Date(state.weekData.getFullYear() + 1, 0, 1) : new Date(state.weekData.getFullYear(), state.weekData.getMonth() + 1, 1),
+      };
+    case 'PREV_WEEK':
+      return {
+        ...state,
+        weekData: new Date(state.weekData.getFullYear(), state.weekData.getMonth(), state.weekData.getDate() - (state.weekData.getDay() + 1)),
+      };
+    case 'NEXT_WEEK':
+      return {
+        ...state,
+        weekData: new Date(state.weekData.getFullYear(), state.weekData.getMonth(), state.weekData.getDate() + (-state.weekData.getDay() + 7)),
+      };
+    case 'DATE_CLICK':
+      return {
+        ...state,
+        clicked: {
+          year: action.year,
+          month: action.month,
+          date: action.date,
+        },
+        prevDate: new Date(state.clicked.year, state.clicked.month - 1, state.clicked.date),
+      };
+    default:
+      return null;
+  }
+}
+
 const Schedule = () => {
-    const matchData = useSelector((state) => state.match.value.match);
-    const now = new Date();                                 //current date
-    const [year, setYear] = useState(now.getFullYear());    //selected year
-    const [month, setMonth] = useState(now.getMonth() + 1); //selected month
-    const [date, setDate] = useState(now.getDate());        //selected day
-    const day = ["일", "월", "화", "수", "목", "금", "토"];
-    const days = [31, 28, 31, 30 ,31, 30, 31, 31, 30, 31, 30, 31];
-    const [matchInfo, setMatchInfo] = useState(matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime()));
-    const [monthData, setMonthData] = useState({
-        date: new Date(year, month-1, date),        //just move week
-        days: Array.from({ length: days[month-1] }, (_, index) => index + 1),       //date info of selected month
-    });
-    const [monthDiv, setMonthDiv] = useState(monthData.days && monthData.days.map((value, index) => {
-        return(
-            <DayWrapper key={index+1}>
-                <div className="day">{day[(new Date(year, month-1, value)).getDay()]}</div>
-                <div className="date">{value}</div>
-            </DayWrapper>
-        );
-    }));
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const matchData = useSelector((state) => state.match.value.match);
+  const loadMatchData = (year, month, date) => {
+    return matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime());
+  }
+  const [matchInfo, setMatchInfo] = useState();
+  const [monthDiv, setMonthDiv] = useState();
+  const [weekDiv, setWeekDiv] = useState();
 
-    const [weekDiv, setWeekDiv] = useState(monthDiv.filter(value => 
-        (date - now.getDay()) <= value.key && (date + (6 - now.getDay())) >= value.key
+
+  useEffect(() => {
+    setMonthDiv(Array.from({ length: state.days[state.weekData.getMonth()] }, (_, index) => index + 1).map((value) => {
+      const clicked = document.getElementById(state.clicked.year + "." + state.clicked.month + "." + state.clicked.date + "daywrapper");
+      if (clicked !== null) {
+        const active = loadMatchData(state.weekData.getFullYear(), state.weekData.getMonth() + 1, value).length;
+        clicked.children[0].style.color = active !== 0 ? "black" : "lightgray";
+        clicked.children[1].style.color = active !== 0 ? "black" : "lightgray";
+        clicked.children[2].style.background = "white";
+      }
+      return (
+        <DayWrapper
+          key={value}
+          id={state.weekData.getFullYear() + "." + (state.weekData.getMonth() + 1) + "." + value + "daywrapper"}
+          onClick={() => selectDate(value)}
+          $isActive={loadMatchData(state.weekData.getFullYear(), state.weekData.getMonth() + 1, value).length}
+        >
+          <div id={state.weekData.getFullYear() + "." + (state.weekData.getMonth() + 1) + "." + value + "day"} className="day">{state.day[(new Date(state.weekData.getFullYear(), state.weekData.getMonth(), value)).getDay()]}</div>
+          <div id={state.weekData.getFullYear() + "." + (state.weekData.getMonth() + 1) + "." + value + "date"} className="date">{value}</div>
+          <div id={state.weekData.getFullYear() + "." + (state.weekData.getMonth() + 1) + "." + value + "bar"} className="selectBar"></div>
+        </DayWrapper>
+      );
+    }))
+  }, [state.weekData])
+
+  useEffect(() => {
+    monthDiv && setWeekDiv(monthDiv.filter(value =>
+      (state.weekData.getDate() - state.weekData.getDay()) <= value.key && (state.weekData.getDate() + (6 - state.weekData.getDay())) >= value.key
     ));
+  }, [monthDiv])
 
-    const loadMatchData = useCallback((year, month, date) => {
-        return matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime());
-      }, [matchData]);
-
-    const selectDate = (value) => {
-        setYear(monthData.date.getFullYear());
-        setMonth(monthData.date.getMonth()+1);
-        setDate(value);
+  useEffect(() => {
+    const clicked = document.getElementById(state.clicked.year + "." + state.clicked.month + "." + state.clicked.date + "daywrapper");
+    if (clicked !== null) {
+      clicked.children[0].style.color = "blue";
+      clicked.children[1].style.color = "blue";
+      clicked.children[2].style.background = "blue";
     }
+    const prev = document.getElementById(state.prevDate.getFullYear() + "." + (state.prevDate.getMonth() + 1) + "." + state.prevDate.getDate() + "daywrapper");
+    if (prev !== null && clicked !== prev) {
+      prev.children[0].style.color = "black";
+      prev.children[1].style.color = "black";
+      prev.children[2].style.background = "white";
+    }
+  }, [state.clicked, state.prevDate, weekDiv])
 
-    useEffect(() => {
-        const matchInfo = loadMatchData(year, month, date);
-        setMatchInfo(matchInfo);
-    }, [year, month, date, loadMatchData]);
+  const selectDate = (value) => {
+    const matchInfo = loadMatchData(state.weekData.getFullYear(), state.weekData.getMonth() + 1, value);
+    if (matchInfo.length === 0)
+      return;
+    dispatch({ type: 'DATE_CLICK', year: state.weekData.getFullYear(), month: state.weekData.getMonth() + 1, date: value });
+    setMatchInfo(matchInfo);
+  }
 
-    useEffect(() => {
-        setMonthDiv(monthData.days && monthData.days.map((value) => {
-            return(
-                <DayWrapper key={value} onClick={() => selectDate(value)} $isActive={loadMatchData(monthData.date.getFullYear(), monthData.date.getMonth()+1, value).length}>
-                    <div className="day">{day[(new Date(monthData.date.getFullYear(), monthData.date.getMonth(), value)).getDay()]}</div>
-                    <div className="date">{value}</div>
-                </DayWrapper>
+
+  const prevMonth = () => {
+    dispatch({ type: 'PREV_MONTH' });
+  };
+
+  const nextMonth = () => {
+    dispatch({ type: 'NEXT_MONTH' })
+  };
+
+  const prevWeek = () => {
+    dispatch({ type: 'PREV_WEEK' });
+  }
+
+  const nextWeek = () => {
+    dispatch({ type: 'NEXT_WEEK' });
+  }
+
+  return (
+    <CalenderWrapper>
+      <MonthSelectWrapper>
+        <img src={arrowLeft} alt="left" style={{ width: "25px", height: "25px", cursor: "pointer" }} onClick={prevMonth}></img>
+        <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{state.weekData && state.weekData.getFullYear()}.{state.weekData && state.weekData.getMonth() < 9 ? 0 : null}{state.weekData && state.weekData.getMonth() + 1}</div>
+        <img src={arrowRight} alt="right" style={{ width: "25px", height: "25px", cursor: "pointer" }} onClick={nextMonth}></img>
+      </MonthSelectWrapper>
+      <WeekWrapper $date={state.weekData} $days={state.days}>
+        <img src={gotoLeft} alt="gotoLeft" className="prevWeek" onClick={prevWeek} />
+        <WeekView $date={state.weekData}>
+          {weekDiv}
+        </WeekView>
+        <img src={gotoRight} alt="gotoRight" className="nextWeek" onClick={nextWeek} />
+      </WeekWrapper>
+      <MatchWrapper>
+        <div>{state.clicked.month}월 {state.clicked.date}일</div>
+        {
+          matchInfo && matchInfo.map((value, index) => {
+            return (
+              <MatchView key={index}>
+                <div className="matchNum">
+                  <div>{index + 1}경기</div>
+                  <div>{value.league}</div>
+                </div>
+                <div className="matchInfo">
+                  <div>{value.home}</div>
+                  <div>vs</div>
+                  <div>{value.away}</div>
+                </div>
+              </MatchView>
             );
-        }))// eslint-disable-next-line
-    }, [monthData.days])
-
-    useEffect(() => {     
-        setWeekDiv(monthDiv.filter(value => 
-            (monthData.date.getDate() - monthData.date.getDay()) <= value.key && (monthData.date.getDate() + (6 - monthData.date.getDay())) >= value.key
-        ));
-    }, [monthData.date, monthDiv])
-
-
- 
-    
-    const prevMonth = () => {
-        if(monthData.date.getMonth() === 0){
-            setMonthData((prev) => ({
-                days: Array.from({ length: days[11] }, (_, index) => index + 1),
-                date: new Date(prev.date.getFullYear()-1, 11, days[11]),
-            }));
+          })
         }
-        else{
-            setMonthData((prev) => ({
-                days: Array.from({ length: days[prev.date.getMonth()-1] }, (_, index) => index + 1),
-                date: new Date(prev.date.getFullYear(), prev.date.getMonth()-1, days[prev.date.getMonth()-1]),
-            }));
-        }
-    };
-
-    const nextMonth = () => {
-        if(monthData.date.getMonth() === 11){
-            setMonthData((prev) => ({
-                days: Array.from({ length: days[0] }, (_, index) => index + 1),
-                date: new Date(prev.date.getFullYear()+1, 0, 1),
-            }));
-        }
-        else{
-            setMonthData((prev) => ({
-                days: Array.from({ length: days[prev.date.getMonth()+1] }, (_, index) => index + 1),
-                date: new Date(prev.date.getFullYear(), prev.date.getMonth()+1, 1),
-            }));
-        }
-    };
-
-    const prevWeek = () => {
-        setMonthData((prev) => ({
-            ...prev,
-            date: new Date(prev.date.getFullYear(), prev.date.getMonth(), prev.date.getDate() - (prev.date.getDay() + 1)),
-        }));
-    }
-
-    const nextWeek = () => {
-        setMonthData((prev) => ({
-            ...prev,
-            date: new Date(prev.date.getFullYear(), prev.date.getMonth(), prev.date.getDate() + (-prev.date.getDay() + 7)),
-        }));
-    }
-
-    return(
-        <CalenderWrapper>
-            <MonthSelectWrapper>
-                <img src={arrowLeft} alt="left" style={{width:"25px", height:"25px", cursor: "pointer"}} onClick={prevMonth}></img>
-                <div style={{fontSize:"1.5rem", fontWeight:"bold"}}>{monthData.date.getFullYear()}.{monthData.date.getMonth() < 9 ? 0 : null}{monthData.date.getMonth()+1}</div>
-                <img src={arrowRight} alt="right" style={{width:"25px", height:"25px", cursor: "pointer"}} onClick={nextMonth}></img>
-            </MonthSelectWrapper>
-            <WeekWrapper $date={monthData.date} $days={days}>
-                <img src={gotoLeft} alt="gotoLeft" className="prevWeek" onClick={prevWeek}/>
-                <WeekView $date={monthData.date}>
-                    {weekDiv}
-                </WeekView>
-                <img src={gotoRight} alt="gotoRight" className="nextWeek" onClick={nextWeek}/>
-            </WeekWrapper>
-            <MatchWrapper>
-                <div>{month}월 {date}일</div>
-                {
-                    matchInfo && matchInfo.map((value, index) => {
-                        return(
-                            <MatchView key={index}>
-                                <div className="matchNum">
-                                    <div>{index+1}경기</div>
-                                    <div>{value.league}</div>
-                                </div>
-                                <div className="matchInfo">
-                                    <div>{value.home}</div>
-                                    <div>vs</div>
-                                    <div>{value.away}</div>
-                                </div>
-                            </MatchView>
-                        );
-                    })
-                }
-            </MatchWrapper>
-        </CalenderWrapper>
-    );
+      </MatchWrapper>
+    </CalenderWrapper>
+  );
 
 }
 
@@ -213,6 +249,7 @@ const DayWrapper = styled.div`
     align-items: center;
     text-align: center;
     cursor: pointer;
+    
     @media (max-width: 600px){
         width: 3rem;
     }
@@ -233,6 +270,14 @@ const DayWrapper = styled.div`
         @media (max-width: 600px){
             width: 3rem;
         }
+    }
+    .selectBar{
+        width: 3rem;
+        @media (max-width: 600px){
+            width: 2rem;
+        }
+        height: 2px;
+        background-color: #FFFFFF;
     }
 `;
 const MatchWrapper = styled.div`
@@ -268,14 +313,14 @@ const MatchView = styled.div`
 `;
 
 WeekView.propTypes = {
-    $date: PropTypes.instanceOf(Date),
+  $date: PropTypes.instanceOf(Date),
 };
 
 WeekWrapper.propTypes = {
-    $date: PropTypes.instanceOf(Date),
-    $days: PropTypes.array,
+  $date: PropTypes.instanceOf(Date),
+  $days: PropTypes.array,
 };
 
 DayWrapper.propTypes = {
-    $isActive: PropTypes.number,
+  $isActive: PropTypes.number,
 };
