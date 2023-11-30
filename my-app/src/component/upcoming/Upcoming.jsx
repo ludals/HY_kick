@@ -1,17 +1,22 @@
 import styled from "styled-components";
 import logo from '../team_image/gaebal.jpg'
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import PropTypes from 'prop-types';
 import UpcomingModal from "./UpcomingModal";
 
 const Upcoming = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const days = ["일", "월", "화", "수", "목", "금", "토"];
-  const homeComponent = document.getElementsByClassName('Home');
-  const awayComponent = document.getElementsByClassName('Away');
+  // const homeComponent = document.getElementsByClassName('Home');
+  // const awayComponent = document.getElementsByClassName('Away');
   const prevMatch = [props.matches[0], props.matches[1]];
   const upcomingMatch1 = [props.matches[2], props.matches[3]];
   const upcomingMatch2 = [props.matches[4], props.matches[5]];
+  const ref = useRef(null);
+  const matchWrapperSize = 27 * 16;
+  const [positionx, setPositionx] = useState(0);
+  const [imgCount, setImgCount] = useState(1);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -88,16 +93,43 @@ const Upcoming = (props) => {
   //   });
   // }, [homeComponent, awayComponent])
 
+  const onTouchEnd = (e) => {
+    const swipe = positionx - e.changedTouches[0].pageX;
+    const div = ref.current;
+    if (swipe > 30) {
+      if (imgCount !== 3) {
+        const move = (-matchWrapperSize * imgCount)
+        div.style.transform = `translateX(calc(${move}px))`;
+        setImgCount(imgCount + 1);
+      }
+      else {
+        div.style.transform = `translateX(calc(${matchWrapperSize * 0}px))`;
+        setImgCount(1);
+      }
+    }
+    else if (swipe < -30) {
+      if (imgCount !== 1) {
+        const move = (-matchWrapperSize * (imgCount - 2))
+        div.style.transform = `translateX(calc(${move}px))`;
+        setImgCount(imgCount - 1);
+      }
+      else {
+        div.style.transform = `translateX(calc(${-matchWrapperSize * 2}px))`;
+        setImgCount(3);
+      }
+    }
+  }
+
 
   return (
     <>
-      {isModalOpen ? <UpcomingModal closeModal={closeModal} /> : null}
+      {/* {isModalOpen ? <UpcomingModal closeModal={closeModal} /> : null} */}
       <UpcomingWrapper className="UpcomingWrapper">
         <UpcomingHeader className="UpcomingHeader">
           경기 일정/결과
         </UpcomingHeader>
-        <UpcomingView className="UpcomingView">
-          <div className="upcoming_container">
+        <UpcomingView className="UpcomingView" onTouchStart={(e) => setPositionx(e.changedTouches[0].pageX)} onTouchEnd={onTouchEnd}>
+          <div ref={ref} className="upcoming_container">
             <UpcomingBody className="UpcomingBody">
               {prevMatchComponent}
             </UpcomingBody>
@@ -109,6 +141,11 @@ const Upcoming = (props) => {
             </UpcomingBody>
           </div>
         </UpcomingView>
+        <Pagination>
+          <PaginationDot $index={1} $imgcount={imgCount}></PaginationDot>
+          <PaginationDot $index={2} $imgcount={imgCount}></PaginationDot>
+          <PaginationDot $index={3} $imgcount={imgCount}></PaginationDot>
+        </Pagination>
         <UpcomingFooter className="UpcomingFooter">
           <Link to="/schedule" className="link">
             <span>전체 일정 보기</span>
@@ -132,6 +169,7 @@ const UpcomingWrapper = styled.div`
     .upcoming_container{
       display: flex;
       gap: 3rem;
+      transition: transform 0.5s ease;
     }
 `;
 
@@ -224,6 +262,20 @@ const UpcomingInfo = styled.div`
     white-space: pre-line;
 `;
 
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  gap : 0.5rem;
+`;
+
+const PaginationDot = styled.div`
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid navy;
+  background: ${(props) => (props.$imgcount !== props.$index ? "white" : "navy")};
+`;
+
 const UpcomingFooter = styled.div`
     width: auto;
     height: 1rem;
@@ -238,3 +290,8 @@ const UpcomingFooter = styled.div`
         color: lightgray;
     }
 `;
+
+PaginationDot.propTypes = {
+  $imgcount: PropTypes.number,
+  $index: PropTypes.number,
+};
