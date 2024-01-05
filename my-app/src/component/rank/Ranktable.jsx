@@ -4,69 +4,70 @@ import arrow from "../../asset/right_arrow.png"
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Ranktable = ({children}) => {
-    const teams = useSelector((state) => state.ranking.value)
-    const teamDatas = (children === "선봉리그" ? teams.ranking.sunbong : teams.ranking.gongde);
-    const teamPagePaths = {
-        '개발': '/gaebal',
-        '메풍': '/maepung',
-        '전사': '/junsa',
-        'SOCC3': '/socc3',
-        '알싸' : '/alssa',
-        'HYUS' : '/hyus',
-        'UFC' : '/ufc',
+const Ranktable = ({ children }) => {
+  const teams = useSelector((state) => state.ranking.value)
+  const teamDatas = (children === "선봉리그" ? teams.ranking.sunbong : teams.ranking.gongde);
+  const teamPagePaths = {
+    '개발': '/gaebal',
+    '메풍': '/maepung',
+    '전사': '/junsa',
+    'SOCC3': '/socc3',
+    '알싸': '/alssa',
+    'HYUS': '/hyus',
+    'UFC': '/ufc',
 
-        '슈탱': '/shootang',
-        'AUSOC' : '/ausoc',
-        'HYMSE' : '/hymse',
-        '신화' : '/sinhwa',
-        '포유' : '/foryou',
-        'LALA' : '/lala',
-        '혈쉬' : '/hyulshe',
-      };
-    return(
-        <RankWrapper>
-            <RankHeader>
-                <span className="ranking">순위</span>                
-                <span className="club">동아리</span>
-                <span>경기수</span>
-                <span>승점</span>
-                <span>승</span>
-                <span>무</span>
-                <span>패</span>
-            </RankHeader>         
-            {teamDatas.map((teamData, index)=>(
-                    <RankBody key={index}>
-                        <span className="rank">{index+1}</span>
-                        <span className="clubname">
-                            <img
-                            className="logo"
-                            src={logo}
-                                alt="logo"
-                                width={30}
-                                height={30}
-                            />
-                            <span>{teamData.name}</span>
-                            <Link to={teamPagePaths[teamData.name] || '/default'} className="link">                            
-                                <img
-                                className="arrow"
-                                src={arrow}
-                                    alt="arrow"
-                                    width={20}
-                                    height={20}
-                                />
-                                <span>팀페이지</span>
-                            </Link>
-                        </span>
-                        <span>{teamData.played}</span>
-                        <span>{teamData.points}</span>
-                        <span>{teamData.win}</span>
-                        <span>{teamData.draw}</span>
-                        <span>{teamData.lose}</span>
-                    </RankBody>
-            ))}
-        </RankWrapper>
-    );
+    '슈탱': '/shootang',
+    'AUSOC': '/ausoc',
+    'HYMSE': '/hymse',
+    '신화': '/sinhwa',
+    '포유': '/foryou',
+    'LALA': '/lala',
+    '혈쉬': '/hyulshe',
+  };
+  return (
+    <RankWrapper>
+      <RankHeader>
+        <span className="ranking">순위</span>
+        <span className="club">동아리</span>
+        <span>경기수</span>
+        <span>승점</span>
+        <span>승</span>
+        <span>무</span>
+        <span>패</span>
+      </RankHeader>
+      {teamDatas.map((teamData, index) => (
+        <RankBody key={index}>
+          <span className="rank">{index + 1}</span>
+          <span className="clubname">
+            <img
+              className="logo"
+              src={logo}
+              alt="logo"
+              width={30}
+              height={30}
+              style={{ borderRadius: "70%", overflow: "hidden" }}
+            />
+            <span>{teamData.name}</span>
+            <Link to={teamPagePaths[teamData.name] || '/default'} className="link">
+              <img
+                className="arrow"
+                src={arrow}
+                alt="arrow"
+                width={20}
+                height={20}
+              />
+              <span>팀페이지</span>
+            </Link>
+          </span>
+          <span>{teamData.played}</span>
+          <span>{teamData.points}</span>
+          <span>{teamData.win}</span>
+          <span>{teamData.draw}</span>
+          <span>{teamData.lose}</span>
+        </RankBody>
+      ))}
+    </RankWrapper>
+  );
 }
 
 export default Ranktable;

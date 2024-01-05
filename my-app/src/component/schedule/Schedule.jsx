@@ -6,6 +6,7 @@ import gotoRight from "../../asset/gotoRight.png"
 import arrowLeft from "../../asset/arrow_left.png"
 import arrowRight from "../../asset/arrow_right.png"
 import { useSelector } from "react-redux";
+import logo from "../team_image/gaebal.jpg";
 
 const initialState = {
   today: new Date(),
@@ -131,6 +132,11 @@ const Schedule = () => {
     setMatchInfo(matchInfo);
   }
 
+  useEffect(() => {
+    const matchInfo = loadMatchData(state.weekData.getFullYear(), state.weekData.getMonth() + 1, state.weekData.getDate());
+    setMatchInfo(matchInfo);
+  }, [])
+
 
   const prevMonth = () => {
     dispatch({ type: 'PREV_MONTH' });
@@ -163,19 +169,25 @@ const Schedule = () => {
         <img src={gotoRight} alt="gotoRight" className="nextWeek" onClick={nextWeek} />
       </WeekWrapper>
       <MatchWrapper>
-        <div>{state.clicked.month}월 {state.clicked.date}일</div>
+        <div className="dateInfo">{state.clicked.year}년 {state.clicked.month}월 {state.clicked.date}일</div>
         {
           matchInfo && matchInfo.map((value, index) => {
             return (
               <MatchView key={index}>
                 <div className="matchNum">
-                  <div>{index + 1}경기</div>
-                  <div>{value.league}</div>
+                  {/* <div>{index + 1}경기</div> */}
+                  <div className="leaguetype">{value.league}</div>
                 </div>
                 <div className="matchInfo">
-                  <div>{value.home}</div>
-                  <div>vs</div>
-                  <div>{value.away}</div>
+                  <div className="hometeam">{value.home}</div>
+                  <img src={logo} alt="logo"></img>
+                  {
+                    new Date(state.clicked.year, state.clicked.month - 1, state.clicked.date + 1) > new Date() ?
+                      <div className="versus">{value.time}:00</div>
+                      : <div className="versus">1:0</div>
+                  }
+                  <img src={logo} alt="logo"></img>
+                  <div className="awayteam">{value.away}</div>
                 </div>
               </MatchView>
             );
@@ -282,20 +294,37 @@ const DayWrapper = styled.div`
 `;
 const MatchWrapper = styled.div`
     width: 100%;
-    height: 10rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center
-`;
-
-const MatchView = styled.div`
-    width: 50%;
-    height: 3rem;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    .dateInfo{
+      width: 30rem;
+      height: 2rem;
+      margin-top: 2rem;
+      border: 1px solid black;
+      border-radius: 10px;
+      /* background: lightgrey; */
+      display: flex;
+      align-items: center;
+      padding-left: 1rem;
+      @media (max-width: 600px){
+        width: 20rem;
+      }
+    }
+`;
+
+const MatchView = styled.div`
+    width: 30rem;
+    height: 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 600px){
+      width: 20rem;
+    }
     .matchNum{
         width: 100%;
         display: flex;
@@ -303,12 +332,45 @@ const MatchView = styled.div`
         align-items: center;
         gap: 1rem;
     }
+    .leaguetype{
+      width: 100%;
+      height: 2rem;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+    }
     .matchInfo{
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 1rem;
+        img{
+          width: 30px;
+          height: 30px;
+          border-radius: 70%;
+          overflow: hidden;
+        }
+        .hometeam{
+          width: 5rem;
+          display: flex;
+          justify-content: end;
+        }
+        .awayteam{
+          width: 5rem;
+          display: flex;
+          justify-content: start;
+        }
+        .versus{
+          width: 4rem;
+          height: 2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border : 1px solid black;
+          border-radius: 10px;
+          /* background: navy; */
+        }
     }
 `;
 

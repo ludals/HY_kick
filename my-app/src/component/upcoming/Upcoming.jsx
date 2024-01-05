@@ -15,6 +15,7 @@ const Upcoming = (props) => {
   const upcomingMatch2 = [props.matches[4], props.matches[5]];
   const ref = useRef(null);
   const matchWrapperSize = 27 * 16;
+  const [swiped, setSwiped] = useState(false);
   const [positionx, setPositionx] = useState(0);
   const [imgCount, setImgCount] = useState(1);
 
@@ -25,6 +26,35 @@ const Upcoming = (props) => {
   const closeModal = (e) => {
     setIsModalOpen(false);
   }
+
+  const swipe = (div) => {
+    if (div) {
+      if (imgCount !== 3) {
+        const move = (-matchWrapperSize * imgCount)
+        div.style.transform = `translateX(calc(${move}px))`;
+        setImgCount(imgCount + 1);
+      }
+      else {
+        div.style.transform = `translateX(calc(${matchWrapperSize * 0}px))`;
+        setImgCount(1);
+      }
+    }
+  }
+
+  useEffect(() => {
+    const div = ref.current;
+    let timer;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      swipe(div)
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [imgCount])
 
   const matchComponent = (matches) => {
     return (
@@ -106,6 +136,7 @@ const Upcoming = (props) => {
         div.style.transform = `translateX(calc(${matchWrapperSize * 0}px))`;
         setImgCount(1);
       }
+      setSwiped(true);
     }
     else if (swipe < -30) {
       if (imgCount !== 1) {
@@ -117,6 +148,7 @@ const Upcoming = (props) => {
         div.style.transform = `translateX(calc(${-matchWrapperSize * 2}px))`;
         setImgCount(3);
       }
+      setSwiped(true);
     }
   }
 
