@@ -18,7 +18,10 @@ const initialState = {
   prevDate: new Date(),
   weekData: new Date(),
   day: ["일", "월", "화", "수", "목", "금", "토"],
-  days: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+  get days() {
+    const isLeapYear = this.weekData.getFullYear() % 4 === 0;
+    return [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  },
 }
 
 function reducer(state, action) {
