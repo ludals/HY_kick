@@ -137,8 +137,8 @@ const Schedule = () => {
         id={state.weekData.year + "." + state.weekData.month + "." + value + "daywrapper"}
         onClick={() => selectDate(value)}
         $isActive={loadMatchData(state.weekData.year, state.weekData.month, value).length}
-        $clicked={state.clicked}
-        $date={new Date(state.weekData.year, state.weekData.month + 1, value)}
+        $clicked={new Date(state.clicked.year, state.clicked.month - 1, state.clicked.date)}
+        $date={new Date(state.weekData.year, state.weekData.month - 1, value)}
       >
         <div id={state.weekData.year + "." + state.weekData.month + "." + value + "day"} className="day">{state.day[(new Date(state.weekData.year, state.weekData.month - 1, value)).getDay()]}</div>
         <div id={state.weekData.year + "." + state.weekData.month + "." + value + "date"} className="date">{value}</div>
@@ -320,7 +320,7 @@ const DayWrapper = styled.div`
         width: 5rem;
         height: 1rem;
         font-size:0.8rem;
-        color: ${(props) => (props.$clicked instanceof Date ? (props.$date.getTime() === props.$clicked.getTime() ? "blue" : props.$isActive !== 0 ? "black" : "lightgray") : "lightgray")};
+        color: ${(props) => (props.$date.getTime() === props.$clicked.getTime() ? "blue" : props.$isActive !== 0 ? "black" : "lightgray")};
         @media (max-width: 600px){
             width: 3rem;
         }
@@ -329,7 +329,7 @@ const DayWrapper = styled.div`
         width: 5rem;
         height: 2rem;
         font-size: 1.4rem;
-        color: ${(props) => (props.$clicked instanceof Date ? (props.$date.getTime() === props.$clicked.getTime() ? "blue" : props.$isActive !== 0 ? "black" : "lightgray") : "lightgray")};
+        color: ${(props) => (props.$date.getTime() === props.$clicked.getTime() ? "blue" : props.$isActive !== 0 ? "black" : "lightgray")};
         @media (max-width: 600px){
             width: 3rem;
         }
@@ -340,7 +340,7 @@ const DayWrapper = styled.div`
             width: 2rem;
         }
         height: 2px;
-        background-color: ${(props) => (props.$clicked instanceof Date && props.$date.getTime() === props.$clicked.getTime() ? "blue" : "white")};
+        background-color: ${(props) => (props.$date.getTime() === props.$clicked.getTime() ? "blue" : "white")};
     }
 `;
 const MatchWrapper = styled.div`
