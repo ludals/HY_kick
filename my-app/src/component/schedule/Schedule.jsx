@@ -1,4 +1,5 @@
 import { useEffect, useReducer, useState } from "react";
+import { useNavigate } from 'react-router-dom'
 import styled from "styled-components";
 import PropTypes from 'prop-types';
 import gotoLeft from "../../asset/gotoLeft.png"
@@ -118,12 +119,28 @@ function reducer(state, action) {
         },
         prevDate: new Date(state.clicked.year, state.clicked.month - 1, state.clicked.date),
       };
+    case 'SET_DATE':
+      return {
+        ...state,
+        clicked: {
+          year: action.year,
+          month: action.month,
+          date: action.date,
+        },
+        weekData: {
+          year: action.year,
+          month: action.month,
+          date: action.date,
+        },
+        prevDate: new Date(),
+      };
     default:
       return null;
   }
 }
 
 const Schedule = () => {
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, initialState);
   const matchData = useSelector((state) => state.match.value.match);
   const loadMatchData = (year, month, date) => {
@@ -147,7 +164,7 @@ const Schedule = () => {
     );
   }));
   const [weekDiv, setWeekDiv] = useState();
-
+  const storedDate = sessionStorage.getItem('curDate');
 
 
   useEffect(() => {
@@ -184,8 +201,11 @@ const Schedule = () => {
   }
 
   useEffect(() => {
-    const matchInfo = loadMatchData(state.weekData.year, state.weekData.month, state.weekData.date);
-    setMatchInfo(matchInfo);
+    if (storedDate && (new Date(state.clicked.year, state.clicked.month - 1, state.clicked.date) !== new Date(storedDate))) {
+      const date = storedDate.split('.').map(str => Number(str))
+      dispatch({ type: 'SET_DATE', year: parseInt(date[0]), month: parseInt(date[1]), date: parseInt(date[2]) });
+      setMatchInfo(loadMatchData(date[0], date[1], date[2]));
+    }
   }, [])
 
 
@@ -203,6 +223,11 @@ const Schedule = () => {
 
   const nextWeek = () => {
     dispatch({ type: 'NEXT_WEEK' });
+  }
+
+  const clickMatch = (value) => {
+    sessionStorage.setItem('curDate', `${state.clicked.year + '.' + state.clicked.month + '.' + state.clicked.date}`);
+    navigate(`/result/${value.id}`)
   }
 
   return (
@@ -224,7 +249,7 @@ const Schedule = () => {
         {
           matchInfo && matchInfo.map((value, index) => {
             return (
-              <MatchView key={index}>
+              <MatchView key={index} onClick={() => clickMatch(value)}>
                 <div className="matchNum">
                   {/* <div>{index + 1}경기</div> */}
                   <div className="leaguetype">{value.league}</div>
