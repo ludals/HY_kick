@@ -4,7 +4,7 @@ import ResultViewer from "../component/result/ResultViewer";
 import DetailedViewer from "../component/result/DetailedViewer";
 import MomPlayer from "../component/result/MomPlayer";
 
-const Result = () => {
+const ResultPage = () => {
   return (
     <RankingLayout>
       <ResultViewer />
@@ -14,7 +14,7 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default ResultPage;
 
 const RankingLayout = styled.div`
   width: 100%;

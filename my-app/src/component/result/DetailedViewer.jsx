@@ -2,65 +2,22 @@ import { useParams } from "react-router-dom";
 import squad from "../../asset/squad.jpg"
 
 import {
+  showItems,
+  showTeam1Detail,
+  showTeam2Detail,
   RefereeWrapper,
   DetailInfoContainer,
   DetailInfoWrapper,
   DetailInfo
 } from "./DetailedViewerStyle";
+import { RESULT_ITEMS } from "../../constants/constant";
 
 const DetailedViewer = () => {
-  const matchID = useParams();
+  // const matchID = useParams();
 
   //API 호출
-  const ITEMS = ["득점", "슈팅", "유효슈팅", "코너킥", "오프사이드"];
   const Team1 = [1, 2, 3, 4, 5];
   const Team2 = [5, 4, 3, 2, 1];
-
-  const showItems = (ITEMS) => {
-    return (
-      <section>
-        {
-          ITEMS.map((item) => {
-            return (
-              <div key={`${item}`}>{item}</div>
-            );
-          })
-        }
-      </section>
-    );
-  };
-
-  const showTeam1Detail = (Team1) => {
-    return (
-      <section className="result">
-        {
-          Team1.map((content, index) => {
-            return (
-              <div className={Team1[index] < Team2[index] ? "lose" : ""}>
-                {content}
-              </div>
-            )
-          })
-        }
-      </section>
-    );
-  };
-
-  const showTeam2Detail = (Team2) => {
-    return (
-      <section className="result">
-        {
-          Team2.map((content, index) => {
-            return (
-              <div className={Team2[index] < Team1[index] ? "lose" : ""}>
-                {content}
-              </div>
-            )
-          })
-        }
-      </section>
-    );
-  };
 
   return (
     <>
@@ -70,17 +27,17 @@ const DetailedViewer = () => {
             <RefereeWrapper>
               <div>Referee</div>
               <div>
-                <img src="/image/gaebal.jpg" />
+                <img src="/image/gaebal.jpg" alt="" />
                 <span>개발</span>
               </div>
             </RefereeWrapper>
-            {showItems(ITEMS)}
-            {showTeam1Detail(Team1)}
-            {showTeam2Detail(Team2)}
+            {showItems(RESULT_ITEMS)}
+            {showTeam1Detail(Team1, Team2)}
+            {showTeam2Detail(Team1, Team2)}
           </DetailInfo>
         </DetailInfoWrapper>
         <DetailInfoWrapper>
-          <img src={squad} />
+          <img src={squad} alt="" />
         </DetailInfoWrapper>
       </DetailInfoContainer>
     </>
