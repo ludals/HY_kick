@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./component/Main";
-import Ranking from "./component/rank/Ranking";
+import RankingPage from "./page/RankingPage";
 import Schedule from "./component/schedule/Schedule";
 import SquadMaker from "./component/Squadmaker";
 import Register from "./component/register/Register"
-import Result from "./page/Result";
+import ResultPage from "./page/ResultPage";
 import Login from "./component/login/Login";
 import Home from "./component/home/Home";
 import Team from './component/team_pages/Team';
@@ -33,11 +33,11 @@ function App() {
         <Route path="/" element={<Main />}>
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/ranking" element={<Ranking />} />
+          <Route path="/ranking" element={<RankingPage />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/squadmaker" element={<SquadMaker formation="포메이션" players={['민지우', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/result/:id" element={<Result />} />
+          <Route path="/result/:id" element={<ResultPage />} />
           {/* 선봉리그 */}
           <Route path="/gaebal" element={<Team teamName="개발" teamLogo={gaeballogo} deptLogo={cselogo} />} />
           <Route path="/maepung" element={<Team teamName="메풍" teamLogo={gaeballogo} deptLogo={cselogo} />} />

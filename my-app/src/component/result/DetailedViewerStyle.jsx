@@ -1,5 +1,51 @@
 import styled from "styled-components";
 
+export const showItems = (ITEMS) => {
+  return (
+    <section>
+      {
+        ITEMS.map((item) => {
+          return (
+            <div key={`${item}`}>{item}</div>
+          );
+        })
+      }
+    </section>
+  );
+};
+
+export const showTeam1Detail = (Team1, Team2) => {
+  return (
+    <section className="result">
+      {
+        Team1.map((content, index) => {
+          return (
+            <div className={Team1[index] < Team2[index] ? "lose" : ""}>
+              {content}
+            </div>
+          )
+        })
+      }
+    </section>
+  );
+};
+
+export const showTeam2Detail = (Team1, Team2) => {
+  return (
+    <section className="result">
+      {
+        Team2.map((content, index) => {
+          return (
+            <div className={Team2[index] < Team1[index] ? "lose" : ""}>
+              {content}
+            </div>
+          )
+        })
+      }
+    </section>
+  );
+};
+
 export const DetailInfoWrapper = styled.div`
   min-width: 20rem;
   height: 20rem;
