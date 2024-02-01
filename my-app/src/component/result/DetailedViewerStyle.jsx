@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import {
+  BORDER_RADIUS_20,
+  BACKGROUND_COLOR
+} from "../../constants/styleconstant";
 
 export const showItems = (ITEMS) => {
   return (
@@ -70,6 +74,8 @@ export const DetailInfoContainer = styled.div`
   border: 1px solid lightgray;
   display: flex;
   overflow: hidden;
+  border-radius: ${BORDER_RADIUS_20};
+  background-color: ${BACKGROUND_COLOR};
 `;
 
 export const DetailInfo = styled.div`

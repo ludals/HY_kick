@@ -2,7 +2,7 @@ import { useEffect, useReducer, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from "react-redux";
 
-import scheduleReducer, { initialState } from "../../reducers/scheduleReducer"
+import scheduleReducer, { initialState } from "../../reducer/scheduleReducer"
 import {
   CalenderWrapper,
   DayWrapper,
@@ -101,7 +101,7 @@ const Schedule = () => {
 
   const clickMatch = (value) => {
     sessionStorage.setItem('curDate', `${state.clicked.year + '.' + state.clicked.month + '.' + state.clicked.date}`);
-    navigate(`/result/${value.id}`)
+    navigate(`/result/${value.id}`, value)
   }
 
   return (

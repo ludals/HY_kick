@@ -1,11 +1,17 @@
 import styled from "styled-components";
+import {
+  BORDER_RADIUS_30,
+  BACKGROUND_COLOR
+} from "../../constants/styleconstant";
 
 export const ResultWrapper = styled.div`
   width: 25rem;
   height: 15rem;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 0.5fr 1fr 2fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 0.5fr 1fr 2fr 0.5fr;
   grid-template-rows: 1fr 1.5fr 1fr;
+  background-color: ${BACKGROUND_COLOR};
+  border-radius: ${BORDER_RADIUS_30};
   >:nth-child(n){
     display: flex;
     justify-content: center;
@@ -37,7 +43,7 @@ export const ResultWrapper = styled.div`
   }
 `;
 
-export const Date = styled.div`
+export const Dateform = styled.div`
   text-align: center;
   font-weight: 700;
 `;

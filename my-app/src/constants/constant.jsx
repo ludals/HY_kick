@@ -1,6 +1,8 @@
 export const LEAGUE_TYPE1 = "선봉리그";
 export const LEAGUE_TYPE2 = "공대리그";
 
+export const DAYS = ["일", "월", "화", "수", "목", "금", "토"];
+
 export const RESULT_ITEMS = ["득점", "슈팅", "유효슈팅", "코너킥", "오프사이드"];
 
 export const TABLEHEADER = [

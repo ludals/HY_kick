@@ -1,11 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./component/Main";
-import RankingPage from "./page/RankingPage";
+import RankingPage from "./pages/RankingPage";
 import Schedule from "./component/schedule/Schedule";
 import SquadMaker from "./component/Squadmaker";
 import Register from "./component/register/Register"
-import ResultPage from "./page/ResultPage";
+import ResultPage from "./pages/ResultPage";
 import Login from "./component/login/Login";
 import Home from "./component/home/Home";
 import Team from './component/team_pages/Team';
