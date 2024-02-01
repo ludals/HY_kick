@@ -20,7 +20,10 @@ export const showTeam1Detail = (Team1, Team2) => {
       {
         Team1.map((content, index) => {
           return (
-            <div className={Team1[index] < Team2[index] ? "lose" : ""}>
+            <div
+              className={Team1[index] < Team2[index] ? "lose" : ""}
+              key={"team1Result" + index}
+            >
               {content}
             </div>
           )
@@ -36,7 +39,10 @@ export const showTeam2Detail = (Team1, Team2) => {
       {
         Team2.map((content, index) => {
           return (
-            <div className={Team2[index] < Team1[index] ? "lose" : ""}>
+            <div
+              className={Team2[index] < Team1[index] ? "lose" : ""}
+              key={"team2Result" + index}
+            >
               {content}
             </div>
           )

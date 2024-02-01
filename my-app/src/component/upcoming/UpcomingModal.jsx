@@ -1,23 +1,22 @@
 import styled from "styled-components";
-import close from "../../asset/close.png"
 
-const UpcomingModal = ({closeModal}) => {
-    const CloseButton = {
-        position: "fixed",
-        top: "1rem",
-        right: "1rem",
-        width: "2rem",
-        height: "2rem",
-    }
-    
-    return(
-        <ModalWrapper onClick={closeModal}>
-            <Modal onClick={(e) => {e.stopPropagation();}}>
-                <img src={close} alt="close" style={CloseButton} onClick={closeModal}></img>
-                세부 정보?
-            </Modal>
-        </ModalWrapper>
-    );
+const UpcomingModal = ({ closeModal }) => {
+  const CloseButton = {
+    position: "fixed",
+    top: "1rem",
+    right: "1rem",
+    width: "2rem",
+    height: "2rem",
+  }
+
+  return (
+    <ModalWrapper onClick={closeModal}>
+      <Modal onClick={(e) => { e.stopPropagation(); }}>
+        <img src="/image/close.png" alt="close" style={CloseButton} onClick={closeModal}></img>
+        세부 정보?
+      </Modal>
+    </ModalWrapper>
+  );
 }
 
 export default UpcomingModal;
