@@ -16,7 +16,7 @@ const RankTable = ({ teamDatas }) => {
         {
           TABLEHEADER.map((header) => {
             return (
-              <div className={`${header.field}`} key={header.label}>
+              <div className={header.field} key={header.field}>
                 {header.label}
               </div>
             );
@@ -26,12 +26,12 @@ const RankTable = ({ teamDatas }) => {
       {
         teamDatas?.map((data, index) => {
           return (
-            <TableBody>
+            <TableBody key={index + data.name}>
               {
                 TABLEHEADER.map((header) => {
                   if (header.field === "rank")
                     return (
-                      <div className={`${header.field}`} key={header.field + index}>
+                      <div className={header.field} key={index + header.field}>
                         {index + 1}
                       </div>
                     )
@@ -39,8 +39,8 @@ const RankTable = ({ teamDatas }) => {
                     return (
                       <Link
                         to={TEAMPAGE_PATH[data.name] || '/default'}
-                        className="link"
-                        key={header.field + index}
+                        className={header.field}
+                        key={index + header.field}
                       >
                         <img
                           src='/image/right_arrow.png'
@@ -53,15 +53,15 @@ const RankTable = ({ teamDatas }) => {
                     )
                   else if (header.field === "name") {
                     return (
-                      <div className={`${header.field}`} key={header.field + index}>
-                        <img src="/image/gaebal.jpg" />
+                      <div className={header.field} key={index + header.field}>
+                        <img src="/image/gaebal.jpg" alt="" />
                         {data[header.field]}
                       </div>
                     )
                   }
                   else {
                     return (
-                      <div className={`${header.field}`} key={header.field + index}>
+                      <div className={header.field} key={index + header.field}>
                         {data[header.field]}
                       </div>
                     )

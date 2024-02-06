@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import fieldImage from '../asset/field.jpg';
 import { getFormationData, getPositionStyle } from './Formation.jsx';
 
 const SquadMaker = ({ formation, players }) => {
@@ -52,21 +51,21 @@ const SquadMaker = ({ formation, players }) => {
           const style = getPositionStyle(selectedFormation, index);
           return (
             <PositionContainer key={index}>
-            <PlayerSelect
+              <PlayerSelect
                 style={{ top: `${style.top}`, left: `${style.left}` }}
                 onChange={(e) => handlePlayerSelection(e.target.value, index)}
                 value={selectedPlayers[index] || ''}
-            >
+              >
                 <option value="">이름</option>
                 {players.map((player, playerIndex) => (
-                    <option key={playerIndex} value={player}>
-                        {player}
-                    </option>
-          ))}
-        </PlayerSelect>
-      </PositionContainer>
+                  <option key={playerIndex} value={player}>
+                    {player}
+                  </option>
+                ))}
+              </PlayerSelect>
+            </PositionContainer>
           );
-          })}
+        })}
       </FormationContainer>
 
       <SaveButton onClick={handleSave}>Save</SaveButton>
@@ -91,7 +90,7 @@ const FormationSelection = styled.select`
 
 const FormationContainer = styled.div`
   position: relative;
-  background-image: url(${fieldImage});
+  background-image: url(${"/image/field.jpg"});
   width: 360px;
   height: 306px;
   background-size: cover;

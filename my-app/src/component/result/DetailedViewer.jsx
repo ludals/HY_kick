@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import squad from "../../asset/squad.jpg"
 
 import {
   showItems,
@@ -37,7 +36,7 @@ const DetailedViewer = () => {
           </DetailInfo>
         </DetailInfoWrapper>
         <DetailInfoWrapper>
-          <img src={squad} alt="" />
+          <img src="/image/squad.jpg" alt="" />
         </DetailInfoWrapper>
       </DetailInfoContainer>
     </>

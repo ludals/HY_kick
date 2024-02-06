@@ -1,13 +1,19 @@
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-
 import ResultViewer from "../component/result/ResultViewer";
 import DetailedViewer from "../component/result/DetailedViewer";
 import MomPlayer from "../component/result/MomPlayer";
 
 const ResultPage = () => {
+  const param = useParams();
+  const matches = useSelector((state) => state.match.value).match;
+  const matchID = parseInt(param.id);
+  const match = matches.filter(match => matchID === match.id);
+
   return (
     <RankingLayout>
-      <ResultViewer />
+      <ResultViewer match={match[0]} />
       <MomPlayer />
       <DetailedViewer />
     </RankingLayout>

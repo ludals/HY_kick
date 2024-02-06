@@ -1,15 +1,20 @@
 import styled from "styled-components";
+import {
+  BORDER_RADIUS_20,
+  BACKGROUND_COLOR
+} from "../../constants/styleconstant";
 
 export const MomPlayerWrapper = styled.div`
   width: 25rem;
   height: 6rem;
-  border: 1px solid lightgray;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
   color: darkslategray;
+  border-radius: ${BORDER_RADIUS_20};
+  background-color: ${BACKGROUND_COLOR};
   font-weight: 700;
   .title{
     font-size: 2rem;
