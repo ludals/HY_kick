@@ -1,8 +1,7 @@
 import {
   ResultWrapper,
   Dateform,
-  Score,
-  Place
+  Score
 } from "./ResultViewerStyle";
 import { RefereeWrapper } from "./DetailedViewerStyle";
 import TeamView from "../TeamView";

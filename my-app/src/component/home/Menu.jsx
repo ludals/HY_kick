@@ -1,48 +1,59 @@
-import styled from "styled-components";
+import { Link } from "react-router-dom";
+import Allteam from "../teams.json";
 import {
-  BORDER_RADIUS_20,
-  BACKGROUND_COLOR,
-  WIDTH
-} from "../../constants/styleconstant";
+  MenuWrapper,
+  MenuItem,
+  Image,
+  RankSection,
+  LeagueRank,
+  LeagueType
+} from "./MenuStyle"
 
 const Menu = () => {
+  const teams = [Allteam.sunbong, Allteam.gongde];
   return (
     <MenuWrapper>
-      <MenuItem style={{ height: '100%' }}>
-        Ranking
+      <MenuItem style={{ width: '100%' }}>
+        <Link to="/ranking">
+          <Image src="/image/gotoRight.png" alt="" />
+        </Link>
+        {
+          teams.map((team, index) => {
+            return (
+              <RankSection key={`${team.name}${index}`}>
+                <LeagueType>{index === 0 ? "선봉리그" : "공대리그"}</LeagueType>
+                {
+                  team.slice(0, 3).map((team, index) => {
+                    return (
+                      <LeagueRank key={`${team}${index}`}>
+                        <div>{index + 1}</div>
+                        <div>
+                          <img src="/image/gaebal.jpg" alt="" />
+                          {team.name}
+                        </div>
+                      </LeagueRank>
+                    );
+                  })
+                }
+              </RankSection>
+            );
+          })
+        }
       </MenuItem>
       <MenuItem>
-        Schedule
+        <Link to="/schedule">
+          <Image src="/image/gotoRight.png" alt="" />
+        </Link>
+        <LeagueType>리그 일정/결과</LeagueType>
       </MenuItem>
       <MenuItem>
-        TeamPage
+        <Link to="/gaebal">
+          <Image src="/image/gotoRight.png" alt="" />
+        </Link>
+        <LeagueType>Team Page </LeagueType>
       </MenuItem>
     </MenuWrapper>
   );
 };
 
 export default Menu;
-
-const MenuWrapper = styled.div`
-  width: ${WIDTH};
-  height: 22rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 1rem;
-  >:nth-child(n){
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  >:nth-child(1){
-    grid-area: 1/1/3/2;
-  }
-`;
-
-const MenuItem = styled.div`
-  width: calc((${WIDTH} - 1rem)/2);
-  height: calc((${WIDTH} - 1rem)/2);
-  border-radius: ${BORDER_RADIUS_20};
-  background-color: ${BACKGROUND_COLOR};
-`;

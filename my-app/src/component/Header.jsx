@@ -2,12 +2,13 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const Header = () => {
+  const [isSettingVisible, setSettingVisible] = useState(false);
   const [notifications, setNotifications] = useState(1);
 
   return (
-    <HeaderLayout>
+    <HeaderLayout $settingvisible={isSettingVisible}>
       <ImageWrapper>
-        <Image src="/image/setting.png" alt="" />
+        <Image src="/image/setting.png" alt="" onClick={() => setSettingVisible(!isSettingVisible)} />
       </ImageWrapper>
       <ProfileWrapper>
         <ImageWrapper>
@@ -44,7 +45,32 @@ const HeaderLayout = styled.div`
   background-color: white;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-`;
+  z-index: 2;
+  animation: 
+    ${props => props.$settingvisible ? 'settingIn' : 'settingOut'} 
+    300ms 
+    both;
+  @keyframes settingIn {
+    0%{
+      height: 3.5rem;
+      align-items: center;
+    }
+    100%{
+      height: 10rem;
+      align-items: end;
+    }
+  }
+  @keyframes settingOut {
+    0%{
+      height: 10rem;
+      align-items: end;
+    }
+    100%{
+      height: 3.5rem;
+      align-items: center;
+    }
+  }
+  `;
 
 const Image = styled.img`
   width: 2rem;
