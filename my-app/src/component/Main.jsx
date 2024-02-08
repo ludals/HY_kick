@@ -11,7 +11,7 @@ const Main = () => {
 
   return (
     <div>
-      <nav>
+      {/* <nav>
         <ul>
           <li> 
             <NavLink style={styles} to="/home">
@@ -57,7 +57,7 @@ const Main = () => {
       </nav>
       <hr />
       <Outlet />
-      <hr />
+      <hr /> */}
     </div>
   );
 };

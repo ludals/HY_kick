@@ -1,12 +1,17 @@
 body {
+  width: 600px;
+  padding-top: 5rem;
   margin: 0;
-  background-color: #000000;
+  background-color: lightgray;
   font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 }
 
 code {
@@ -14,8 +19,12 @@ code {
     monospace;
 }
 
-@media screen and (max-width: 600px) {
-  html {
+
+html {
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 600px) {
     font-size: 14px;
   }
 }

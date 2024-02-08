@@ -4,12 +4,13 @@ import {
   Score,
   Place
 } from "./ResultViewerStyle";
+import { RefereeWrapper } from "./DetailedViewerStyle";
 import TeamView from "../TeamView";
 import { DAYS } from "../../constants/constant"
 
-const ResultViewer = ({ match, width }) => {
+const ResultViewer = ({ match }) => {
   return (
-    <ResultWrapper style={{ width: `${width}` }}>
+    <ResultWrapper>
       <Dateform>
         {new Date(match.date).getMonth() + 1}월 {new Date(match.date).getDate()}일
         ({DAYS[new Date(match.date).getDay()]})
@@ -26,7 +27,13 @@ const ResultViewer = ({ match, width }) => {
       <section>
         <TeamView teamName={'개발'} />
       </section>
-      <Place>한양대학교<br /> 대운동장</Place>
+      <RefereeWrapper>
+        <div>Referee</div>
+        <div>
+          <img src="/image/gaebal.jpg" alt="" />
+          <span>개발</span>
+        </div>
+      </RefereeWrapper>
     </ResultWrapper>
   );
 };

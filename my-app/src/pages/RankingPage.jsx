@@ -5,6 +5,10 @@ import styled from "styled-components";
 import Tab from "../component/rank/Tab";
 import RankTable from "../component/rank/RankTable";
 import { LEAGUE_TYPE1 } from "../constants/constant";
+import {
+  BORDER_RADIUS_20,
+  BACKGROUND_COLOR
+} from "../constants/styleconstant";
 
 const RankingPage = () => {
   const [leagueType, setLeagueType] = useState(LEAGUE_TYPE1);
@@ -13,13 +17,15 @@ const RankingPage = () => {
 
   return (
     <RankingLayout>
-      <Tab
-        leagueType={leagueType}
-        setLeagueType={setLeagueType}
-      />
-      <RankTable
-        teamDatas={teamDatas}
-      />
+      <RankTableContainer>
+        <Tab
+          leagueType={leagueType}
+          setLeagueType={setLeagueType}
+        />
+        <RankTable
+          teamDatas={teamDatas}
+        />
+      </RankTableContainer>
     </RankingLayout>
   );
 };
@@ -32,4 +38,9 @@ const RankingLayout = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+`;
+
+const RankTableContainer = styled.div`
+  border-radius: ${BORDER_RADIUS_20};
+  background-color: ${BACKGROUND_COLOR};
 `;
