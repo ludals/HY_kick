@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import {
   BORDER_RADIUS_20,
-  BACKGROUND_COLOR
+  BACKGROUND_COLOR,
+  WIDTH
 } from "../../constants/styleconstant";
 
 export const MomPlayerWrapper = styled.div`
-  width: 25rem;
+  width: ${WIDTH};
   height: 6rem;
   display: flex;
   flex-direction: column;
