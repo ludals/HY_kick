@@ -84,4 +84,14 @@ export const LeagueRank = styled.div`
       margin-right: 0.2rem;
     }
   }
+  animation: Refresh 6s infinite backwards;
+  animation-delay: ${props => props.$idx * 3 + props.$index}s;
+  @keyframes Refresh {
+    0%{
+      transform: rotateX(90deg);
+    }
+    20%{
+      transform: rotateX(0deg);
+    }
+  }
 `;

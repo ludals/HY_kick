@@ -18,14 +18,14 @@ const Menu = () => {
           <Image src="/image/gotoRight.png" alt="" />
         </Link>
         {
-          teams.map((team, index) => {
+          teams.map((team, idx) => {
             return (
-              <RankSection key={`${team.name}${index}`}>
-                <LeagueType>{index === 0 ? "선봉리그" : "공대리그"}</LeagueType>
+              <RankSection key={`${team.name}${idx}`}>
+                <LeagueType>{idx === 0 ? "선봉리그" : "공대리그"}</LeagueType>
                 {
                   team.slice(0, 3).map((team, index) => {
                     return (
-                      <LeagueRank key={`${team}${index}`}>
+                      <LeagueRank key={`${team}${index}`} $idx={idx} $index={index}>
                         <div>{index + 1}</div>
                         <div>
                           <img src="/image/gaebal.jpg" alt="" />

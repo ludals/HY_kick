@@ -7,25 +7,53 @@ const Header = () => {
 
   return (
     <HeaderLayout $settingvisible={isSettingVisible}>
-      <ImageWrapper>
-        <Image src="/image/setting.png" alt="" onClick={() => setSettingVisible(!isSettingVisible)} />
-      </ImageWrapper>
-      <ProfileWrapper>
+      {
+        isSettingVisible &&
+        <>
+          <LogoWrapper>
+            <div>HY-KICK</div>
+          </LogoWrapper>
+          <SettingWrapper>
+            <SettingItem>
+              <img src="/image/setting.png" alt="" />
+              설정
+            </SettingItem>
+            <SettingItem>
+              <img src="/image/customer-support.png" alt="" />
+              문의
+            </SettingItem>
+            <SettingItem>
+              <img src="/image/information.png" alt="" />
+              도움말
+            </SettingItem>
+            <SettingItem>
+              <img src="/image/people.png" alt="" />
+              개발자
+            </SettingItem>
+          </SettingWrapper>
+        </>
+      }
+      <ProfileSection>
         <ImageWrapper>
-          <Image src="/image/user.png" alt="" />
+          <Image src={isSettingVisible ? "/image/close.png" : "/image/setting.png"} alt="" onClick={() => setSettingVisible(!isSettingVisible)} />
         </ImageWrapper>
-        <Name>이유상</Name>
-        <Club>개발</Club>
-      </ProfileWrapper>
-      <ImageWrapper>
-        <Image src="/image/notification.png" alt="" />
-        {
-          notifications !== 0 &&
-          <div className="notifications">
-            {notifications}
-          </div>
-        }
-      </ImageWrapper>
+        <ProfileWrapper>
+          <ImageWrapper>
+            <Image src="/image/user.png" alt="" />
+          </ImageWrapper>
+          <Name>이유상</Name>
+          <Club>개발</Club>
+        </ProfileWrapper>
+        <ImageWrapper>
+          <Image src="/image/notification.png" alt="" />
+          {
+            notifications !== 0 &&
+            <div className="notifications">
+              {notifications}
+            </div>
+          }
+        </ImageWrapper>
+      </ProfileSection>
     </HeaderLayout>
   );
 };
@@ -40,6 +68,7 @@ const HeaderLayout = styled.div`
   top: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   background-color: white;
@@ -48,34 +77,92 @@ const HeaderLayout = styled.div`
   z-index: 2;
   animation: 
     ${props => props.$settingvisible ? 'settingIn' : 'settingOut'} 
-    300ms 
+    100ms
     both;
   @keyframes settingIn {
     0%{
       height: 3.5rem;
-      align-items: center;
     }
     100%{
       height: 10rem;
-      align-items: end;
     }
   }
   @keyframes settingOut {
     0%{
       height: 10rem;
-      align-items: end;
     }
     100%{
       height: 3.5rem;
-      align-items: center;
     }
   }
-  `;
+`;
+
+const LogoWrapper = styled.div`
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+`;
+
+const SettingWrapper = styled.div`
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: end;
+  /* border-top: 2px solid lightgray; */
+  /* border-bottom: 2px solid lightgray; */
+  animation: 
+    ${props => props.$settingvisible ? 'fadeIn' : 'fadeOut'} 
+    300ms 
+    100ms
+    both;
+  @keyframes fadeIn {
+    0%{
+      opacity: 100%;
+    }
+    100%{
+      opacity: 0%;
+    }
+  }
+  @keyframes fadeOut {
+    0%{
+      opacity: 0%;
+    }
+    100%{
+      opacity: 100%;
+    }
+  }
+`;
+
+const SettingItem = styled.div`
+  width: 6rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  >img{
+    width: 1.5rem;
+  }
+`;
+
+const ProfileSection = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
 const Image = styled.img`
   width: 2rem;
   height: 2rem;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 `;
 
 const ImageWrapper = styled.div`
