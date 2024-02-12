@@ -1,16 +1,28 @@
-import React, { useState, useRef } from 'react';
 import styled from "styled-components";
+import React, { useState, useRef } from 'react';
 
-const Formation = ({ formation, players }) => {
+export { getFormationData, getPositionStyle, FormationMap, FormationModal }
+
+const FormationMap = ({ formationData, players, getPositionStyle, formation, isResult, handlePlayerClick }) => {
+  return (
+    <>
+      {formationData.map((position, index) => {
+        const playerName = players[index];
+        const style = getPositionStyle(formation, index);
+        return (
+          <PlayerButton key={index} style={{ top: `${style.top}`, left: `${style.left}` }} onClick={() => isResult === true ? {} : handlePlayerClick(playerName)}>
+            {position}
+            <br />
+            {playerName}
+          </PlayerButton>
+        );
+      })}
+    </>
+  );
+};
+
+const FormationModal = ({ showModal, setShowModal, selectedPlayer, setSelectedPlayer }) => {
   const modalRef = useRef(null);
-  const formationData = getFormationData(formation);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedPlayer, setSelectedPlayer] = useState('');
-
-  const handlePlayerClick = (playerName) => {
-    setSelectedPlayer(playerName);
-    setShowModal(true);
-  };
 
   const handleCloseModal = (e) => {
     if (modalRef.current === e.target) {
@@ -22,24 +34,7 @@ const Formation = ({ formation, players }) => {
   };
 
   return (
-    <FormationCard>
-      <FormationName>
-        전 경기 포메이션: {formation}
-      </FormationName>
-      <Spacer />
-      <FormationContainer>
-        {formationData.map((position, index) => {
-          const playerName = players[index];
-          const style = getPositionStyle(formation, index);
-          return (
-            <PlayerButton key={index} style={{ top: `${style.top}`, left: `${style.left}` }} onClick={() => handlePlayerClick(playerName)}>
-              {position}
-              <br />
-              {playerName}
-            </PlayerButton>
-          );
-        })}
-      </FormationContainer>
+    <>
       {showModal && (
         <ModalWrapper ref={modalRef} onClick={handleCloseModal}>
           <ModalContent>
@@ -51,10 +46,9 @@ const Formation = ({ formation, players }) => {
           </ModalContent>
         </ModalWrapper>
       )}
-    </FormationCard>
+    </>
   );
 };
-export default Formation
 
 function getFormationData(formation) {
   switch (formation) {
@@ -90,7 +84,6 @@ function getFormationData(formation) {
       return [];
   }
 }
-export { getFormationData, getPositionStyle }
 
 function getPositionStyle(formation, index) {
   const position = index + 1;
@@ -331,7 +324,7 @@ function getPositionStyle(formation, index) {
   };
 }
 
-const FormationCard = styled.div`
+export const FormationCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -342,15 +335,15 @@ const FormationCard = styled.div`
   margin: 10 auto; 
 `;
 
-const FormationName = styled.h3`
+export const FormationName = styled.h3`
   margin: 10px 0;
 `;
 
-const Spacer = styled.span`
+export const Spacer = styled.span`
   margin: 20px;
 `;
 
-const FormationContainer = styled.div`
+export const FormationContainer = styled.div`
   position: relative;
   background-image: url(${'/image/field.jpg'});
   width: 360px;
@@ -370,7 +363,7 @@ const FormationContainer = styled.div`
 //   text-align: center;
 //   font-weight: bold;
 // `;
-const PlayerButton = styled.button`
+export const PlayerButton = styled.button`
   position: absolute;
   padding: 4px;
   margin: 4px;
@@ -384,7 +377,7 @@ const PlayerButton = styled.button`
   height: 38px;
 `;
 
-const ModalWrapper = styled.div`
+export const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -396,20 +389,20 @@ const ModalWrapper = styled.div`
   align-items: center;
 `;
 
-const ModalContent = styled.div`
+export const ModalContent = styled.div`
   background-color: white;
   padding: 20px;
   border-radius: 8px;
 `;
 
-const ModalHeader = styled.div`
+export const ModalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 `;
 
-const ModalCloseButton = styled.button`
+export const ModalCloseButton = styled.button`
   background-color: #dc3545;
   color: white;
   border: none;

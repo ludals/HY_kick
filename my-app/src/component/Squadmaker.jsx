@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getFormationData, getPositionStyle } from './Formation.jsx';
+import { getFormationData, getPositionStyle } from './formation/FormationStyle.jsx';
 
 const SquadMaker = ({ formation, players }) => {
   const [selectedPlayers, setSelectedPlayers] = useState([]);

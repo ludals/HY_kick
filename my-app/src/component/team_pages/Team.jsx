@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import Formation from '../Formation';
+import Formation from '../formation/Formation';
 
 //DB에서 최근 5경기 전적 가져옴(예: recent5result = ['W', 'D', 'L', 'W', 'D']) -> prop으로 넣음
 {/* <Recent5Performance>
@@ -40,7 +40,7 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
       <CurrentRank>현재 순위: 1위</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
       <Spacer />
       <SeasonPerformance>8경기 5승 2무 1패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
-      <Recent5Performance>
+        <Recent5Performance>{/*back 최근 5경기 결과*/}
         <RecordCircle>
           <CircleText>W</CircleText>
         </RecordCircle>
