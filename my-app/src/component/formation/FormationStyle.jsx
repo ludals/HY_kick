@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useRef } from 'react';
+import { WIDTH } from "../../constants/styleconstant";
 
 export { getFormationData, getPositionStyle, FormationMap, FormationModal }
 
@@ -346,7 +347,7 @@ export const Spacer = styled.span`
 export const FormationContainer = styled.div`
   position: relative;
   background-image: url(${'/image/field.jpg'});
-  width: 360px;
+  width: ${WIDTH};
   height: 306px;
   background-size: cover;
   background-repeat: no-repeat;
