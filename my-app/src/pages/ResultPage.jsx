@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import ResultViewer from "../component/result/ResultViewer";
 import DetailedViewer from "../component/result/DetailedViewer";
+import ResultSlide from "../component/result/ResultSlide";
 import MomPlayer from "../component/result/MomPlayer";
 
 const ResultPage = () => {
@@ -15,7 +16,8 @@ const ResultPage = () => {
     <RankingLayout>
       <ResultViewer match={match[0]} />
       <MomPlayer />
-      <DetailedViewer />
+      {/* <DetailedViewer /> */}
+      <ResultSlide/>
     </RankingLayout>
   );
 };
