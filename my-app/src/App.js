@@ -7,7 +7,7 @@ import SquadMaker from "./component/Squadmaker";
 import Register from "./component/register/Register"
 import ResultPage from "./pages/ResultPage";
 import Login from "./component/login/Login";
-import Home from "./component/home/Home";
+import Home from "./pages/HomePage";
 import Team from './component/team_pages/Team';
 import gaeballogo from './component/team_image/gaebal.jpg';
 import cselogo from './component/dept_image/cse.jpg';
@@ -18,6 +18,7 @@ import teams from "../src/component/teams.json"
 import { useDispatch, useSelector } from "react-redux";
 import { load_match } from "../src/redux/match";
 import { load_ranking } from "../src/redux/ranking"
+import Header from "./component/Header";
 
 function App() {
   const match = useSelector((state) => state.match.value);
@@ -28,9 +29,9 @@ function App() {
 
   return (
     <>
-      <h1>HY_Kick</h1>
+      <Header />
       <Routes>
-        <Route path="/" element={<Main />}>
+        <Route path="/" element={<Home />}>
           <Route path="/home" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/ranking" element={<RankingPage />} />
@@ -55,11 +56,9 @@ function App() {
           <Route path="/lala" element={<Team teamName="LALA" teamLogo={gaeballogo} deptLogo={cselogo} />} />
           <Route path="/hyulshe" element={<Team teamName="혈쉬" teamLogo={gaeballogo} deptLogo={cselogo} />} />
 
-          <Route path="/formation" element={<Formation formation="4-2-3-1" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} isResult={false} />}  />
+          <Route path="/formation" element={<Formation formation="4-2-3-1" players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} isResult={false} />} />
         </Route>
       </Routes>
-
-      <footer>HY_Kick</footer>
     </>
   );
 }
