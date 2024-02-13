@@ -77,6 +77,8 @@ export const DetailInfoContainer = styled.div`
   overflow: hidden;
   border-radius: ${BORDER_RADIUS_20};
   background-color: ${BACKGROUND_COLOR};
+  justify-content: center;
+  align-items: center;
 `;
 
 export const DetailInfo = styled.div`

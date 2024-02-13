@@ -15,11 +15,11 @@ const Formation = ({ formation, players, isResult }) => {
 
   return (
     <FormationCard>
-      <FormationName>
+      {/* <FormationName> */}
         {/* 전 경기 포메이션: */}
-        {formation}
-      </FormationName>
-      <Spacer />
+        {/* {formation} */}
+      {/* </FormationName> */}
+      {/* <Spacer /> */}
       <FormationContainer>
         <FormationMap
           formationData={getFormationData(formation)}
