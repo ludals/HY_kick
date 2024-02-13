@@ -19,13 +19,33 @@ import { load_match } from "../src/redux/match";
 import { load_ranking } from "../src/redux/ranking"
 import Header from "./component/Header";
 
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+export const TEAMS = gql`
+  query {
+    teams {
+      team_id
+      team_name
+      wins
+      draws
+      losses
+      department
+      founding_year
+      current_rank
+      team_code
+      league
+      played
+    }
+  }
+`;
+
 function App() {
   const match = useSelector((state) => state.match.value);
   const ranking = useSelector((state) => state.ranking.value)
   const dispatch = useDispatch();
   dispatch(load_match(matches.match));
   dispatch(load_ranking(teams));
-
+  const { loading, error, data } = useQuery(TEAMS); console.log(data)
   return (
     <>
       <Header />
