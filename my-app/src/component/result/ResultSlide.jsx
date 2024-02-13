@@ -5,7 +5,8 @@ import styled from "styled-components";
 import DetailedViewer from './DetailedViewer';
 import {
   BORDER_RADIUS_20,
-  BACKGROUND_COLOR
+  BACKGROUND_COLOR,
+  WIDTH
 } from "../../constants/styleconstant";
 
 
@@ -56,16 +57,16 @@ const ResultSlide = ({ Team1, Team2 }) => {
     <SlideWrapper>
       <SlideContainer ref={slideContainerRef} style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
         <Slide>
-            <Formation formation="4-2-3-1"
-              players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']}
-              isResult={true} />
+          <Formation formation="4-2-3-1"
+            players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']}
+            isResult={true} />
         </Slide>
         <Slide>
-            <DetailedViewer />
+          <DetailedViewer />
         </Slide>
         <Slide>
           <Formation formation="4-4-2"
-              players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']}
+            players={['이름1', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']}
             isResult={true} />
         </Slide>
       </SlideContainer>
@@ -76,13 +77,13 @@ const ResultSlide = ({ Team1, Team2 }) => {
 export default ResultSlide;
 
 const SlideWrapper = styled.div`
-  width: 85%;
+  width: calc(${WIDTH} + 2rem);
   overflow: hidden;
 `;
 
 const SlideContainer = styled.div`
   display: flex;
-  width: 28rem;//SlideWrapper의 width: 85%와 맞춘것
+  width: calc(${WIDTH} + 2rem);
   transition: transform 0.5s ease;
 `;
 
@@ -90,7 +91,7 @@ const Slide = styled.div`
   height: fit-content;
   margin-right: 1rem;
   margin-left: 1rem;
-  // width: 25rem;
+  width: ${WIDTH};
   border-radius: ${BORDER_RADIUS_20};
   background-color: ${BACKGROUND_COLOR};
 `;

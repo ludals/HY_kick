@@ -5,14 +5,18 @@ import {
 } from "../../constants/styleconstant";
 
 export const CalenderWrapper = styled.div`
-  width: 25rem;
+  width: 40rem;
   height: auto;
+  padding: 0.5rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: ${BORDER_RADIUS_20};
   background-color: ${BACKGROUND_COLOR};
+  @media (max-width: 600px){
+      width: 25rem;
+    }
 `;
 
 export const MonthSelectWrapper = styled.div`

@@ -1,20 +1,52 @@
 const express = require('express');
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+const db = require('./db');
+
+const schema = buildSchema(`
+  type Team {
+    team_id: Int
+    team_name: String
+    wins: Int
+    draws: Int
+    losses: Int
+    department: String
+    founding_year: Int
+    current_rank: Int
+    team_code: String
+    league: String
+    played: Int
+  }
+
+  type Query {
+    hello: String
+    teams: [Team]
+  }
+`);
+
+const root = {
+    hello: () => 'Hello, World!',
+    teams: () => {
+      return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM teams', (error, results) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(results);
+          }
+        });
+      });
+    },
+  };
+
 const app = express();
-const PORT = 5000;
-const db = require('./db'); // MySQL 연결 설정이 포함된 모듈
+const PORT = 8081;
 
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
-});
-
-app.get('/teams', (req, res) => {
-    db.query('SELECT * FROM teams', (error, results, fields) => {
-        if (error) {
-            return res.status(500).send('Error occurred: ' + error.message);
-        }
-        res.json(results);
-    });
-});
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true,
+  }));
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);

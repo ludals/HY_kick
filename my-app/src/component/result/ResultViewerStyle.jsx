@@ -1,15 +1,16 @@
 import styled from "styled-components";
 import {
   BORDER_RADIUS_30,
-  BACKGROUND_COLOR
+  BACKGROUND_COLOR,
+  WIDTH
 } from "../../constants/styleconstant";
 
 export const ResultWrapper = styled.div`
-  width: 25rem;
+  width: ${WIDTH};
   height: 15rem;
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 0.5fr 1fr 2fr 0.5fr;
-  grid-template-rows: 1fr 1.5fr 1fr;
+  grid-template-rows: 1fr 1.5fr 1.2fr;
   background-color: ${BACKGROUND_COLOR};
   border-radius: ${BORDER_RADIUS_30};
   >:nth-child(n){
@@ -37,6 +38,7 @@ export const ResultWrapper = styled.div`
   }
   >:nth-child(7){
     grid-area: 3/3/4/6;
+    justify-content: start;
   }
   .versus{
     font-size: 2rem;

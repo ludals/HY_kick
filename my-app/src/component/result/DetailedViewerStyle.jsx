@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import {
   BORDER_RADIUS_20,
-  BACKGROUND_COLOR
+  BACKGROUND_COLOR,
+  WIDTH
 } from "../../constants/styleconstant";
 
 export const showItems = (ITEMS) => {
@@ -59,7 +60,7 @@ export const showTeam2Detail = (Team1, Team2) => {
 export const DetailInfoWrapper = styled.div`
   min-width: 20rem;
   height: 20rem;
-  padding: 0 2.5rem;
+  padding: 0 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -69,7 +70,7 @@ export const DetailInfoWrapper = styled.div`
 `;
 
 export const DetailInfoContainer = styled.div`
-  width: 25rem;
+  width: ${WIDTH};
   height: 20rem;
   border: 1px solid lightgray;
   display: flex;
@@ -126,7 +127,6 @@ export const RefereeWrapper = styled.div`
   flex-direction: column;
   justify-content: end;
   align-items: center;
-  gap: 0.3rem;
   img{
     width: 1.8rem;
     height: 1.8rem;

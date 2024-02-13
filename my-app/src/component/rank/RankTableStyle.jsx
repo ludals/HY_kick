@@ -46,8 +46,8 @@ export const TableBody = styled.div`
   justify-content: center;
   text-align: center;
   font-size: 1rem;
-  border-top: 1px solid rgb(245, 242, 245);
-  border-bottom: 1px solid rgb(245, 242, 245);
+  border-top: 3px solid rgb(245, 242, 245);
+  /* border-bottom: 1px solid rgb(245, 242, 245); */
   padding: 0.5rem 0;
   .link{
     display: flex;
