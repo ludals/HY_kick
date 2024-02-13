@@ -87,6 +87,7 @@ const SlideContainer = styled.div`
 `;
 
 const Slide = styled.div`
+  height: fit-content;
   margin-right: 1rem;
   margin-left: 1rem;
   // width: 25rem;
