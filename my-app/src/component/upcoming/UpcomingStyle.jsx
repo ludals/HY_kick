@@ -26,6 +26,7 @@ export const UpcomingHeader = styled.div`
 
 export const UpcomingView = styled.div`
   width: calc(${WIDTH} + 2rem);
+  height: calc(${WIDTH} / 8 * 5 + 1rem);
   overflow: hidden;
 `;
 
@@ -37,6 +38,7 @@ export const UpcomingBody = styled.div`
 export const Pagination = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   gap : 0.5rem;
   margin-bottom: 1rem;
 `;

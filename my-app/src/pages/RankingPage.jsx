@@ -7,8 +7,10 @@ import RankTable from "../component/rank/RankTable";
 import { LEAGUE_TYPE1 } from "../constants/constant";
 import {
   BORDER_RADIUS_20,
-  BACKGROUND_COLOR
+  BACKGROUND_COLOR,
+  MARGIN_TOP
 } from "../constants/styleconstant";
+import Header from "../component/Header";
 
 const RankingPage = () => {
   const [leagueType, setLeagueType] = useState(LEAGUE_TYPE1);
@@ -16,17 +18,20 @@ const RankingPage = () => {
   const teamDatas = (leagueType === LEAGUE_TYPE1 ? teams.ranking.sunbong : teams.ranking.gongde);
 
   return (
-    <RankingLayout>
-      <RankTableContainer>
-        <Tab
-          leagueType={leagueType}
-          setLeagueType={setLeagueType}
-        />
-        <RankTable
-          teamDatas={teamDatas}
-        />
-      </RankTableContainer>
-    </RankingLayout>
+    <>
+      <Header />
+      <RankingLayout>
+        <RankTableContainer>
+          <Tab
+            leagueType={leagueType}
+            setLeagueType={setLeagueType}
+          />
+          <RankTable
+            teamDatas={teamDatas}
+          />
+        </RankTableContainer>
+      </RankingLayout>
+    </>
   );
 };
 
@@ -38,6 +43,7 @@ const RankingLayout = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: ${MARGIN_TOP};
 `;
 
 const RankTableContainer = styled.div`

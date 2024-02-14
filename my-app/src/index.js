@@ -6,14 +6,24 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import store from './redux/store';
 import { Provider } from 'react-redux';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const client = new ApolloClient({
+  uri: 'http://localhost:8081/graphql',
+  cache: new InMemoryCache(),
+});
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProvider>
     </Provider>
   </React.StrictMode>
 );
