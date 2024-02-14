@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Allteam from "../teams.json";
 import {
   MenuWrapper,
@@ -11,12 +11,11 @@ import {
 
 const Menu = () => {
   const teams = [Allteam.sunbong, Allteam.gongde];
+  const navigate = useNavigate();
   return (
     <MenuWrapper>
-      <MenuItem style={{ width: '100%' }}>
-        <Link to="/ranking">
-          <Image src="/image/gotoRight.png" alt="" />
-        </Link>
+      <MenuItem style={{ width: '100%' }} onClick={() => { navigate('/rank') }}>
+        <Image src="/image/gotoRight.png" alt="" />
         {
           teams.map((team, idx) => {
             return (
@@ -40,16 +39,12 @@ const Menu = () => {
           })
         }
       </MenuItem>
-      <MenuItem>
-        <Link to="/schedule">
-          <Image src="/image/gotoRight.png" alt="" />
-        </Link>
+      <MenuItem onClick={() => { navigate('/schedule') }}>
+        <Image src="/image/gotoRight.png" alt="" />
         <LeagueType>리그 일정/결과</LeagueType>
       </MenuItem>
-      <MenuItem>
-        <Link to="/gaebal">
-          <Image src="/image/gotoRight.png" alt="" />
-        </Link>
+      <MenuItem onClick={() => { navigate('/gaebal') }}>
+        <Image src="/image/gotoRight.png" alt="" />
         <LeagueType>Team Page </LeagueType>
       </MenuItem>
     </MenuWrapper>

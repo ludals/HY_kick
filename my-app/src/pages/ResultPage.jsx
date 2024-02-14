@@ -5,6 +5,8 @@ import ResultViewer from "../component/result/ResultViewer";
 import DetailedViewer from "../component/result/DetailedViewer";
 import ResultSlide from "../component/result/ResultSlide";
 import MomPlayer from "../component/result/MomPlayer";
+import { MARGIN_TOP } from "../constants/styleconstant";
+import Header from "../component/Header";
 
 const ResultPage = () => {
   const param = useParams();
@@ -13,12 +15,15 @@ const ResultPage = () => {
   const match = matches.filter(match => matchID === match.id);
 
   return (
-    <RankingLayout>
-      <ResultViewer match={match[0]} />
-      <MomPlayer />
-      {/* <DetailedViewer /> */}
-      <ResultSlide/>
-    </RankingLayout>
+    <>
+      <Header />
+      <RankingLayout>
+        <ResultViewer match={match[0]} />
+        <MomPlayer />
+        {/* <DetailedViewer /> */}
+        <ResultSlide />
+      </RankingLayout>
+    </>
   );
 };
 
@@ -26,6 +31,7 @@ export default ResultPage;
 
 const RankingLayout = styled.div`
   width: 100%;
+  margin-top: ${MARGIN_TOP};
   display: flex;
   flex-direction: column;
   justify-content: center;

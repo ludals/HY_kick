@@ -2,17 +2,19 @@ import styled from "styled-components";
 import {
   BORDER_RADIUS_30,
   BACKGROUND_COLOR,
-  WIDTH
+  WIDTH,
+  SHADOW
 } from "../../constants/styleconstant";
 
 export const ResultWrapper = styled.div`
   width: ${WIDTH};
-  height: 15rem;
+  height: calc(${WIDTH} / 8 * 5);
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 0.5fr 1fr 2fr 0.5fr;
   grid-template-rows: 1fr 1.5fr 1.2fr;
   background-color: ${BACKGROUND_COLOR};
   border-radius: ${BORDER_RADIUS_30};
+  box-shadow: ${SHADOW};
   >:nth-child(n){
     display: flex;
     justify-content: center;
@@ -38,7 +40,7 @@ export const ResultWrapper = styled.div`
   }
   >:nth-child(7){
     grid-area: 3/3/4/6;
-    justify-content: start;
+    justify-content: center;
   }
   .versus{
     font-size: 2rem;

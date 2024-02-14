@@ -2,21 +2,17 @@ import styled from "styled-components";
 import {
   BORDER_RADIUS_20,
   BACKGROUND_COLOR,
-  WIDTH
+  WIDTH,
+  SHADOW
 } from "../../constants/styleconstant";
 
 export const MenuWrapper = styled.div`
   width: ${WIDTH};
-  height: 22rem;
+  height: ${WIDTH};
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 1rem;
-  >:nth-child(n){
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   >:nth-child(1){
     grid-area: 1/1/2/3;
   }
@@ -27,8 +23,12 @@ export const MenuItem = styled.div`
   height: calc((${WIDTH} - 1rem)/2);
   border-radius: ${BORDER_RADIUS_20};
   background-color: ${BACKGROUND_COLOR};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: ${SHADOW};
   position: relative;
-  gap: 3.5rem;
+  gap: 1rem;
   >:first-child{
     position: absolute;
     top: 0.5rem;
@@ -42,8 +42,8 @@ export const Image = styled.img`
 `;
 
 export const RankSection = styled.div`
-  width: 8rem;
-  height: 8rem;
+  width: calc((${WIDTH} - 1rem)/2);
+  width: calc((${WIDTH} - 1rem)/2);
   display: flex;
   flex-direction: column;
   justify-content: center;

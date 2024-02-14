@@ -5,12 +5,13 @@ import Schedule from "./component/schedule/Schedule";
 import SquadMaker from "./component/Squadmaker";
 import Register from "./component/register/Register"
 import ResultPage from "./pages/ResultPage";
-import Login from "./component/login/Login";
+import KakaoLogin from "./component/login/KakaoLogin";
 import Home from "./pages/HomePage";
 import Team from './component/team_pages/Team';
 import gaeballogo from './component/team_image/gaebal.jpg';
 import cselogo from './component/dept_image/cse.jpg';
 import Formation from './component/formation/Formation';
+import Splash from "./pages/Splash";
 
 import matches from "../src/component/matches.json"
 import teams from "../src/component/teams.json"
@@ -45,14 +46,14 @@ function App() {
   const dispatch = useDispatch();
   dispatch(load_match(matches.match));
   dispatch(load_ranking(teams));
-  const { loading, error, data } = useQuery(TEAMS); console.log(data)
+  const { loading, error, data } = useQuery(TEAMS);
   return (
     <>
-      <Header />
       <Routes>
+        <Route path="/" element={<Splash />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/ranking" element={<RankingPage />} />
+        <Route path="/auth" element={<KakaoLogin />} />
+        <Route path="/rank" element={<RankingPage />} />
         <Route path="/schedule" element={<Schedule />} />
         <Route path="/squadmaker" element={<SquadMaker formation="포메이션" players={['민지우', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />} />
         <Route path="/register" element={<Register />} />

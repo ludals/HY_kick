@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { BACKGROUND_COLOR, SHADOW } from "../constants/styleconstant";
 
 const Header = () => {
   const [isSettingVisible, setSettingVisible] = useState(false);
   const [notifications, setNotifications] = useState(1);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   return (
     <HeaderLayout $settingvisible={isSettingVisible}>
@@ -11,6 +15,7 @@ const Header = () => {
         isSettingVisible &&
         <>
           <LogoWrapper>
+            {/* <Image src="/image/HY_kick_logo.png" /> */}
             <div>HY-KICK</div>
           </LogoWrapper>
           <SettingWrapper>
@@ -35,7 +40,13 @@ const Header = () => {
       }
       <ProfileSection>
         <ImageWrapper>
-          <Image src={isSettingVisible ? "/image/close.png" : "/image/setting.png"} alt="" onClick={() => setSettingVisible(!isSettingVisible)} />
+          {
+            location.pathname === "/home" ? (
+              <Image src={isSettingVisible ? "/image/close.png" : "/image/setting.png"} alt="" onClick={() => setSettingVisible(!isSettingVisible)} />
+            ) : (
+              <Image src="/image/arrow_left.png" alt="" onClick={() => navigate(-1)} />
+            )
+          }
         </ImageWrapper>
         <ProfileWrapper>
           <ImageWrapper>
@@ -61,20 +72,23 @@ const Header = () => {
 export default Header;
 
 const HeaderLayout = styled.div`
-  width: calc(100% - 2rem);
+  width: calc(600px - 2rem);
   height: 3.5rem;
   padding: 0.75rem 1rem 0.75rem 1rem;
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: ${BACKGROUND_COLOR};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.4);
   z-index: 2;
+  @media screen and (max-width: 600px) {
+    width: calc(100% - 2rem);
+  }
   animation: 
     ${props => props.$settingvisible ? 'settingIn' : 'settingOut'} 
     100ms
