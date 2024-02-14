@@ -15,7 +15,7 @@ const QRCodeComponent = ({ name, club }) => {
 };
 
 const Header = () => {
-  const [isSettingVisible, setSettingVisible] = useState(false);
+  const [isSettingVisible, setSettingVisible] = useState(null);
   const [notifications, setNotifications] = useState(1);
   const location = useLocation();
   const navigate = useNavigate();
@@ -102,12 +102,12 @@ const HeaderLayout = styled.div`
     width: calc(100% - 2rem);
   }
   animation: 
-    ${props => props.$settingvisible ? 'settingIn' : 'settingOut'} 
+    ${props => props.$settingvisible === null ? 'none' : (props.$settingvisible ? 'settingIn' : 'settingOut')}
     100ms
     both;
   @keyframes settingIn {
     0%{
-      height: 3.5rem;
+      height: 10rem;
     }
     100%{
       height: 17rem;
