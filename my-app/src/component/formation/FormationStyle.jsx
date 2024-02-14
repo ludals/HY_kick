@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { useState, useRef } from 'react';
-import { WIDTH } from "../../constants/styleconstant";
+import { WIDTH, BORDER_RADIUS_20 } from "../../constants/styleconstant";
 
 export { getFormationData, getPositionStyle, FormationMap, FormationModal }
 
@@ -329,11 +329,11 @@ export const FormationCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
   border: 1px solid #ddd;
-  padding: 5px;
+  padding: 0px;
   text-align: center;
   margin: 10 auto; 
+  border-radius: ${BORDER_RADIUS_20};
 `;
 
 export const FormationName = styled.h3`
@@ -352,18 +352,9 @@ export const FormationContainer = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  border-radius: ${BORDER_RADIUS_20};
 `;
 
-// const PlayerPosition = styled.div`
-//   position: absolute;
-//   font-size: 12px;
-//   text-align: center;
-//   font-weight: bold;
-// `;
 export const PlayerButton = styled.button`
   position: absolute;
   padding: 4px;

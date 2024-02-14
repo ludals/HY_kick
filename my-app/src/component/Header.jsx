@@ -2,6 +2,17 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BACKGROUND_COLOR, SHADOW } from "../constants/styleconstant";
+import QRCode from 'react-qr-code';
+
+const QRCodeComponent = ({ name, club }) => {
+  const qrValue = `Name: ${name}, Club: ${club}`;
+
+  return (
+    <QRCodeContainer>
+      <QRCode value={qrValue} />
+    </QRCodeContainer>
+  );
+};
 
 const Header = () => {
   const [isSettingVisible, setSettingVisible] = useState(false);
@@ -36,6 +47,7 @@ const Header = () => {
               개발자
             </SettingItem>
           </SettingWrapper>
+          <QRCodeComponent />
         </>
       }
       <ProfileSection>
@@ -98,7 +110,7 @@ const HeaderLayout = styled.div`
       height: 3.5rem;
     }
     100%{
-      height: 10rem;
+      height: 17rem;
     }
   }
   @keyframes settingOut {
@@ -235,4 +247,13 @@ const Club = styled.div`
   background-color: navy;
   border-radius: 10px;
   font-weight: 500;
+`;
+
+const QRCodeContainer = styled.div`
+  padding: 1rem 0 1rem 0;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

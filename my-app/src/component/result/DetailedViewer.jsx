@@ -35,9 +35,6 @@ const DetailedViewer = () => {
             {showTeam2Detail(Team1, Team2)}
           </DetailInfo>
         </DetailInfoWrapper>
-        <DetailInfoWrapper>
-          <img src="/image/squad.jpg" alt="" />
-        </DetailInfoWrapper>
       </DetailInfoContainer>
     </>
   );
