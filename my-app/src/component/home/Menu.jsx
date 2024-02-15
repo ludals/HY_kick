@@ -16,7 +16,7 @@ const Menu = () => {
     <MenuWrapper>
       <MenuItem style={{ width: '100%' }} onClick={() => { navigate('/rank') }}>
         <Image src="/image/gotoRight.png" alt="" />
-        {
+        {/* {
           teams.map((team, idx) => {
             return (
               <RankSection key={`${team.name}${idx}`}>
@@ -37,15 +37,15 @@ const Menu = () => {
               </RankSection>
             );
           })
-        }
+        } */}
       </MenuItem>
       <MenuItem onClick={() => { navigate('/schedule') }}>
         <Image src="/image/gotoRight.png" alt="" />
-        <LeagueType>리그 일정/결과</LeagueType>
+        {/* <LeagueType>리그 일정/결과</LeagueType> */}
       </MenuItem>
       <MenuItem onClick={() => { navigate('/gaebal') }}>
         <Image src="/image/gotoRight.png" alt="" />
-        <LeagueType>Team Page </LeagueType>
+        {/* <LeagueType>Team Page </LeagueType> */}
       </MenuItem>
     </MenuWrapper>
   );

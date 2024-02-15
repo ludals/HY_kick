@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import { HANYANG_BLUE } from "../../constants/styleconstant"
+import { HANYANG_COLOR } from "../../constants/styleconstant"
 
 export const SplashLayout = styled.div`
   width: 100%;
   height: 100vh;
   position: relative;
-  background-color: ${HANYANG_BLUE};
+  background-color: ${HANYANG_COLOR.BLUE};
   overflow: hidden;
 `;
 
@@ -101,9 +101,11 @@ export const HylionImg = styled.img`
   @keyframes HyLion {
     0%{
       left: 120%;
+      opacity: 0;
     }
     33%{
       left: 100%;
+      opacity: 1;
     }
     66%{
       left: 80%;

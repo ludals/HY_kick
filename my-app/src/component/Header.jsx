@@ -84,9 +84,10 @@ const Header = () => {
 export default Header;
 
 const HeaderLayout = styled.div`
-  width: calc(600px - 2rem);
-  height: 3.5rem;
+  width: 600px;
+  height: 5rem;
   padding: 0.75rem 1rem 0.75rem 1rem;
+  box-sizing: border-box;
   position: absolute;
   top: 0;
   display: flex;
@@ -96,10 +97,10 @@ const HeaderLayout = styled.div`
   background-color: ${BACKGROUND_COLOR};
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
   z-index: 2;
   @media screen and (max-width: 600px) {
-    width: calc(100% - 2rem);
+    width: 100%;
   }
   animation: 
     ${props => props.$settingvisible === null ? 'none' : (props.$settingvisible ? 'settingIn' : 'settingOut')}
@@ -118,7 +119,7 @@ const HeaderLayout = styled.div`
       height: 10rem;
     }
     100%{
-      height: 3.5rem;
+      height: 5rem;
     }
   }
 `;
