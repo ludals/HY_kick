@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Formation from '../formation/Formation';
+import {
+  BORDER_RADIUS_20,
+  BACKGROUND_COLOR,
+  WIDTH
+} from "../../constants/styleconstant";
 
 //DB에서 최근 5경기 전적 가져옴(예: recent5result = ['W', 'D', 'L', 'W', 'D']) -> prop으로 넣음
 {/* <Recent5Performance>
@@ -112,14 +117,18 @@ const TeamCard = styled.div`
 //팀 정보
 const TeamContent = styled.div`
   border: 1px solid #ddd;
-  padding: 20px;
-  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
   gap:20px;
   flex-wrap: wrap;
   flex: 1; 
   margin-top: 20px;
+  border-radius: ${BORDER_RADIUS_20};
+  background-color: ${BACKGROUND_COLOR};
+  width: ${WIDTH};
+  align-items: center;
 `;
 const FirstRow = styled.div`
   display: flex;
@@ -150,7 +159,7 @@ const TeamDescription = styled.p`
 `;
 
 const TeamInfo = styled.div`
-  border: 1px solid #ddd;
+  border: 0px solid #ddd;
   flex: 1;
   padding-left: 10px;
   padding-right: 15px;
@@ -161,20 +170,21 @@ const SeasonCard = styled.div`
   
   border: 1px solid #ddd;
   //background-color: #f7f7f7;
-  padding-top: 20px;
-  padding-left: 57px;
-  padding-right:57px;
-  text-align: left;
+  text-align: center;
   margin-top: 10px;
+  border-radius: ${BORDER_RADIUS_20};
+  background-color: ${BACKGROUND_COLOR};
+  width: ${WIDTH};
+  align-items: center;
 `;
 
 const LeagueName = styled.h4`
-  margin: 0;
-  font-size: 14px; 
+  margin-top: 20px;
+  margin-bottom: 3px;
+  font-size: 18px; 
 `;
 
 const CurrentRank = styled.p`
-  margin: 0;
   font-weight: bold;
   font-size: 16px;
   display: inline;
@@ -190,7 +200,7 @@ const SeasonPerformance = styled.p`
 const Recent5Performance = styled.p`
   justify-content: center;
   display: flex;
-  gap: 12px;
+  gap: 21px;
 `;
 
 const CircleText = styled.p`
@@ -208,7 +218,6 @@ const RecordCircle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
 `;
 // background-color: ${props => {
 //   switch (props.result) {
@@ -230,8 +239,8 @@ const Spacer = styled.span`
 //역대 전적
 const TeamHistoryCard = styled.div`
 width: calc(100% - 120px);
-border: 1px solid #ddd;
-padding: 20px;
+border: 0px solid #ddd;
+padding: 0px;
 padding-left: 10px;
 padding-bottom: 0px;
 text-align: left;
@@ -271,18 +280,19 @@ const TeamHistory = ({ history }) => {
 //Details(Navigation Bar)
 
 const DetailCard = styled.div`
-
-  padding: 10px;
   background-color: '#f0f0f0';
   border: 1px solid #ddd;
   margin-top:10px;
+  width: ${WIDTH};
+  border-radius: ${BORDER_RADIUS_20};
+  background-color: ${BACKGROUND_COLOR};
 `;
 
 const Navigation = styled.nav`
   display: flex;
   justify-content: space-between;
   padding: 5px;
-  border: 1px solid #ddd;
+  border-radius: ${BORDER_RADIUS_20};
 `;
 
 const NavItem = styled.div`
@@ -291,6 +301,7 @@ padding: 10px;
 cursor: pointer;
 font-size: 12px;
 background-color: ${props => (props.selected ? '#f0f0f0' : 'transparent')};
+border-radius: ${BORDER_RADIUS_20};
 `;
 
 const CardWrapper = styled.div`
