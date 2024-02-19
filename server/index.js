@@ -117,7 +117,11 @@ type Scorer {
 type Member {
   member_id: Int
   name: String
+  email: String
+  team_id: Int
   position: String
+  student_number: String
+  jersey_number: Int
 }
 
 """
@@ -132,13 +136,10 @@ type Match {
   team2_score: Int
 }
 
-type KakaoAuthResponse {
+type UserAuthResponse {
+  member: Member
   accessToken: String
   refreshToken: String
-  expiresIn: Int
-  tokenType: String
-  scope: String
-  userId: Int
 }
 
 """
@@ -154,7 +155,14 @@ type Query {
 }
 
 type Mutation {
-  authenticateWithKakao(authorizationCode: String!): KakaoAuthResponse
+  loginWithKakao(authorizationCode: String!): UserAuthResponse
+  registerOrAuthenticateUser(
+    authorizationCode: String!
+    student_number: String
+    team_code: String
+    position: String
+    jersey_number: Int
+  ): UserAuthResponse
 }
 
 `);
@@ -187,38 +195,43 @@ const root = {
       });
     });
   },
-  authenticateWithKakao: async ({ authorizationCode }) => {
+  registerOrAuthenticateUser: async ({authorizationCode, additionalInfo }) => {
     try {
-      const params = new URLSearchParams();
-      params.append('grant_type', 'authorization_code');
-      params.append('client_id', 'YOUR_CLIENT_ID'); // 카카오 앱 REST API 키
-      params.append('redirect_uri', 'YOUR_REDIRECT_URI'); // 카카오 개발자 콘솔에 등록한 리디렉트 URI
-      params.append('code', authorizationCode);
-
-      // 카카오로부터 액세스 토큰 요청
-      const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', params);
-      const { access_token, refresh_token, expires_in, token_type, scope } = tokenResponse.data;
-
-      // 액세스 토큰으로 카카오 API를 통해 사용자 정보 요청
-      const userInfoResponse = await axios.get('https://kapi.kakao.com/v2/user/me', {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      const userId = userInfoResponse.data.id; // 카카오 사용자 고유 ID
-
+      const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
+      let member = await findMemberByEmail(kakaoUserInfo.email);
+      if (!member) {
+        member = await registerNewMember(kakaoUserInfo, additionalInfo);
+      }
       return {
-        accessToken: access_token,
-        refreshToken: refresh_token,
-        expiresIn: expires_in,
-        tokenType: token_type,
-        scope: scope,
-        userId: userId,
+        member,
+        accessToken: kakaoUserInfo.accessToken,
+        refreshToken: kakaoUserInfo.refreshToken,
       };
     } catch (error) {
-      console.error('Error during Kakao authentication:', error);
-      throw new Error('Failed to authenticate with Kakao');
+      throw new Error(error.message);
+    }
+  },
+
+  loginWithKakao: async ({ authorizationCode }) => {
+    try {
+      const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
+      let member = await findMemberByEmail(kakaoUserInfo.email);
+      if (member) {
+        // 로그인 처리 로직을 구현합니다.
+        // 예를 들면, 세션 생성, JWT 발급 등을 수행할 수 있습니다.
+        
+        // 회원 정보 및 액세스 토큰 정보 반환
+        return {
+          member,
+          accessToken: kakaoUserInfo.accessToken,
+          // 여기에 추가로 필요한 정보를 포함시킬 수 있습니다.
+        };
+      } else {
+        // 회원이 존재하지 않는 경우, 에러 처리나 회원가입 절차를 수행합니다.
+        throw new Error("Member not found. Please register first.");
+      }
+    } catch (error) {
+      throw new Error(error.message);
     }
   },
   teamInfo: async ({ team_id }) => {
@@ -319,13 +332,79 @@ const root = {
   },
 };
 
+async function getKakaoUserInfo(authorizationCode) {
+  const params = new URLSearchParams();
+  params.append('grant_type', 'authorization_code');
+  params.append('client_id', 'YOUR_CLIENT_ID'); // 카카오 앱 REST API 키
+  params.append('redirect_uri', 'YOUR_REDIRECT_URI'); // 카카오 개발자 콘솔에 등록한 리디렉트 URI
+  params.append('code', authorizationCode);
+
+  // 액세스 토큰 받아오기
+  const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', params);
+  const accessToken = tokenResponse.data.access_token;
+
+  // 액세스 토큰을 사용하여 사용자 정보 받아오기
+  const userInfoResponse = await axios.get('https://kapi.kakao.com/v2/user/me', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return {
+    accessToken,
+    refreshToken: tokenResponse.data.refresh_token,
+    ...userInfoResponse.data,
+  };
+}
+
+async function findMemberByEmail(email) {
+  return new Promise((resolve, reject) => {
+    db.query('SELECT * FROM members WHERE email = ?', [email], (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results[0]);
+      }
+    });
+  });
+}
+
+async function registerNewMember(kakaoUserInfo, additionalInfo) {
+  const { id, properties, kakao_account } = kakaoUserInfo;
+  const { 
+    student_number,
+    teamCode,
+    position,
+    jersey_number }= additionalInfo;
+
+
+  return new Promise((resolve, reject) => {
+    db.query(
+      'INSERT INTO members (name, email, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?)',
+      [properties.nickname, kakaoUserInfo.email, position, student_number, jersey_number], (error, results) => {
+          if (error) {
+          reject(error);
+          } else {
+          resolve({
+          member_id: results.insertId,
+          name: properties.nickname,
+          email: memberEmail,
+          position: position,
+          student_number: student_number,
+          jersey_number: jersey_number
+          });
+          }
+          }
+          );
+})}
+
 const app = express();
 const PORT = 8081;
 
 const cors = require('cors');
 app.use(cors({
-  origin: 'http://localhost:3000', // 허용할 도메인
-  credentials: true, // 필요한 경우 (쿠키 전송을 위해)
+  origin: 'http://localhost:3000',
+  credentials: true,
 }));
 
 app.use('/graphql', graphqlHTTP({
