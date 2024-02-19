@@ -17,7 +17,7 @@ import {
 ))}
 </Recent5Performance> */}
 
-const Team = ({ teamName, teamLogo, deptLogo }) => {
+const Team = ({ team, teamLogo, deptLogo }) => {
   //const [results, setResults] = useState(resultData);
   const [selectedNav, setSelectedNav] = useState('nav1'); //초기값
 
@@ -30,7 +30,7 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
       <FirstRow>
       <TeamLogo src={teamLogo} alt="팀 로고" />
       <TeamInfo>
-        <TeamName>{teamName}</TeamName>
+        <TeamName>{team.team_name}</TeamName>
         <TeamDescription>컴퓨터소프트웨어학부</TeamDescription>{/* back */}
         <TeamDescription>창설년도: 2020</TeamDescription>{/* back */}
       </TeamInfo>
@@ -41,10 +41,10 @@ const Team = ({ teamName, teamLogo, deptLogo }) => {
     </SecondRow>
     </TeamContent>
     <SeasonCard>
-      <LeagueName>공대스리가</LeagueName>{/* back {leagueName} */}
-      <CurrentRank>현재 순위: 1위</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
+        <LeagueName>{team.league}</LeagueName>{/* back {leagueName} */}
+        <CurrentRank>현재 순위: {team.current_rank}</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
       <Spacer />
-      <SeasonPerformance>8경기 5승 2무 1패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
+        <SeasonPerformance>{team.played}경기 {team.wins}승 {team.draws}무 {team.losses}패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
         <Recent5Performance>{/*back 최근 5경기 결과*/}
         <RecordCircle>
           <CircleText>W</CircleText>
