@@ -2,6 +2,7 @@ const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
 const db = require('./db');
+const axios = require('axios');
 
 const schema = buildSchema(`
 """
@@ -131,6 +132,15 @@ type Match {
   team2_score: Int
 }
 
+type KakaoAuthResponse {
+  accessToken: String
+  refreshToken: String
+  expiresIn: Int
+  tokenType: String
+  scope: String
+  userId: Int
+}
+
 """
 쿼리 타입은 API를 통해 조회할 수 있는 데이터와 메서드를 정의합니다.
 """
@@ -141,6 +151,10 @@ type Query {
   members(team_id: Int!): [Member]
   recentMatches(team_id: Int!): [Match]
   upcomingMatches(team_id: Int!): [Match]
+}
+
+type Mutation {
+  authenticateWithKakao(authorizationCode: String!): KakaoAuthResponse
 }
 
 `);
@@ -172,6 +186,40 @@ const root = {
         else resolve(results);
       });
     });
+  },
+  authenticateWithKakao: async ({ authorizationCode }) => {
+    try {
+      const params = new URLSearchParams();
+      params.append('grant_type', 'authorization_code');
+      params.append('client_id', 'YOUR_CLIENT_ID'); // 카카오 앱 REST API 키
+      params.append('redirect_uri', 'YOUR_REDIRECT_URI'); // 카카오 개발자 콘솔에 등록한 리디렉트 URI
+      params.append('code', authorizationCode);
+
+      // 카카오로부터 액세스 토큰 요청
+      const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', params);
+      const { access_token, refresh_token, expires_in, token_type, scope } = tokenResponse.data;
+
+      // 액세스 토큰으로 카카오 API를 통해 사용자 정보 요청
+      const userInfoResponse = await axios.get('https://kapi.kakao.com/v2/user/me', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+      const userId = userInfoResponse.data.id; // 카카오 사용자 고유 ID
+
+      return {
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        expiresIn: expires_in,
+        tokenType: token_type,
+        scope: scope,
+        userId: userId,
+      };
+    } catch (error) {
+      console.error('Error during Kakao authentication:', error);
+      throw new Error('Failed to authenticate with Kakao');
+    }
   },
   teamInfo: async ({ team_id }) => {
     try {
