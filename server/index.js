@@ -152,18 +152,22 @@ type Query {
   recentMatches(team_id: Int!): [Match]
   upcomingMatches(team_id: Int!): [Match]
 }
+input additionalInfo {
+  name: String
+  email: String
+  student_number: String
+  team_code: String
+  position: String
+  jersey_number: Int
+}
 
 type Mutation {
   loginWithKakao(authorizationCode: String!): UserAuthResponse
   registerOrAuthenticateUser(
     authorizationCode: String!
-    student_number: String
-    team_code: String
-    position: String
-    jersey_number: Int
+    input: additionalInfo
   ): UserAuthResponse
 }
-
 `);
 
 const root = {
@@ -194,16 +198,19 @@ const root = {
       });
     });
   },
-  registerOrAuthenticateUser: async ({authorizationCode, additionalInfo }) => {
+  registerOrAuthenticateUser: async ({authorizationCode, input : additionalInfo }) => {
     try {
+      console.log(additionalInfo)
       const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
-      let member = await findMemberByEmail(kakaoUserInfo.email);
+      console.log("카카오", kakaoUserInfo)
+      let member = await findMemberBykakaoID(kakaoUserInfo.id);
       if (!member) {
         member = await registerNewMember(kakaoUserInfo, additionalInfo);
       }
 
       const tokenPayload = {
           id: member.id,
+          name: member.name,
           email: member.email,
           position : member.position,
           student_number: member.student_number, 
@@ -225,10 +232,11 @@ const root = {
   loginWithKakao: async ({ authorizationCode }) => {
     try {
       const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
-      let member = await findMemberByEmail(kakaoUserInfo.email);
+      let member = await findMemberBykakaoID(kakaoUserInfo.id);
       if (member) {
         const tokenPayload = {
           id: member.id,
+          name: member.name,
           email: member.email,
           position : member.position,
           student_number: member.student_number, 
@@ -373,9 +381,9 @@ async function getKakaoUserInfo(authorizationCode) {
   };
 }
 
-async function findMemberByEmail(email) {
+async function findMemberBykakaoID(id) {
   return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM members WHERE email = ?', [email], (error, results) => {
+    db.query('SELECT * FROM members WHERE kakaoId = ?', [id], (error, results) => {
       if (error) {
         reject(error);
       } else {
@@ -388,23 +396,24 @@ async function findMemberByEmail(email) {
 async function registerNewMember(kakaoUserInfo, additionalInfo) {
   const { id, properties, kakao_account } = kakaoUserInfo;
   const { 
+    name,
+    email,
     student_number,
     teamCode,
     position,
     jersey_number }= additionalInfo;
-
-
+    console.log(kakaoUserInfo)
   return new Promise((resolve, reject) => {
     db.query(
       'INSERT INTO members (name, email, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?)',
-      [properties.nickname, kakaoUserInfo.email, position, student_number, jersey_number], (error, results) => {
+      [name, email, position, student_number, jersey_number], (error, results) => {
           if (error) {
           reject(error);
           } else {
           resolve({
           member_id: results.insertId,
-          name: properties.nickname,
-          email: memberEmail,
+          name: name,
+          email: email,
           position: position,
           student_number: student_number,
           jersey_number: jersey_number
@@ -432,3 +441,5 @@ app.use('/graphql', graphqlHTTP({
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+//멤버에 카카오id필드 추가하고 로그인이랑 회원가입할떄 kakaoinfo.id 넣기

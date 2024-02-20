@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const KakaoLogin = () => {
@@ -9,7 +10,9 @@ const KakaoLogin = () => {
   const onclick = () => {
     window.location.href = kakaoURL;
   }
-
+  useEffect(() => {
+    console.log(code);
+  },[code])
   return (
     <AuthWrapper>
       <KakaoButton src='/image/kakao-login.png' alt="" onClick={onclick} />
