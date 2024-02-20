@@ -333,17 +333,18 @@ const root = {
 };
 
 async function getKakaoUserInfo(authorizationCode) {
+  const REST_API_KEY = '531ad8ca7724886e585bdd16b39a39bc';
+  const REDIRECT_URI = 'http://localhost:3000/auth';
+
   const params = new URLSearchParams();
   params.append('grant_type', 'authorization_code');
-  params.append('client_id', 'YOUR_CLIENT_ID'); // 카카오 앱 REST API 키
-  params.append('redirect_uri', 'YOUR_REDIRECT_URI'); // 카카오 개발자 콘솔에 등록한 리디렉트 URI
+  params.append('client_id', REST_API_KEY);
+  params.append('redirect_uri', REDIRECT_URI);
   params.append('code', authorizationCode);
 
-  // 액세스 토큰 받아오기
   const tokenResponse = await axios.post('https://kauth.kakao.com/oauth/token', params);
-  const accessToken = tokenResponse.data.access_token;
+  const accessToken = tokenResponse.data.access_token; 
 
-  // 액세스 토큰을 사용하여 사용자 정보 받아오기
   const userInfoResponse = await axios.get('https://kapi.kakao.com/v2/user/me', {
     headers: {
       Authorization: `Bearer ${accessToken}`,
