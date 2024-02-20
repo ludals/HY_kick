@@ -3,6 +3,7 @@ const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
 const db = require('./db');
 const axios = require('axios');
+const jwt = require('jsonwebtoken'); 
 
 const schema = buildSchema(`
 """
@@ -137,9 +138,7 @@ type Match {
 }
 
 type UserAuthResponse {
-  member: Member
-  accessToken: String
-  refreshToken: String
+  jwtToken: String
 }
 
 """
@@ -202,11 +201,22 @@ const root = {
       if (!member) {
         member = await registerNewMember(kakaoUserInfo, additionalInfo);
       }
-      return {
-        member,
-        accessToken: kakaoUserInfo.accessToken,
-        refreshToken: kakaoUserInfo.refreshToken,
-      };
+
+      const tokenPayload = {
+          id: member.id,
+          email: member.email,
+          position : member.position,
+          student_number: member.student_number, 
+          jersey_number:member.jersey_number
+        };
+        
+        const secretKey = process.env.SECRET_KEY;
+        const options = { expiresIn: '1h' };
+  
+        const jwtToken = jwt.sign(tokenPayload, secretKey, options);
+        return {
+          jwtToken,
+        };
     } catch (error) {
       throw new Error(error.message);
     }
@@ -217,17 +227,22 @@ const root = {
       const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
       let member = await findMemberByEmail(kakaoUserInfo.email);
       if (member) {
-        // 로그인 처리 로직을 구현합니다.
-        // 예를 들면, 세션 생성, JWT 발급 등을 수행할 수 있습니다.
+        const tokenPayload = {
+          id: member.id,
+          email: member.email,
+          position : member.position,
+          student_number: member.student_number, 
+          jersey_number:member.jersey_number
+        };
         
-        // 회원 정보 및 액세스 토큰 정보 반환
+        const secretKey = process.env.SECRET_KEY;
+        const options = { expiresIn: '1h' };
+  
+        const jwtToken = jwt.sign(tokenPayload, secretKey, options);
         return {
-          member,
-          accessToken: kakaoUserInfo.accessToken,
-          // 여기에 추가로 필요한 정보를 포함시킬 수 있습니다.
+          jwtToken,
         };
       } else {
-        // 회원이 존재하지 않는 경우, 에러 처리나 회원가입 절차를 수행합니다.
         throw new Error("Member not found. Please register first.");
       }
     } catch (error) {
