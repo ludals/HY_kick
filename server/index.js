@@ -232,6 +232,7 @@ const root = {
   loginWithKakao: async ({ authorizationCode }) => {
     try {
       const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
+      console.log("login", kakaoUserInfo)
       let member = await findMemberBykakaoID(kakaoUserInfo.id);
       if (member) {
         const tokenPayload = {
@@ -383,7 +384,7 @@ async function getKakaoUserInfo(authorizationCode) {
 
 async function findMemberBykakaoID(id) {
   return new Promise((resolve, reject) => {
-    db.query('SELECT * FROM members WHERE kakaoId = ?', [id], (error, results) => {
+    db.query('SELECT * FROM members WHERE member_id = ?', [id], (error, results) => {
       if (error) {
         reject(error);
       } else {
@@ -405,8 +406,8 @@ async function registerNewMember(kakaoUserInfo, additionalInfo) {
     console.log(kakaoUserInfo)
   return new Promise((resolve, reject) => {
     db.query(
-      'INSERT INTO members (name, email, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?)',
-      [name, email, position, student_number, jersey_number], (error, results) => {
+      'INSERT INTO members ( member_id, name, email, position, student_number, jersey_number) VALUES (?,?, ?, ?, ?, ?)',
+      [kakaoUserInfo.id, name, email, position, student_number, jersey_number], (error, results) => {
           if (error) {
           reject(error);
           } else {
