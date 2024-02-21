@@ -43,7 +43,6 @@ async function getKakaoUserInfo(authorizationCode) {
     const { id, properties, kakao_account } = kakaoUserInfo;
     const { 
       name,
-      email,
       student_number,
       teamCode,
       position,
@@ -51,15 +50,14 @@ async function getKakaoUserInfo(authorizationCode) {
   
     return new Promise((resolve, reject) => {
       db.query(
-        'INSERT INTO members (kakao_id, name, email, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?, ?)',
-        [id, name, email, position, student_number, jersey_number], (error, results) => {
+        'INSERT INTO members (kakao_id, name, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?, ?)',
+        [id, name, position, student_number, jersey_number], (error, results) => {
           if (error) {
             reject(error);
           } else {
             resolve({
               member_id: results.insertId,
               name: name,
-              email: email,
               position: position,
               student_number: student_number,
               jersey_number: jersey_number

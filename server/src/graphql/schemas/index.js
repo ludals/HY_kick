@@ -112,7 +112,6 @@ type Scorer {
 type Member {
   member_id: Int
   name: String
-  email: String
   team_id: Int
   position: String
   student_number: String
@@ -148,7 +147,6 @@ type Query {
 }
 input additionalInfo {
   name: String
-  email: String
   student_number: String
   team_code: String
   position: String

@@ -11,7 +11,6 @@ const mutationResolvers = {
             const tokenPayload = {
               id: member.id,
               name: member.name,
-              email: member.email,
               position : member.position,
               student_number: member.student_number, 
               jersey_number:member.jersey_number
@@ -44,7 +43,6 @@ const mutationResolvers = {
           const tokenPayload = {
               id: member.id,
               name: member.name,
-              email: member.email,
               position : member.position,
               student_number: member.student_number, 
               jersey_number:member.jersey_number
