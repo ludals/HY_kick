@@ -5,12 +5,12 @@ const mutationResolvers = {
     loginWithKakao: async ({ authorizationCode }) => {
         try {
           const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
-          console.log("login", kakaoUserInfo)
           let member = await findMemberBykakaoID(kakaoUserInfo.id);
           if (member) {
             const tokenPayload = {
               id: member.id,
               name: member.name,
+              team_id: member.team_id,
               position : member.position,
               student_number: member.student_number, 
               jersey_number:member.jersey_number
@@ -34,7 +34,6 @@ const mutationResolvers = {
         try {
           console.log(additionalInfo)
           const kakaoUserInfo = await getKakaoUserInfo(authorizationCode);
-          console.log("카카오", kakaoUserInfo)
           let member = await findMemberBykakaoID(kakaoUserInfo.id);
           if (!member) {
             member = await registerNewMember(kakaoUserInfo, additionalInfo);
@@ -43,6 +42,7 @@ const mutationResolvers = {
           const tokenPayload = {
               id: member.id,
               name: member.name,
+              team_id: member.team_id,
               position : member.position,
               student_number: member.student_number, 
               jersey_number:member.jersey_number

@@ -29,7 +29,7 @@ async function getKakaoUserInfo(authorizationCode) {
 
   async function findMemberBykakaoID(id) {
     return new Promise((resolve, reject) => {
-      db.query('SELECT * FROM members WHERE kakao_id = ?', [id], (error, results) => {
+      db.query('SELECT * FROM members WHERE member_id = ?', [id], (error, results) => {
         if (error) {
           reject(error);
         } else {
@@ -44,20 +44,21 @@ async function getKakaoUserInfo(authorizationCode) {
     const { 
       name,
       student_number,
-      teamCode,
+      team_id,
       position,
       jersey_number }= additionalInfo;
   
     return new Promise((resolve, reject) => {
       db.query(
-        'INSERT INTO members (kakao_id, name, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?, ?)',
-        [id, name, position, student_number, jersey_number], (error, results) => {
+        'INSERT INTO members (kakao_id, name, team_id, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?, ?)',
+        [id, name, team_id, position, student_number, jersey_number], (error, results) => {
           if (error) {
             reject(error);
           } else {
             resolve({
               member_id: results.insertId,
               name: name,
+              team_id: team_id,
               position: position,
               student_number: student_number,
               jersey_number: jersey_number

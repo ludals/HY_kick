@@ -148,7 +148,7 @@ type Query {
 input additionalInfo {
   name: String
   student_number: String
-  team_code: String
+  team_id: Int
   position: String
   jersey_number: Int
 }
