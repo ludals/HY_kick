@@ -15,11 +15,9 @@ const Menu = () => {
   const navigate = useNavigate();
   return (
     <MenuWrapper>
-      <MenuItem style={{ width: '100%' }}>
-        <Link to="/ranking">
-          <Image src="/image/gotoRight.png" alt="" />
-        </Link>
-        {
+      <MenuItem style={{ width: '100%' }} onClick={() => { navigate('/rank') }}>
+        <Image src="/image/gotoRight.png" alt="" />
+        {/* {
           teams.map((team, idx) => {
             return (
               <RankSection key={`${team.name}${idx}`}>
@@ -40,17 +38,15 @@ const Menu = () => {
               </RankSection>
             );
           })
-        }
+        } */}
       </MenuItem>
       <MenuItem onClick={() => { navigate('/schedule') }}>
-        <Link to="/schedule">
-          <Image src="/image/gotoRight.png" alt="" />
-        </Link>
-        <LeagueType>리그 일정/결과</LeagueType>
+        <Image src="/image/gotoRight.png" alt="" />
+        {/* <LeagueType>리그 일정/결과</LeagueType> */}
       </MenuItem>
       <MenuItem onClick={() => { navigate('/team/1') }}> {/* /team/user.team_id */}
         <Image src="/image/gotoRight.png" alt="" />
-        <LeagueType>Team Page </LeagueType>
+        {/* <LeagueType>Team Page </LeagueType> */}
       </MenuItem>
     </MenuWrapper>
   );

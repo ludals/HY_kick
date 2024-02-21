@@ -7,7 +7,7 @@ export const UpcomingWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
   .upcoming_container{
     display: flex;
     gap: 3rem;
