@@ -108,9 +108,9 @@ const Upcoming = (props) => {
 
   return (
     <UpcomingWrapper>
-      <UpcomingHeader>
-        {/* 경기 일정/결과 */}
-      </UpcomingHeader>
+      {/* <UpcomingHeader>
+        경기 일정/결과
+      </UpcomingHeader> */}
       <UpcomingView onTouchStart={(e) => setPositionx(e.changedTouches[0].pageX)} onTouchEnd={onTouchEnd}>
         <div ref={ref} className="upcoming_container">
           {

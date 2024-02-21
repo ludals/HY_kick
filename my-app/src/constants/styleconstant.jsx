@@ -4,6 +4,7 @@ export const BACKGROUND_COLOR = '#ffffff';
 export const WIDTH = window.innerWidth >= 500 ? '30rem' : (window.innerWidth >= 410 ? '27rem' : '24rem');
 export const HEIGHT = 'calc(100vh - 5rem)';
 export const MARGIN_TOP = '5rem';
+export const MARGIN_BOTTOM = '9rem';
 export const SHADOW = '0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.4)';
 
 export const HANYANG_COLOR = {

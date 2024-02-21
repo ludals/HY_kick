@@ -3,7 +3,8 @@ import {
   BORDER_RADIUS_30,
   BACKGROUND_COLOR,
   WIDTH,
-  SHADOW
+  SHADOW,
+  HANYANG_COLOR
 } from "../../constants/styleconstant";
 
 export const ResultWrapper = styled.div`
@@ -12,9 +13,10 @@ export const ResultWrapper = styled.div`
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 0.5fr 1fr 2fr 0.5fr;
   grid-template-rows: 1fr 1.5fr 1.2fr;
-  background-color: ${BACKGROUND_COLOR};
+  background-color: ${HANYANG_COLOR.BLUE};
   border-radius: ${BORDER_RADIUS_30};
   box-shadow: ${SHADOW};
+  color: #FFFFFF;
   >:nth-child(n){
     display: flex;
     justify-content: center;
