@@ -4,7 +4,7 @@ import {
   getFormationData, getPositionStyle, FormationMap, FormationModal
 } from "./FormationStyle";
 
-const Formation = ({ formation, players, isResult }) => {
+const Formation = ({ formation, players, isResult }) => {//여기 players는 List<Member>
   const [showModal, setShowModal] = useState(false);
   const [selectedPlayer, setSelectedPlayer] = useState('');
 
@@ -15,11 +15,6 @@ const Formation = ({ formation, players, isResult }) => {
 
   return (
     <FormationCard>
-      {/* <FormationName> */}
-        {/* 전 경기 포메이션: */}
-        {/* {formation} */}
-      {/* </FormationName> */}
-      {/* <Spacer /> */}
       <FormationContainer>
         <FormationMap
           formationData={getFormationData(formation)}
