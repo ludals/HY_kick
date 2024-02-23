@@ -19,7 +19,6 @@ const SquadMaker = ({ formation, players }) => {
   const handleSave = () => {
     // TODO: Save selectedPlayers to the database
     console.log('Selected Players:', selectedPlayers);
-    // Add logic to save 'selectedPlayers' in the database
   };
 
   const formationData = getFormationData(selectedFormation);

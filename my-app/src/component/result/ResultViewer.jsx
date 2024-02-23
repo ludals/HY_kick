@@ -1,7 +1,8 @@
 import {
   ResultWrapper,
   Dateform,
-  Score
+  Score,
+  ScoreView
 } from "./ResultViewerStyle";
 import { RefereeWrapper } from "./DetailedViewerStyle";
 import TeamView from "../TeamView";
@@ -18,13 +19,13 @@ const ResultViewer = ({ match }) => {
         {match.time >= 13 ? match.time % 12 : match.time}시
       </Dateform>
       <section>
-        <TeamView teamName={'개발'} />
+        <TeamView teamName={match.teams[0].name} />
       </section>
-      <Score>3</Score>
+      <ScoreView score = {match.teams[0].score}/>
       <div className="versus">:</div>
-      <Score>2</Score>
+      <ScoreView score = {match.teams[1].score}/>
       <section>
-        <TeamView teamName={'개발'} />
+        <TeamView teamName={match.teams[1].name} />
       </section>
       <RefereeWrapper>
         <div>Referee</div>
@@ -38,3 +39,4 @@ const ResultViewer = ({ match }) => {
 };
 
 export default ResultViewer;
+

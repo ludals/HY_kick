@@ -8,14 +8,60 @@ import {
   WIDTH
 } from "../../constants/styleconstant";
 
-//DB에서 최근 5경기 전적 가져옴(예: recent5result = ['W', 'D', 'L', 'W', 'D']) -> prop으로 넣음
-{/* <Recent5Performance>
-{recent5result.map((result, index) => (
-  <RecordCircle key={index} result={result}>
-    <CircleText>{result}</CircleText>
-  </RecordCircle>
-))}
-</Recent5Performance> */}
+import { gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { dummyMatches, dummyScorers, dummyTeamPlayers } from './TeamDummy';
+import TeamScorers from './TeamScorerRank';
+import TeamPlayers from './TeamPlayerList';
+import { Upcoming2Matches, Recent2Matches } from './TeamMatches';
+export const TEAMINFO = gql`
+query ($team_id: Int!) {
+    teamInfo(team_id : $team_id) {
+    team_name
+    department
+    founding_year
+    league
+    current_rank
+    played
+    wins
+    draws
+    losses
+    recentMatches{
+      match_id
+      match_date
+      team1_id
+      team2_id
+      team1_score
+      team2_score
+    }
+    upcomingMatches{
+      match_id
+      match_date
+      team1_id
+      team2_id
+      team1_score
+      team2_score
+    }
+    topScorers{
+      member_id
+      name
+      goals
+    }
+    members{
+      member_id
+      name
+      position
+      student_number
+      jersey_number
+    }
+    lastFormation{
+        formation
+        starting_players
+      }
+    }
+  }`;
+
+
 
 const Team = ({ team, teamLogo, deptLogo }) => {
   //const [results, setResults] = useState(resultData);
@@ -24,44 +70,33 @@ const Team = ({ team, teamLogo, deptLogo }) => {
   const handleNavClick = (nav) => {
     setSelectedNav(nav);
   };
+  console.log("dddddd" + team.team_id);
+  const { loading, error, data } = useQuery(TEAMINFO, {
+          variables: { team_id: team.team_id }
+  });
+  //const { teamInfo } = data;
   return(
   <TeamCard>
     <TeamContent>
       <FirstRow>
       <TeamLogo src={teamLogo} alt="팀 로고" />
       <TeamInfo>
-        <TeamName>{team.team_name}</TeamName>
-        <TeamDescription>컴퓨터소프트웨어학부</TeamDescription>{/* back */}
+        <TeamName>{team.team_name}</TeamName> {/*teamInfo.team_name */}
+        <TeamDescription>team.department</TeamDescription>{/* back */}
         <TeamDescription>창설년도: 2020</TeamDescription>{/* back */}
       </TeamInfo>
       </FirstRow>
-      <SecondRow>
+      {/* <SecondRow>
       <TeamLogo src={deptLogo} alt="학과 이미지" />
     <TeamHistory history="2022년 공대스리가 우승, 2021년 공대스리가 3위, 2020년 공대스리가 5위" />
-    </SecondRow>
+    </SecondRow> */}
     </TeamContent>
     <SeasonCard>
         <LeagueName>{team.league}</LeagueName>{/* back {leagueName} */}
         <CurrentRank>현재 순위: {team.current_rank}</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
       <Spacer />
         <SeasonPerformance>{team.played}경기 {team.wins}승 {team.draws}무 {team.losses}패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
-        <Recent5Performance>{/*back 최근 5경기 결과*/}
-        <RecordCircle>
-          <CircleText>W</CircleText>
-        </RecordCircle>
-        <RecordCircle>
-          <CircleText>W</CircleText>
-        </RecordCircle>
-        <RecordCircle>
-          <CircleText>W</CircleText>
-        </RecordCircle>
-        <RecordCircle>
-          <CircleText>D</CircleText>
-        </RecordCircle>
-        <RecordCircle>
-          <CircleText>L</CircleText>
-        </RecordCircle>
-      </Recent5Performance>
+        <Recent5Performance results={['W', 'W', 'W', 'D', 'L']} />
     </SeasonCard>
     <DetailCard>
         <Navigation>
@@ -91,10 +126,10 @@ const Team = ({ team, teamLogo, deptLogo }) => {
           </NavItem>
         </Navigation>
         <CardWrapper>
-        {selectedNav === 'nav1' && <Upcoming2Matches />} {/* 네비게이션 1을 클릭했을 때 Upcoming2Matches 렌더링 */}
-        {selectedNav === 'nav2' && <Recent2Matches />} {/* 네비게이션 2를 클릭했을 때 Recent2Matches 렌더링 */}
-        {selectedNav === 'nav3' && <TeamScoreRank />} {/* 네비게이션 3를 클릭했을 때 TeamScoreRank 렌더링 */}
-        {selectedNav === 'nav4' && <TeamSquad />} {/* 네비게이션 4를 클릭했을 때 TeamSquad 렌더링 */}
+        {selectedNav === 'nav1' && <Upcoming2Matches matches = {dummyMatches}/>}
+        {selectedNav === 'nav2' && <Recent2Matches matches = {dummyMatches}/>}
+        {selectedNav === 'nav3' && <TeamScorers scorers={dummyScorers}/>}
+        {selectedNav === 'nav4' && <TeamPlayers players={dummyTeamPlayers}/>}
       </CardWrapper>
       </DetailCard>
       <Spacer/>
@@ -179,8 +214,7 @@ const SeasonCard = styled.div`
 `;
 
 const LeagueName = styled.h4`
-  margin-top: 20px;
-  margin-bottom: 3px;
+  margin: 20px 0px;
   font-size: 18px; 
 `;
 
@@ -197,11 +231,18 @@ const SeasonPerformance = styled.p`
   display: inline;
 `;
 
-const Recent5Performance = styled.p`
-  justify-content: center;
-  display: flex;
-  gap: 21px;
-`;
+const Recent5Performance = ({ results }) => {
+  return (
+    <Recent5PerformanceWrapper>
+      {results.slice(0, 5).map((result, index) => (
+        <RecordCircle key={index} result={result}>
+          <CircleText>{result}</CircleText>
+        </RecordCircle>
+      ))}
+    </Recent5PerformanceWrapper>
+  );
+};
+
 
 const CircleText = styled.p`
   color: #fff;
@@ -210,28 +251,33 @@ const CircleText = styled.p`
   margin: 0;
 `;
 
+const Recent5PerformanceWrapper = styled.div`
+  padding: 30px 50px;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const RecordCircle = styled.div`
-  background-color: #3498db;
   width: 30px;
   height: 30px;
   border-radius: 50%;
+  background-color: ${({ result }) => {
+    switch (result) {
+      case 'W':
+        return 'green';
+      case 'D':
+        return 'gray';
+      case 'L':
+        return 'red';
+      default:
+        return 'white';
+    }
+  }};
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 5px;
 `;
-// background-color: ${props => {
-//   switch (props.result) {
-//     case 'W':
-//       return 'green';
-//     case 'D':
-//       return 'yellow';
-//     case 'L':
-//       return 'red';
-//     default:
-//       return 'transparent';
-//   }
-// }};
-// color: ${props => (props.result === 'W' || props.result === 'L') ? 'white' : 'black'};
 
 const Spacer = styled.span`
   margin: 10px;
@@ -302,6 +348,7 @@ cursor: pointer;
 font-size: 12px;
 background-color: ${props => (props.selected ? '#f0f0f0' : 'transparent')};
 border-radius: ${BORDER_RADIUS_20};
+overflow-y: auto;
 `;
 
 const CardWrapper = styled.div`
@@ -309,30 +356,3 @@ const CardWrapper = styled.div`
   padding: 20px;
 `;
 
-const Upcoming2Matches = () => (
-  <div>
-    <h2>다가오는 2 경기</h2>
-    <p>Upcoming 2 Matches</p>
-  </div>
-);
-
-const Recent2Matches = () => (
-  <div>
-    <h2>최근 2 경기 결과</h2>
-    <p>Recent 2 Matches</p>
-  </div>
-);
-
-const TeamScoreRank = () => (
-  <div>
-    <h2>팀 내 득점 순위</h2>
-    <p>Team Score Ranking</p>
-  </div>
-);
-
-const TeamSquad = () => (
-  <div>
-    <h2>팀 선수 명단</h2>
-    <p>Team Squad</p>
-  </div>
-);

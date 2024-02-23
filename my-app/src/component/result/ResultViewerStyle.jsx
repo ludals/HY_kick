@@ -7,9 +7,16 @@ import {
   HANYANG_COLOR
 } from "../../constants/styleconstant";
 
+export const ScoreView = ({ score }) => {
+  return (
+        <Score>{score}</Score>
+  );
+}
+
 export const ResultWrapper = styled.div`
-  width: ${WIDTH};
+  width: ${WIDTH-30};
   height: calc(${WIDTH} / 8 * 5);
+  margin-bottom: 20px;
   display: grid;
   grid-template-columns: 0.5fr 2fr 1fr 0.5fr 1fr 2fr 0.5fr;
   grid-template-rows: 1fr 1.5fr 1.2fr;

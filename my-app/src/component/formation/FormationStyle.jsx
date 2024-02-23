@@ -8,7 +8,7 @@ const FormationMap = ({ formationData, players, getPositionStyle, formation, isR
   return (
     <>
       {formationData.map((position, index) => {
-        const playerName = players[index];
+        const playerName = players[index];//players[index].name
         const style = getPositionStyle(formation, index);
         return (
           <PlayerButton key={index} style={{ top: `${style.top}`, left: `${style.left}` }} onClick={() => isResult === true ? {} : handlePlayerClick(playerName)}>
