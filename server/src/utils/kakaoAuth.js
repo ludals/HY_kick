@@ -50,7 +50,7 @@ async function getKakaoUserInfo(authorizationCode) {
   
     return new Promise((resolve, reject) => {
       db.query(
-        'INSERT INTO members (kakao_id, name, team_id, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?, ?)',
+        'INSERT INTO members (member_id, name, team_id, position, student_number, jersey_number) VALUES (?, ?, ?, ?, ?, ?)',
         [id, name, team_id, position, student_number, jersey_number], (error, results) => {
           if (error) {
             reject(error);
