@@ -1,12 +1,33 @@
 import React, { useState } from 'react';
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import Formation from '../formation/Formation';
 import {
-  BORDER_RADIUS_20,
-  BACKGROUND_COLOR,
-  WIDTH
-} from "../../constants/styleconstant";
+  CardWrapper,
+  NavItem,
+  Navigation,
+  DetailCard,
+  TeamHistory,
+  HistoryItem,
+  HistoryList,
+  TeamHistoryTitle,
+  TeamHistoryCard,
+  Spacer,
+  RecordCircle,
+  Recent5PerformanceWrapper,
+  CircleText,
+  Recent5Performance,
+  SeasonPerformance,
+  CurrentRank,
+  LeagueName,
+  SeasonCard,
+  TeamInfo,
+  TeamDescription,
+  TeamName,
+  FirstRow,
+  TeamContent,
+  TeamCard,
+  TeamViewWrapper,
+  TeamView
+} from "./TeamStyle";
 
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
@@ -64,26 +85,28 @@ query ($team_id: Int!) {
 
 
 const Team = ({ team, teamLogo, deptLogo }) => {
-  //const [results, setResults] = useState(resultData);
-  const [selectedNav, setSelectedNav] = useState('nav1'); //초기값
+  const [selectedNav, setSelectedNav] = useState('nav1');
 
   const handleNavClick = (nav) => {
     setSelectedNav(nav);
   };
-  console.log("dddddd" + team.team_id);
   const { loading, error, data } = useQuery(TEAMINFO, {
           variables: { team_id: team.team_id }
   });
-  //const { teamInfo } = data;
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const teamInfo = data.teamInfo;
   return(
   <TeamCard>
     <TeamContent>
       <FirstRow>
-      <TeamLogo src={teamLogo} alt="팀 로고" />
+      <TeamView teamName={teamInfo.team_name} />
       <TeamInfo>
-        <TeamName>{team.team_name}</TeamName> {/*teamInfo.team_name */}
-        <TeamDescription>team.department</TeamDescription>{/* back */}
-        <TeamDescription>창설년도: 2020</TeamDescription>{/* back */}
+        <TeamName>{teamInfo.team_name}</TeamName> {/*teamInfo.team_name */}
+            <TeamDescription>{teamInfo.department}</TeamDescription>{/* back */}
+        <TeamDescription>{teamInfo.founding_year}</TeamDescription>{/* back */}
       </TeamInfo>
       </FirstRow>
       {/* <SecondRow>
@@ -92,10 +115,10 @@ const Team = ({ team, teamLogo, deptLogo }) => {
     </SecondRow> */}
     </TeamContent>
     <SeasonCard>
-        <LeagueName>{team.league}</LeagueName>{/* back {leagueName} */}
-        <CurrentRank>현재 순위: {team.current_rank}</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
+        <LeagueName>{teamInfo.league}</LeagueName>{/* back {leagueName} */}
+        <CurrentRank>현재 순위: {teamInfo.current_rank}</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
       <Spacer />
-        <SeasonPerformance>{team.played}경기 {team.wins}승 {team.draws}무 {team.losses}패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
+        <SeasonPerformance>{teamInfo.played}경기 {teamInfo.wins}승 {teamInfo.draws}무 {teamInfo.losses}패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
         <Recent5Performance results={['W', 'W', 'W', 'D', 'L']} />
     </SeasonCard>
     <DetailCard>
@@ -126,7 +149,26 @@ const Team = ({ team, teamLogo, deptLogo }) => {
           </NavItem>
         </Navigation>
         <CardWrapper>
-        {selectedNav === 'nav1' && <Upcoming2Matches matches = {dummyMatches}/>}
+          {selectedNav === 'nav1' && teamInfo.recentMatches.map(match => {
+            const utcDate = new Date(match.match_date);
+            const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+            const localTime = localDate.getHours();
+
+            return (
+              <Upcoming2Matches matches={[
+                {
+                  id: match.match_id,
+                  date: localDate,
+                  time: localTime,
+                  teams: [
+                    { name: match.team1_id, score: match.team1_score },
+                    { name: match.team2_id, score: match.team2_score }
+                  ],
+                  referee: { name: "Referee Name", image: "/image/gaebal.jpg" }
+                },
+              ]} />
+            );
+          })}
         {selectedNav === 'nav2' && <Recent2Matches matches = {dummyMatches}/>}
         {selectedNav === 'nav3' && <TeamScorers scorers={dummyScorers}/>}
         {selectedNav === 'nav4' && <TeamPlayers players={dummyTeamPlayers}/>}
@@ -138,221 +180,4 @@ const Team = ({ team, teamLogo, deptLogo }) => {
 );};
 export default Team
 
-
-const TeamCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  //width: 100%; 
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
-  margin: 0 auto; 
-`;
-//팀 정보
-const TeamContent = styled.div`
-  border: 1px solid #ddd;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  gap:20px;
-  flex-wrap: wrap;
-  flex: 1; 
-  margin-top: 20px;
-  border-radius: ${BORDER_RADIUS_20};
-  background-color: ${BACKGROUND_COLOR};
-  width: ${WIDTH};
-  align-items: center;
-`;
-const FirstRow = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-const SecondRow = styled.div`
-  display: flex;
-  gap: 20px;
-`;
-
-const TeamLogo = styled.img`
-  max-width: 100px;
-  max-height: 100px;
-  border-radius: 50%;
-  border: 2px solid #ddd;
-  padding: 1px;
-`;
-
-const TeamName = styled.h3`
-  margin: 10px 0;
-`;
-
-const TeamDescription = styled.p`
-  margin: 0;
-  font-size: 14px;
-  color: #333;
-`;
-
-const TeamInfo = styled.div`
-  border: 0px solid #ddd;
-  flex: 1;
-  padding-left: 10px;
-  padding-right: 15px;
-  text-align: left;
-`;
-//이번 시즌 성적
-const SeasonCard = styled.div`
-  
-  border: 1px solid #ddd;
-  //background-color: #f7f7f7;
-  text-align: center;
-  margin-top: 10px;
-  border-radius: ${BORDER_RADIUS_20};
-  background-color: ${BACKGROUND_COLOR};
-  width: ${WIDTH};
-  align-items: center;
-`;
-
-const LeagueName = styled.h4`
-  margin: 20px 0px;
-  font-size: 18px; 
-`;
-
-const CurrentRank = styled.p`
-  font-weight: bold;
-  font-size: 16px;
-  display: inline;
-`;
-
-const SeasonPerformance = styled.p`
-  margin: 0;
-  font-weight: bold;
-  font-size: 16px;
-  display: inline;
-`;
-
-const Recent5Performance = ({ results }) => {
-  return (
-    <Recent5PerformanceWrapper>
-      {results.slice(0, 5).map((result, index) => (
-        <RecordCircle key={index} result={result}>
-          <CircleText>{result}</CircleText>
-        </RecordCircle>
-      ))}
-    </Recent5PerformanceWrapper>
-  );
-};
-
-
-const CircleText = styled.p`
-  color: #fff;
-  font-weight: bold;
-  font-size: 16px;
-  margin: 0;
-`;
-
-const Recent5PerformanceWrapper = styled.div`
-  padding: 30px 50px;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const RecordCircle = styled.div`
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: ${({ result }) => {
-    switch (result) {
-      case 'W':
-        return 'green';
-      case 'D':
-        return 'gray';
-      case 'L':
-        return 'red';
-      default:
-        return 'white';
-    }
-  }};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 5px;
-`;
-
-const Spacer = styled.span`
-  margin: 10px;
-`;
-//역대 전적
-const TeamHistoryCard = styled.div`
-width: calc(100% - 120px);
-border: 0px solid #ddd;
-padding: 0px;
-padding-left: 10px;
-padding-bottom: 0px;
-text-align: left;
-`;
-
-const TeamHistoryTitle = styled.h3`
-margin: 0;
-font-size: 14px;
-`;
-
-const HistoryList = styled.ul`
-  list-style-type: none;
-  padding: 0px;
-  margin-top: 5;
-`;
-
-const HistoryItem = styled.li`
-  font-size: 14px;
-  margin-bottom: 2px;
-`;
-
-const TeamHistory = ({ history }) => {
-  const historyItems = history.split(',');
-
-  return (
-    <TeamHistoryCard>
-      <TeamHistoryTitle>역대 전적</TeamHistoryTitle>
-      <HistoryList>
-        {historyItems.map((item, index) => (
-          <HistoryItem key={index}>{item.trim()}</HistoryItem>
-        ))}
-      </HistoryList>
-    </TeamHistoryCard>
-  );
-};
-
-//Details(Navigation Bar)
-
-const DetailCard = styled.div`
-  background-color: '#f0f0f0';
-  border: 1px solid #ddd;
-  margin-top:10px;
-  width: ${WIDTH};
-  border-radius: ${BORDER_RADIUS_20};
-  background-color: ${BACKGROUND_COLOR};
-`;
-
-const Navigation = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  padding: 5px;
-  border-radius: ${BORDER_RADIUS_20};
-`;
-
-const NavItem = styled.div`
-color: black;
-padding: 10px;
-cursor: pointer;
-font-size: 12px;
-background-color: ${props => (props.selected ? '#f0f0f0' : 'transparent')};
-border-radius: ${BORDER_RADIUS_20};
-overflow-y: auto;
-`;
-
-const CardWrapper = styled.div`
-  border: 1px solid #ddd;
-  padding: 20px;
-`;
 

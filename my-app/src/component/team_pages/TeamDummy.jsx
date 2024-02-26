@@ -28,7 +28,7 @@ const dummyMatches = [
   {
     id: 1,
     date: new Date("2024-02-23T18:30:00"),
-    time: 18,
+    time: new Date("2024-02-23T18:30:00").getHours(),
     teams: [
       { name: "Team A", score: 3 },
       { name: "Team B", score: 2 }
@@ -38,7 +38,7 @@ const dummyMatches = [
   {
     id: 2,
     date: new Date("2024-02-24T15:00:00"),
-    time: 15,
+    time: new Date("2024-02-24T15:00:00").getHours(),
     teams: [
       { name: "Team C", score: 1 },
       { name: "Team D", score: 1 }
