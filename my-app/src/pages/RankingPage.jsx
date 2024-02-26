@@ -14,7 +14,7 @@ import Header from "../component/Header";
 
 const RankingPage = () => {
   const [leagueType, setLeagueType] = useState(LEAGUE_TYPE1);
-  const teams = useSelector((state) => state.ranking.value)
+  const teams = useSelector((state) => state.teams.value)
   const teamDatas = (leagueType === LEAGUE_TYPE1 ? teams.ranking.sunbong : teams.ranking.gongde);
 
   return (

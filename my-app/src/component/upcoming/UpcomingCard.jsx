@@ -47,7 +47,7 @@ const UpcomingCard = (props) => {
           }
         </OpenSection>
         {
-          matches.map((match, index) => {
+          matches?.map((match, index) => {
             return (
               <Card
                 $index={index}
