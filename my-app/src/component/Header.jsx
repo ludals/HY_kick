@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { BACKGROUND_COLOR, SHADOW } from "../constants/styleconstant";
@@ -15,6 +16,7 @@ const QRCodeComponent = ({ name, club }) => {
 };
 
 const Header = () => {
+  const user = useSelector((state) => state.user.value);
   const [isSettingVisible, setSettingVisible] = useState(null);
   const [notifications, setNotifications] = useState(1);
   const location = useLocation();
@@ -64,8 +66,8 @@ const Header = () => {
           <ImageWrapper>
             <Image src="/image/user.png" alt="" />
           </ImageWrapper>
-          <Name>이유상</Name>
-          <Club>개발</Club>
+          <Name>{user.name}</Name>
+          <Club>{user.team_id}</Club>
         </ProfileWrapper>
         <ImageWrapper>
           <Image src="/image/notification.png" alt="" />
