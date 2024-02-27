@@ -50,16 +50,20 @@ const queryResolvers = {
       
           const recentMatchesResults = await new Promise((resolve, reject) => {
             db.query(`
-            SELECT m.*, mr.team1_score, mr.team2_score
-            FROM matches m
-            LEFT JOIN match_records mr ON m.match_id = mr.match_id
-            WHERE m.team1_id = ? OR m.team2_id = ?
-            ORDER BY m.match_date DESC LIMIT 2
-          `, [team_id, team_id], (error, results) => {
-            if (error) reject(error);
-            else resolve(results);
-            });
-          });
+            SELECT m.*, mr.team1_score, mr.team2_score,
+            t1.team_name AS team1_name, 
+            t2.team_name AS team2_name
+     FROM matches m
+     JOIN match_records mr ON m.match_id = mr.match_id
+     JOIN teams t1 ON m.team1_id = t1.team_id
+     JOIN teams t2 ON m.team2_id = t2.team_id
+     WHERE m.team1_id = ? OR m.team2_id = ?
+     ORDER BY m.match_date DESC LIMIT 2
+   `, [team_id, team_id], (error, results) => {
+     if (error) reject(error);
+     else resolve(results);
+   });
+ });
           team.recentMatches = recentMatchesResults.map(match => ({
             ...match,
             match_date: new Date(match.match_date).toISOString()
@@ -67,14 +71,19 @@ const queryResolvers = {
       
           const upcomingMatchesResults = await new Promise((resolve, reject) => {
             db.query(`
-              SELECT * FROM matches 
-              WHERE (team1_id = ? OR team2_id = ?) AND match_date > NOW()
-              ORDER BY match_date ASC LIMIT 2
-            `, [team_id, team_id], (error, results) => {
-              if (error) reject(error);
-              else resolve(results);
-            });
-          });
+          SELECT m.*, 
+                 t1.team_name AS team1_name, 
+                 t2.team_name AS team2_name
+          FROM matches m
+          JOIN teams t1 ON m.team1_id = t1.team_id
+          JOIN teams t2 ON m.team2_id = t2.team_id
+          WHERE (m.team1_id = ? OR m.team2_id = ?) AND m.match_date > NOW()
+          ORDER BY m.match_date ASC LIMIT 2
+        `, [team_id, team_id], (error, results) => {
+          if (error) reject(error);
+          else resolve(results);
+        });
+      });
           team.upcomingMatches = upcomingMatchesResults.map(match => ({
             ...match,
             match_date: new Date(match.match_date).toISOString()

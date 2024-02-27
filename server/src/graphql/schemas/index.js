@@ -128,6 +128,8 @@ type Match {
   team2_id: Int
   team1_score: Int
   team2_score: Int
+  team1_name: String
+  team2_name: String
 }
 
 type UserAuthResponse {
