@@ -16,7 +16,7 @@ import {
 const Schedule = () => {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(scheduleReducer, initialState);
-  const matchData = useSelector((state) => state.match.value.match);
+  const matchData = useSelector((state) => state.match.value.match.match);
   const loadMatchData = (year, month, date) => {
     return matchData.filter((state) => new Date(state.date).getTime() === new Date(`${year}-${month}-${date}`).getTime());
   }
@@ -121,7 +121,7 @@ const Schedule = () => {
       <MatchWrapper>
         <div className="dateInfo">{state.clicked.year}년 {state.clicked.month}월 {state.clicked.date}일</div>
         {
-          matchInfo && matchInfo.map((value, index) => {
+          matchInfo?.map((value, index) => {
             return (
               <MatchView key={index} onClick={() => clickMatch(value)}>
                 <div className="matchNum">

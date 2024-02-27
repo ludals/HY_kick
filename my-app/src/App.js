@@ -19,10 +19,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { load_match } from "../src/redux/match";
 import { load_teams } from "./redux/teams"
 import Header from "./component/Header";
+import useTeamData from "./hooks/useTeamData";
 
 import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
-export const TEAMS = gql`
+const TEAMS = gql`
   query {
     teams {
       team_id
@@ -40,10 +41,17 @@ export const TEAMS = gql`
   }
 `;
 
+// const MATCHES =   gql`
+//   query{
+
+//   }
+// `;
+
 function App() {
   const { data } = useQuery(TEAMS);
   const dispatch = useDispatch();
   dispatch(load_teams(data));
+  dispatch(load_match(matches));
 
   return (
     <>
@@ -56,7 +64,7 @@ function App() {
         <Route path="/squadmaker" element={<SquadMaker formation="포메이션" players={['민지우', '이름2', '이름3', '이름4', '이름5', '이름6', '이름7', '이름8', '이름9', '이름10', '이름11']} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/result/:id" element={<ResultPage />} />
-        {data && data.teams.map(team => (
+        {data?.teams.map(team => (
           <Route
             key={team.team_id}
             path={`/team/${team.team_id}`}

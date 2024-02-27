@@ -6,6 +6,7 @@ const userSlice = createSlice({
     value: {
       name: null,
       team_id: null,
+      team_name: null,
       position: null, //직책
       jersey_number: null,
       student_number: null,
@@ -13,7 +14,11 @@ const userSlice = createSlice({
   },
   reducers: {
     loginAction: (state, action) => {
-      state.value = { ...action.payload };
+      state.value.name = action.payload.name;
+      state.value.team_id = action.payload.team_id;
+      state.value.position = action.payload.position;
+      state.value.jersey_number = action.payload.jersey_number;
+      state.value.student_number = action.payload.student_number;
     },
   },
 });

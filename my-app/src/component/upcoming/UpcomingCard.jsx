@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { BACKGROUND_COLOR, BORDER_RADIUS_30 } from "../../constants/styleconstant";
 import { DAYS } from "../../constants/constant"
 
-const UpcomingCard = (props) => {
+const UpcomingCard = () => {
+  const matches = useSelector((state) => state.match.value).match.match;
   const [cardTouched, SetCardTouched] = useState(null);
   const [cardNum, setCardNum] = useState(null);
   const [prevCard, setPrevCard] = useState(null);
-  const matches = [props.matches[0], props.matches[1], props.matches[2], props.matches[3], props.matches[4], props.matches[5]];
+  const matchArray = [matches[0], matches[1], matches[2], matches[3], matches[4], matches[5]];
 
   const selectCard = (event, index) => {
     event.stopPropagation();
@@ -47,7 +49,7 @@ const UpcomingCard = (props) => {
           }
         </OpenSection>
         {
-          matches?.map((match, index) => {
+          matchArray?.map((match, index) => {
             return (
               <Card
                 $index={index}
@@ -221,7 +223,7 @@ const CloseButton = styled.img`
 
 const CardWrapper = styled.div`
   width: 100%;
-  height: 9rem;
+  /* height: 9rem; */
   position: absolute;
   bottom: 0;
   animation: 
@@ -230,7 +232,7 @@ const CardWrapper = styled.div`
     both;
   @keyframes CardIn {
     0%{
-      height: 9rem;
+      height: 0rem;
     }
     100%{
       height: 24rem;
@@ -241,7 +243,7 @@ const CardWrapper = styled.div`
       height: 24rem;
     }
     100%{
-      height: 9rem;
+      height: 0rem;
     }
   }
 `;

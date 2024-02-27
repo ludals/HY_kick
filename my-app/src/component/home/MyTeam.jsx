@@ -6,21 +6,81 @@ import {
   WIDTH
 } from "../../constants/styleconstant";
 import Upcoming from "./Upcoming";
+import { useSelector } from "react-redux";
+import { gql, useQuery } from "@apollo/client";
 
-const MyTeam = ({ teamName = "개발", src = "/image/gaebal.jpg", leagueType = "선봉리그", rank = 1 }) => {
+const TEAMINFO = gql`
+  query ($team_id: Int!) {
+    teamInfo(team_id : $team_id) {
+    team_name
+    department
+    founding_year
+    league
+    current_rank
+    played
+    wins
+    draws
+    losses
+    recentMatches{
+      match_id
+      match_date
+      team1_id
+      team2_id
+      team1_score
+      team2_score
+      team1_name
+      team2_name
+    }
+    upcomingMatches{
+      match_id
+      match_date
+      team1_id
+      team2_id
+      team1_score
+      team2_score
+      team1_name
+      team2_name
+    }
+    topScorers{
+      name
+      goals
+    }
+    members{
+      name
+      position
+      student_number
+      jersey_number
+    }
+    lastFormation{
+        formation
+        starting_players
+      }
+    }
+  }
+`;
+
+const MyTeam = () => {
+  const team_id = useSelector((state) => state.user.value).team_id;
+
+  const { loading, error, data } = useQuery(TEAMINFO, {
+    variables: { team_id: team_id }
+  });
+
+  const myTeamData = !loading && data.teamInfo;
+
   return (
     <MyTeamWrapper>
       <TeamName style={{ alignItems: 'end' }}>
         <div>My Team</div>
-        <div className="name">{teamName}</div>
+        <div className="name">{myTeamData.team_name}</div>
       </TeamName>
       <Wrapper>
-        <TeamImage src={src} alt={teamName} />
+        <TeamImage src={`/image/${team_id}.jpg`} alt={myTeamData.team_name} />
       </Wrapper>
       <Wrapper style={{ justifyContent: 'start' }}>
         <LeagueInfo>
-          <div className="league-type">{leagueType}</div>
-          <span className="rank">{rank}</span>
+          <div className="league-type">{myTeamData.league}</div>
+          {/* <span className="rank">{myTeamData.team_name}</span> */}
           <span> 위</span>
         </LeagueInfo>
       </Wrapper>

@@ -10,15 +10,15 @@ import Header from "../component/Header";
 
 const ResultPage = () => {
   const param = useParams();
-  const matches = useSelector((state) => state.match.value).match;
+  const matches = useSelector((state) => state.match.value.match.match);
   const matchID = parseInt(param.id);
-  const match = matches.filter(match => matchID === match.id);
+  const match = matches.filter(match => matchID === match.id)[0];
 
   return (
     <>
       <Header />
       <RankingLayout>
-        <ResultViewer match={match[0]} />
+        <ResultViewer match={match} />
         <MomPlayer />
         {/* <DetailedViewer /> */}
         <ResultSlide />

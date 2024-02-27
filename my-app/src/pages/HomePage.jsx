@@ -8,12 +8,10 @@ import UpcomingCard from "../component/upcoming/UpcomingCard";
 import MyTeam from "../component/home/MyTeam";
 
 const HomePage = () => {
-  const user = useSelector((state) => state.user.value);
-  const matchData = useSelector((state) => state.match.value);
   sessionStorage.removeItem('curDate');
   localStorage.removeItem('register');
 
-  console.log(user);
+
   return (
     <>
       <Header />
@@ -21,7 +19,7 @@ const HomePage = () => {
         {/* <Upcoming matches={matchData.match} /> */}
         <MyTeam />
         <Menu />
-        {/* <UpcomingCard matches={matchData.match} /> */}
+        <UpcomingCard />
       </HomePageLayout>
     </>
   )
