@@ -54,6 +54,8 @@ query ($team_id: Int!) {
       team2_id
       team1_score
       team2_score
+      team1_name
+      team2_name
     }
     upcomingMatches{
       match_id
@@ -62,6 +64,8 @@ query ($team_id: Int!) {
       team2_id
       team1_score
       team2_score
+      team1_name
+      team2_name
     }
     topScorers{
       member_id
@@ -104,9 +108,9 @@ const Team = ({ team, teamLogo, deptLogo }) => {
       <FirstRow>
       <TeamView teamName={teamInfo.team_name} />
       <TeamInfo>
-        <TeamName>{teamInfo.team_name}</TeamName> {/*teamInfo.team_name */}
-            <TeamDescription>{teamInfo.department}</TeamDescription>{/* back */}
-        <TeamDescription>{teamInfo.founding_year}</TeamDescription>{/* back */}
+        <TeamName>{teamInfo.team_name}</TeamName> 
+        <TeamDescription>{teamInfo.department.split(',').join('\n')}</TeamDescription>
+        <TeamDescription>{teamInfo.founding_year}</TeamDescription>
       </TeamInfo>
       </FirstRow>
       {/* <SecondRow>
@@ -115,8 +119,8 @@ const Team = ({ team, teamLogo, deptLogo }) => {
     </SecondRow> */}
     </TeamContent>
     <SeasonCard>
-        <LeagueName>{teamInfo.league}</LeagueName>{/* back {leagueName} */}
-        <CurrentRank>현재 순위: {teamInfo.current_rank}</CurrentRank>{/* back 현재 순위: {currentRank}위*/}
+        <LeagueName>{teamInfo.league}</LeagueName>
+        <CurrentRank>현재 순위: {teamInfo.current_rank}</CurrentRank>
       <Spacer />
         <SeasonPerformance>{teamInfo.played}경기 {teamInfo.wins}승 {teamInfo.draws}무 {teamInfo.losses}패</SeasonPerformance>{/* back {game}경기 {win}승 {draw}무 {lose}패*/}
         <Recent5Performance results={['W', 'W', 'W', 'D', 'L']} />
@@ -149,7 +153,7 @@ const Team = ({ team, teamLogo, deptLogo }) => {
           </NavItem>
         </Navigation>
         <CardWrapper>
-          {selectedNav === 'nav1' && teamInfo.recentMatches.map(match => {
+          {selectedNav === 'nav1' && teamInfo.upcomingMatches.map(match => {
             const utcDate = new Date(match.match_date);
             const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
             const localTime = localDate.getHours();
@@ -161,15 +165,34 @@ const Team = ({ team, teamLogo, deptLogo }) => {
                   date: localDate,
                   time: localTime,
                   teams: [
-                    { name: match.team1_id, score: match.team1_score },
-                    { name: match.team2_id, score: match.team2_score }
+                    { name: match.team1_name, score: match.team1_score },
+                    { name: match.team2_name, score: match.team2_score }
                   ],
                   referee: { name: "Referee Name", image: "/image/gaebal.jpg" }
                 },
               ]} />
             );
           })}
-        {selectedNav === 'nav2' && <Recent2Matches matches = {dummyMatches}/>}
+        {selectedNav === 'nav2' && teamInfo.recentMatches.map(match => {
+            const utcDate = new Date(match.match_date);
+            const localDate = new Date(utcDate.getTime() + utcDate.getTimezoneOffset() * 60000);
+            const localTime = localDate.getHours();
+
+            return (
+              <Recent2Matches matches={[
+                {
+                  id: match.match_id,
+                  date: localDate,
+                  time: localTime,
+                  teams: [
+                    { name: match.team1_name, score: match.team1_score },
+                    { name: match.team2_name, score: match.team2_score }
+                  ],
+                  referee: {image: "/image/gaebal.jpg" }
+                },
+              ]} />
+            );
+          })}
         {selectedNav === 'nav3' && <TeamScorers scorers={dummyScorers}/>}
         {selectedNav === 'nav4' && <TeamPlayers players={dummyTeamPlayers}/>}
       </CardWrapper>

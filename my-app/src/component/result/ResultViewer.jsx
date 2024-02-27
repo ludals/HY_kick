@@ -8,7 +8,18 @@ import { RefereeWrapper } from "./DetailedViewerStyle";
 import TeamView from "../TeamView";
 import { DAYS } from "../../constants/constant"
 
-const ResultViewer = ({ match }) => {
+const ResultViewer = ({ match, isDone }) => {
+  const renderResult = () => {
+    if (isDone) {
+      return (
+        <>
+          <div className="versus">:</div>
+        </>
+      );
+    } else {
+      return <div className="versus" style={{ fontSize: "12px", fontweight: "bold" }}>예정</div>;
+    }
+  };
   return (
     <ResultWrapper>
       <Dateform>
@@ -21,9 +32,9 @@ const ResultViewer = ({ match }) => {
       <section>
         <TeamView teamName={match.teams[0].name} />
       </section>
-      <ScoreView score = {match.teams[0].score}/>
-      <div className="versus">:</div>
-      <ScoreView score = {match.teams[1].score}/>
+      <ScoreView score={match.teams[0].score} />
+          {renderResult()}
+          <ScoreView score={match.teams[1].score} />
       <section>
         <TeamView teamName={match.teams[1].name} />
       </section>

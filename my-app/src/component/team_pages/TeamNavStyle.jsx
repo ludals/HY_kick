@@ -4,8 +4,7 @@ import {
 } from "../../constants/styleconstant";
 
 export const Container = styled.div`
-  max-height: 300px;
-  overflow-y: auto;
+  height: fit-content;
 `;
 
 export const List = styled.ul`
@@ -39,7 +38,7 @@ export const PresidentText = styled.span`
 `;
 
 export const MatchWrapper = styled.div`
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 `;
 
 export const MatchContainer = styled.div`

@@ -11,11 +11,10 @@ const Upcoming2Matches = ({ matches }) => {
       <Container><MatchWrapper>
       <MatchContainer>
         {matches.slice(0, 2).map((match, index) => (
-          <ResultViewer key={index} match={match} />
+          <ResultViewer key={index} match={match} isDone={false} />
         ))}
       </MatchContainer>
     </MatchWrapper></Container>
-    
   );
 };
 
@@ -24,7 +23,7 @@ const Recent2Matches = ({ matches }) => {
       <Container><MatchWrapper>
       <MatchContainer>
         {matches.slice(0, 2).map((match, index) => (
-          <ResultViewer key={index} match={match} />
+          <ResultViewer key={index} match={match} isDone={true}/>
         ))}
       </MatchContainer>
     </MatchWrapper></Container>

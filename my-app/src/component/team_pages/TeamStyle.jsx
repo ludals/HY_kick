@@ -69,21 +69,24 @@ export const FirstRow = styled.div`
 `;
 
 export const TeamName = styled.h3`
-  margin: 10px 0;
+  margin: 10px 0px 10px 0px ;
+  width: 100px;
+  text-align: left;
 `;
 
 export const TeamDescription = styled.p`
-  margin: 0;
+  margin: 0 0 0 0;
+  width: 150px;
   font-size: 14px;
   color: #333;
+  white-space: pre-line;
+  text-align: left;
 `;
 
 export const TeamInfo = styled.div`
   border: 0px solid #ddd;
-  flex: 1;
-  padding-left: 10px;
-  padding-right: 15px;
-  text-align: left;
+  padding-left: 15px;
+  text-align: center;
 `;
 //이번 시즌 성적
 export const SeasonCard = styled.div`
@@ -238,5 +241,8 @@ overflow-y: auto;
 
 export const CardWrapper = styled.div`
   border: 1px solid #ddd;
+  height: fit-content;
+  max-height:280px;
   padding: 20px;
+  overflow-y: auto;
 `;
