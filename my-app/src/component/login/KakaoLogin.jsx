@@ -12,7 +12,7 @@ const KakaoLogin = () => {
   }
   useEffect(() => {
     console.log(code);
-  },[code])
+  }, [code])
   return (
     <AuthWrapper>
       <KakaoButton src='/image/kakao-login.png' alt="" onClick={onclick} />

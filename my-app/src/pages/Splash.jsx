@@ -9,25 +9,21 @@ import {
   KakaoButton
 } from "../component/splash/SplashStyle";
 import { useEffect } from "react";
+import useKakaoLogin from "../hooks/useKakaoLogin";
 
 const Splash = () => {
-  // const user = useSelector((state) => state.user.value);
-  const user = { id: 1 };
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user.value);
+  // const user = { id: 1 };
   const HYKICK = ['H', 'Y', '-', 'K', 'I', 'C', 'K'];
 
-  const REST_API_KEY = '531ad8ca7724886e585bdd16b39a39bc';
-  const REDIRECT_URI = 'http://localhost:3000/auth';
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  const code = new URL(window.location.href).searchParams.get("code");
+  const kakaoURL = useKakaoLogin();
 
   useEffect(() => {
     setTimeout(() => {
-      if (user.id) {
-        navigate('/home');
-      }
+      user.id && navigate('/home');
     }, 4500);
-  }, [])
+  }, []);
 
   const onclick = () => {
     window.location.href = kakaoURL;
