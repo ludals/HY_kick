@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useTeamData from "../../hooks/useTeamData";
-import useRegister from "../../hooks/useRegister";
 import teams from "../teams.json"
 import { HANYANG_COLOR, MARGIN_TOP } from "../../constants/styleconstant";
 
